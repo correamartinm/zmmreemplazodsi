@@ -1,0 +1,71 @@
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.OtMovimiento"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:form="sap.ui.layout.form"
+	xmlns="sap.m">
+
+	
+	<Page title="{i18n>ttmovimiento}" class="Title">
+		<customHeader>
+			<Bar class="custHeader" design="Header">
+				<contentLeft>
+					<Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+				</contentLeft>
+				<contentMiddle>
+					<ObjectIdentifier />
+				</contentMiddle>
+				<contentRight>
+					<!-- <Button id="idBtnReinit" visible="false" type="Emphasized" icon="sap-icon://refresh" press="onReiniciar"/> -->
+					<Image src="./images/logo.png" height="36px"></Image>
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<content>
+            <OverflowToolbar class="sapUiSmallMarginBottom">
+                <ToolbarSpacer/>
+                <Label text="{i18n>ttmovimiento}"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+
+
+
+                    <Label text="{i18n>lblingresepallet}" />
+                    <Input id="idMovPalletInput" submit="onPalletScan" />
+
+
+                </form:content>
+            </form:SimpleForm>
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+
+
+
+                    <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/movdata/movOT}"  />
+                    <ObjectStatus title="{i18n>lblnummaterial}" text="{i18n>lblingreseot}"  />
+                    <ObjectStatus title="{i18n>lblnumalmacen}" text="{i18n>lblingreseot}"  />
+                    <ObjectStatus title="{i18n>lblnumot}" text="{i18n>lblingreseot}"  />
+
+                    <ObjectStatus title="{i18n>lblcantidad}" text="{i18n>lblingreseot}"  />
+
+
+
+
+                </form:content>
+            </form:SimpleForm>
+            
+			
+		</content>
+		<footer>
+		
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+				<Button  text="{i18n>btnconfirm}" type="Emphasized" width="90%" enabled="{mockdata>/movdata/movOTValidate}" />
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+		</footer>
+	</Page>
+
+</mvc:View>

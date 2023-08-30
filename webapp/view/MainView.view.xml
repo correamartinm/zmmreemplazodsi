@@ -1,0 +1,35 @@
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.MainView"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns="sap.m">
+
+
+	<Page title="{i18n>title}" class="Title">
+		<customHeader>
+			<Bar class="custHeader" design="Header">
+				<contentLeft>
+					<!-- <Button type="Emphasized" icon="sap-icon://nav-back" press="onDesEmbalar"/> -->
+				</contentLeft>
+				<contentMiddle>
+					<ObjectIdentifier title="{i18n>title}"/>
+				</contentMiddle>
+				<contentRight>
+					<Button id="idBtnReinit" visible="false" type="Emphasized" icon="sap-icon://refresh" press="onReiniciar"/>
+					<Image src="./images/logo.png" height="36px"></Image>
+				</contentRight>
+			</Bar>
+		</customHeader>
+		<content>
+			<FlexBox height="80%"  alignItems="Center" justifyContent="Center">
+				<VBox >
+					<Label></Label>
+					<Button text="{i18n>btnotentrante}" type="Emphasized" press="onGoOtEntrante" width="210px"/>
+					<Button text="{i18n>btnotsaliente}" type="Emphasized" press="onGoOtSaliente" width="210px"/>
+					<Button text="{i18n>btnmovimiento}" type="Emphasized" press="onGoMovimiento" width="210px"/>
+
+				</VBox>
+			</FlexBox>
+		</content>
+		
+	</Page>
+
+</mvc:View>

@@ -1,0 +1,88 @@
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.OtEntrante"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m">
+
+
+    <Page title="{i18n>ttotentrante}" class="Title">
+        <customHeader>
+            <Bar class="custHeader" design="Header">
+                <contentLeft>
+                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                </contentLeft>
+                <contentMiddle>
+                    <ObjectIdentifier />
+                </contentMiddle>
+                <contentRight>
+                    <!-- <Button id="idBtnReinit" visible="false" type="Emphasized" icon="sap-icon://refresh" press="onReiniciar"/> -->
+                    <Image src="./images/logo.png" height="36px"></Image>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+                <Label text="{i18n>ttotentrante}"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+
+            <form:SimpleForm visible="false" editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+
+                    <Label text="{i18n>labelpallet}" />
+                    <Input id="idInmput" submit="onPalletScan" />
+
+                    <Label text="{i18n>lbldestino}" />
+                    <Input submit="onPalletScan" type="Text" />
+
+                    <Label text="{i18n>lblcodverificador}" />
+                    <Input submit="onPalletScan" />
+
+                    <Label text="{i18n>lblingresepallet}" />
+                    <Input submit="onPalletScan" />
+
+                </form:content>
+            </form:SimpleForm>
+
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+
+                    <Label text="{i18n>labelcodigopallet}" />
+                    <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/inOTPallet}" />
+
+                    <Label text="{i18n>lblubicaciondestino}" />
+                    <Input name="inDestino" id="idDestinoInput" submit="onInputScanSubmit" value="{mockdata>/inOTDestino}"/>
+
+                </form:content>
+            </form:SimpleForm>
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop" visible="{= ${mockdata>/inOTAlmmacen} !== '' }"    >
+                <form:content>
+
+                    <!-- <ObjectStatus title="{i18n>lblnumalmacen}" text="{i18n>lblingreseot}" /> -->
+
+                    <Label text="{i18n>lblnumalmacen}" />
+                    <Text text="{mockdata>/inOTAlmmacen}"/>
+
+
+                    <Label text="{i18n>lblcodverificador}" />
+                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/inOTCodigo}" />
+
+
+
+                </form:content>
+            </form:SimpleForm>
+
+        </content>
+        <footer>
+
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnconfirmaot}" type="Emphasized" width="90%" enabled="{mockdata>/inOTValidate}"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+
+</mvc:View>

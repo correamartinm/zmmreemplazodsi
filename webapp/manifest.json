@@ -1,0 +1,159 @@
+{
+    "_version": "1.49.0",
+    "sap.app": {
+        "id": "morixe.zmmreemplazodsi",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.10.4",
+            "toolsId": "b038b429-3cab-44d4-9660-0ea64dede403"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "morixe-zmmreemplazodsi-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "reemplazodsi",
+                    "action": "openreemplazodsi",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "icon": ""
+                }
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.117.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "morixe.zmmreemplazodsi.i18n.i18n"
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "morixe.zmmreemplazodsi.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteMainView",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetMainView"
+                    ]
+                },
+                {
+                    "name": "RouteOtSaliente",
+                    "pattern": "Data1",
+                    "target": [
+                        "TargetOtSaliente"
+                    ]
+                },
+                {
+                    "name": "RouteOtEntrante",
+                    "pattern": "Data2",
+                    "target": [
+                        "TargetOtEntrante"
+                    ]
+                },
+                {
+                    "name": "RouteMovimiento",
+                    "pattern": "Data3",
+                    "target": [
+                        "TargetMovimiento"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetMainView": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "MainView",
+                    "viewName": "MainView"
+                },
+                "TargetOtSaliente": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "OtSaliente"
+                },
+                "TargetOtEntrante": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "OtEntrante"
+                },
+                "TargetMovimiento": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "OtMovimiento"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "morixe.zmmreemplazodsi.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    }
+}

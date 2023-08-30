@@ -1,0 +1,77 @@
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.OtSaliente"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m">
+
+
+    <Page title="{i18n>ttotsaliente}" class="Title">
+        <customHeader>
+            <Bar class="custHeader" design="Header">
+                <contentLeft>
+                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                </contentLeft>
+                <contentMiddle>
+                    <ObjectIdentifier />
+                </contentMiddle>
+                <contentRight>
+                    <!-- <Button id="idBtnReinit" visible="false" type="Emphasized" icon="sap-icon://refresh" press="onReiniciar"/> -->
+                    <Image src="./images/logo.png" height="36px"></Image>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+                <Label text="{i18n>ttotsaliente}"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+
+
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+                    <Label text="{i18n>lblingreseot}" />
+                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
+                </form:content>
+            </form:SimpleForm>
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+
+                    <ObjectStatus title="{i18n>lblposicion}" text="{mockdata>/outOTPosicion}" />
+            
+                    <ObjectStatus title="{i18n>lblnummaterial}" text="{mockdata>/outOTMaterial}" />
+            
+                    <ObjectStatus title="{i18n>lblmaterial}" text="{mockdata>/outOTMaterialDesc}" />
+            
+                    <ObjectStatus title="{i18n>lblnumalmacen}" text="{mockdata>/inOTDestino}" />
+            
+                    <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/outOTCantidad} {mockdata>/outOTUnidad}" />
+
+                </form:content>
+            </form:SimpleForm>|
+
+            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+                <form:content>
+
+                    <Label text="{i18n>lblingresepallet}" />
+                    <Input id="idOtOutPalletInput" submit="onInputOtScanSubmit" />
+
+                </form:content>
+            </form:SimpleForm>
+
+
+        </content>
+        <footer>
+
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+                <Button text="{i18n>btnconfirmaot}" type="Emphasized" width="90%" enabled="{mockdata>/outOTValidate}" />
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+
+        </footer>
+    </Page>
+
+</mvc:View>
