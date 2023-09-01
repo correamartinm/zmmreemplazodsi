@@ -44,6 +44,7 @@ sap.ui.define(
               displayName: "Usuario Test (dummy.user@com)",
             },
           ],
+          MainButtons : false,
           inOTPallet: "",
           inOTDestino: "",
           inOTAlmmacen: "",

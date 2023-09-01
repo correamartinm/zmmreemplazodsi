@@ -11,6 +11,8 @@ sap.ui.define(
       "morixe.zmmreemplazodsi.controller.BaseController",
       {
         onGoMain: function () {
+
+          // oMockModel.setProperty("/MainButtons", false);
           this.getOwnerComponent().getTargets().display("TargetMainView");
         },
 
@@ -44,6 +46,16 @@ sap.ui.define(
             return param;
           }
         },
+        _onCompareControls: function (oControl1, oControl2) {
+          let oValue1 = oControl1.getValue(),
+            oValue2 = oControl2.getValue();
+
+          if (oValue1 === oValue2) {
+            return true;
+          } else {
+            return false;
+          }
+        },
 
         _onreadModel: function (oModel, oView, oPath) {
           return new Promise((resolve, reject) => {
@@ -60,17 +72,6 @@ sap.ui.define(
               },
             });
           });
-        },
-
-        _onCompareControls: function (oControl1, oControl2) {
-          let oValue1 = oControl1.getValue(),
-            oValue2 = oControl2.getValue();
-
-          if (oValue1 === oValue2) {
-            return true;
-          } else {
-            return false;
-          }
         },
 
         _onfilterModel: function (oModel, oView, oEntity, oFilters) {

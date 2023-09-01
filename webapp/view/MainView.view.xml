@@ -7,19 +7,32 @@
 		<customHeader>
 			<Bar class="custHeader" design="Header">
 				<contentLeft>
+					<Button type="Emphasized" icon="sap-icon://home-share" visible="{mockdata>/MainButtons}" press="onReiniciar"/>
 					<!-- <Button type="Emphasized" icon="sap-icon://nav-back" press="onDesEmbalar"/> -->
 				</contentLeft>
 				<contentMiddle>
-					<ObjectIdentifier title="{i18n>title}"/>
+					
 				</contentMiddle>
 				<contentRight>
-					<Button id="idBtnReinit" visible="false" type="Emphasized" icon="sap-icon://refresh" press="onReiniciar"/>
 					<Image src="./images/logo.png" height="36px"></Image>
 				</contentRight>
 			</Bar>
 		</customHeader>
 		<content>
-			<FlexBox height="80%"  alignItems="Center" justifyContent="Center">
+
+
+
+			<FlexBox height="80%"  alignItems="Center" justifyContent="Center" visible="{= ${mockdata>/MainButtons} === false }">
+				<VBox >
+					
+					<Button text="{i18n>btnolavarria}" type="Emphasized" press="onGoOtEntranteOLV" width="210px"/>
+					<Button text="{i18n>btncordoba}" type="Emphasized" press="onGoOtEntranteCBA" width="210px"/>
+					
+				</VBox>
+			</FlexBox>
+
+
+			<FlexBox height="80%"  alignItems="Center" justifyContent="Center" visible="{mockdata>/MainButtons}">
 				<VBox >
 					<Label></Label>
 					<Button text="{i18n>btnotentrante}" type="Emphasized" press="onGoOtEntrante" width="210px"/>
