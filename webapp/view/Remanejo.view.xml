@@ -1,0 +1,66 @@
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.Remanejo"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:card="sap.f.cards"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+
+
+    <Page title="{i18n>ttotsaliente}" id="OtSaliente" class="Title PanelSnow">
+        <customHeader>
+            <Bar class="custHeader" design="Header">
+                <contentLeft>
+                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                </contentLeft>
+                <contentMiddle>
+                    <ObjectIdentifier />
+                </contentMiddle>
+                <contentRight>
+
+                    <Image src="./images/logo.png" height="36px"></Image>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+                <Label text="{i18n>ttotsaliente}"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+
+            <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
+                <form:content>
+                    <Label text="{i18n>lblingreseot}" />
+                    <Input submit="onInputOtScanSubmit" />
+
+                </form:content>
+            </form:SimpleForm>
+
+            <VBox alignItems="Center" justifyContent="SpaceBetween">
+                <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
+                    <form:content>
+                        <Label text="{i18n>lblnuevonumero}" />
+                        <Input id="idOtOutInput3" submit="onInputOtScanSubmit" />
+
+                    </form:content>
+                </form:SimpleForm>
+
+                <Button text="{i18n>btnimprimir}" type="Emphasized" enabled="{mockdata>/inOTValidate}"/>
+            </VBox>
+        </content>
+        <footer>
+
+            <OverflowToolbar  class="sapUiSmallMarginBottom">
+
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
+
+
+                <ToolbarSpacer/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
+            </OverflowToolbar>
+
+        </footer>
+    </Page>
+
+</mvc:View>

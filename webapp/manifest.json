@@ -119,6 +119,13 @@
                     "target": [
                         "TargetMovimiento"
                     ]
+                },
+                {
+                    "name": "RouteRemanejo",
+                    "pattern": "Data4",
+                    "target": [
+                        "TargetRemanejo"
+                    ]
                 }
             ],
             "targets": {
@@ -133,6 +140,7 @@
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
+                    "viewId": "OtSaliente",
                     "viewName": "OtSaliente"
                 },
                 "TargetOtEntrante": {
@@ -146,7 +154,14 @@
                     "transition": "slide",
                     "clearControlAggregation": false,
                     "viewName": "OtMovimiento"
+                },
+                "TargetRemanejo": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewName": "Remanejo"
                 }
+
             }
         },
         "rootView": {

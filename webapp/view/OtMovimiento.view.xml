@@ -4,7 +4,7 @@
 	xmlns="sap.m">
 
 	
-	<Page title="{i18n>ttmovimiento}" class="Title">
+	<Page title="{i18n>ttmovimiento}" class="Title PanelSnow">
 		<customHeader>
 			<Bar class="custHeader" design="Header">
 				<contentLeft>
@@ -27,7 +27,7 @@
             </OverflowToolbar>
 
 
-            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+            <form:SimpleForm  columnsM="2" columnsXL="4"   editable="true"  backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
 
@@ -38,7 +38,7 @@
 
                 </form:content>
             </form:SimpleForm>
-            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+            <form:SimpleForm  columnsM="2" columnsXL="4"   editable="true"  backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
 
@@ -60,7 +60,7 @@
 		</content>
 		<footer>
 		
-            <OverflowToolbar >
+            <OverflowToolbar  class="sapUiSmallMarginBottom">
                 <ToolbarSpacer/>
 				<Button  text="{i18n>btnconfirm}" type="Emphasized" width="90%" enabled="{mockdata>/movdata/movOTValidate}" />
                 <ToolbarSpacer/>

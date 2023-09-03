@@ -4,7 +4,7 @@
     xmlns="sap.m">
 
 
-    <Page title="{i18n>ttotentrante}" class="Title">
+    <Page title="{i18n>ttotentrante}" class="Title PanelSnow">
         <customHeader>
             <Bar class="custHeader" design="Header">
                 <contentLeft>
@@ -45,24 +45,30 @@
             </form:SimpleForm>
 
 
-            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
+            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
                     <Label text="{i18n>labelcodigopallet}" />
                     <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/inOTPallet}" />
 
-                    <Label text="{i18n>lblubicaciondestino}" />
-                    <Input name="inDestino" id="idDestinoInput" submit="onInputScanSubmit" value="{mockdata>/inOTDestino}"/>
+
 
                 </form:content>
             </form:SimpleForm>
 
-            <form:SimpleForm editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop" visible="{= ${mockdata>/inOTAlmmacen} !== '' }"    >
+            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
                     <!-- <ObjectStatus title="{i18n>lblnumalmacen}" text="{i18n>lblingreseot}" /> -->
 
-                    <Label text="{i18n>lblnumalmacen}" />
+                    <Label text="{i18n>lblnumot}" />
+                    <Text text="{mockdata>/inOTAlmmacen}"/>
+
+                    <Label text="{i18n>lbletapa}" />
+                    <Input submit="onInputScanSubmit" />
+
+
+                    <Label text="{i18n>lblubicaciondestino}" />
                     <Text text="{mockdata>/inOTAlmmacen}"/>
 
 
@@ -77,10 +83,12 @@
         </content>
         <footer>
 
-            <OverflowToolbar >
+            <OverflowToolbar  class="sapUiSmallMarginBottom">
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnconfirmaot}" type="Emphasized" width="90%" enabled="{mockdata>/inOTValidate}"/>
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
                 <ToolbarSpacer/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
             </OverflowToolbar>
         </footer>
     </Page>

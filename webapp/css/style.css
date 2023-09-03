@@ -1,1 +1,143 @@
 /* Enter your custom styles here */
+
+.BigTitle {
+    width: 120px;
+    font-size: 18px;
+}
+
+.BigSizeG {
+    color: MediumSeaGreen;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.BigSizeN {
+    color: OrangeRed;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.BigSize {
+    color: Navy;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.tableline {
+    font-size: 14px;
+}
+
+.tablelineSmall {
+    font-size: 12px;
+}
+
+.tablelineB {
+    color: Navy;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.uptitleC {
+    margin-right: 2px;
+    margin-left: 2px;
+    font-size: 11px;
+	margin-bottom: -6px;
+}
+
+.uptitle {
+    color: Navy;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: -6px;
+}
+
+.Nombrelista {
+    color: Navy;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 2px;
+}
+
+.lista {
+    font-size: 12px;
+}
+
+.MidSize {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.Icon {
+    color: Navy;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+.IconRed {
+    color: IndianRed;
+}
+.PanelFloralWhite {
+    background: FloralWhite;
+}
+
+.PanelLightCyan {
+    background: LightCyan;
+}
+
+.PanelSnow {
+    background: Snow;
+}
+
+.PanelAzure {
+    background: Azure;
+}
+
+.PanelWhite {
+    background: White;
+}
+
+.Input{
+    border: 2px solid #E0FFFF;
+    background: #E0FFFF;
+}
+
+.Name {
+    color: Indigo;
+    text-transform: uppercase;
+    font-size: 15px;
+    font-weight: bold;
+}
+.NameSmall {
+    color: Indigo;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.Uppercase {
+text-transform: uppercase;	
+}
+
+.div.b {
+    text-transform: capitalize;
+    text-transform: lowercase;
+}
+
+.overdue {
+	-webkit-animation: anim-overdue 1500ms;
+}
+
+.overdue {
+	color: LightCyan;
+}
+
+
+@-webkit-keyframes anim-overdue {
+	50%  {
+		background-color: LightCyan;
+	}
+}
