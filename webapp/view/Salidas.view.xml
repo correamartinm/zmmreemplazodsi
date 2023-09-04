@@ -41,16 +41,16 @@
                     </headerToolbar> -->
                     <columns>
 
-                        <Column hAlign="Begin" width="30%" >
+                        <Column  width="30%" >
                             <Text text="{i18n>lblnumot}" />
                         </Column>
-                        <Column  hAlign="Begin" width="30%">
+                        <Column   width="30%">
                             <Text text="{i18n>lbletapa}" />
                         </Column>
-                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" hAlign="Begin">
+                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" >
                             <Text text="{i18n>lblorigen}" />
                         </Column>
-                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" hAlign="Begin">
+                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" >
                             <Text text="{i18n>labelpallet}" />
                         </Column>
                         <Column hAlign="Left" width="10%" >
@@ -76,7 +76,7 @@
 
             </Panel>
 
-            <form:SimpleForm visible="{mockdata>/Picking}" columnsM="2" columnsXL="4" adjustLabelSpan="true" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+            <form:SimpleForm visible="{mockdata>/Picking}" columnsM="2" columnsXL="4"  labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
 
                 <form:content>
                     <Label text="{i18n>lblingreseot}" />

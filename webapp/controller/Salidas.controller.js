@@ -21,17 +21,6 @@ sap.ui.define(
           this._onFocusControl(this.byId("idOtOutInput"));
         },
 
-        _onResetData: function () {
-          let oMockModel = this.getOwnerComponent().getModel("mockdata");
-          this._onUpdateJsonModel(oMockModel, "/outOT", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTPosicion", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTMaterial", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTMaterialDesc", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTCantidad", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTUnidad", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTPallet", "");
-          this._onUpdateJsonModel(oMockModel, "/outOTValidate", false);
-        },
 
         _onGotoMainMenu: function () {
           let sMessage = this._i18n().getText("msgvolver"),
@@ -39,7 +28,7 @@ sap.ui.define(
 
           this._onShowMsgBoxConfirm(sMessage, sMessageTitle).then((rta) => {
             if (rta === "OK") {
-              this._onResetData();
+              // this._onResetPikingData();
               this.onGoMain();
             }
           });

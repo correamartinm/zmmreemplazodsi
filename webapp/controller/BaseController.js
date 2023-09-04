@@ -185,7 +185,7 @@ sap.ui.define(
               onClose: function (oAction) {
                 resolve(oAction);
               }.bind(this),
-              styleClass: "",
+              styleClass: sResponsivePaddingClasses,
               actions: MessageBox.Action.CLOSE,
               emphasizedAction: MessageBox.Action.CLOSE,
             });
@@ -202,7 +202,7 @@ sap.ui.define(
               onClose: function (oAction) {
                 resolve(oAction);
               }.bind(this),
-              styleClass: "",
+              styleClass: sResponsivePaddingClasses,
               actions: MsgObj.acciones,
               emphasizedAction: MsgObj.resaltar,
             });
