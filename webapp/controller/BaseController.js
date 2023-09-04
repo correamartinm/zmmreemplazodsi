@@ -206,6 +206,20 @@ sap.ui.define(
             });
           });
         },
+        _onShowMsgBoxNextPositions: function (sMessage, sMessageTitle, Actions ) {
+          return new Promise((resolve, reject) => {
+            MessageBox.success(sMessage, {
+              icon: MessageBox.Icon.SUCCESS,
+              title: sMessageTitle,
+              onClose: function (oAction) {
+                resolve(oAction);
+              }.bind(this),
+              styleClass: "",
+              actions: Actions,
+              emphasizedAction: sap.m.MessageBox.Action.OK,
+            });
+          });
+        },
       }
     );
   }
