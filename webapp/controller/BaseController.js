@@ -192,31 +192,19 @@ sap.ui.define(
           });
         },
 
-        _onShowMsgBoxSucces: function (sMessage, sMessageTitle) {
+
+        _onShowMsgBox: function (MsgObj ) {
+
           return new Promise((resolve, reject) => {
-            MessageBox.success(sMessage, {
-              icon: MessageBox.Icon.SUCCESS,
-              title: sMessageTitle,
+            MessageBox.success(MsgObj.mensaje, {
+              icon: MsgObj.icono,
+              title: MsgObj.titulo,
               onClose: function (oAction) {
                 resolve(oAction);
               }.bind(this),
               styleClass: "",
-              actions: sap.m.MessageBox.Action.OK,
-              emphasizedAction: sap.m.MessageBox.Action.OK,
-            });
-          });
-        },
-        _onShowMsgBoxNextPositions: function (sMessage, sMessageTitle, Actions ) {
-          return new Promise((resolve, reject) => {
-            MessageBox.success(sMessage, {
-              icon: MessageBox.Icon.SUCCESS,
-              title: sMessageTitle,
-              onClose: function (oAction) {
-                resolve(oAction);
-              }.bind(this),
-              styleClass: "",
-              actions: Actions,
-              emphasizedAction: sap.m.MessageBox.Action.OK,
+              actions: MsgObj.acciones,
+              emphasizedAction: MsgObj.resaltar,
             });
           });
         },

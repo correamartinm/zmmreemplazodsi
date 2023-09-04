@@ -41,19 +41,7 @@ sap.ui.define(
           });
         },
 
-        _onShowMsg: function() {
-          
-          let Actions = [sap.m.MessageBox.Action.CLOSE, "NEXT"];
-          let sMessage = this._i18n().getText("msgvolver"),
-
-          sMessageTitle = this._i18n().getText("msgconsulta");
-          this._onShowMsgBoxNextPositions(sMessage, sMessageTitle, Actions).then((rta) => {
-            if (rta === "NEXT") {
-              this._onResetData();
-              this.onGoMain();
-            }
-          });
-        },
+ 
 
         onInputScanSubmit: function (oEvent) {
           let oValue = oEvent.getSource().getValue(),

@@ -11,6 +11,7 @@
             <Bar class="custHeader" design="Header">
                 <contentLeft>
                     <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                   
                 </contentLeft>
                 <contentMiddle>
                     <ObjectIdentifier />
