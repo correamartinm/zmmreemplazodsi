@@ -1,0 +1,143 @@
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.Salidas"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:card="sap.f.cards"
+    xmlns:f="sap.f"
+    xmlns="sap.m">
+
+
+    <Page title="{i18n>ttotsaliente}" id="OtSaliente" class="Title PanelSnow">
+        <customHeader>
+            <Bar class="custHeader" design="Header">
+                <contentLeft>
+                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+
+                </contentLeft>
+                <contentMiddle>
+                    <ObjectIdentifier />
+                </contentMiddle>
+                <contentRight>
+
+                    <Image src="./images/logo.png" height="36px"></Image>
+                </contentRight>
+            </Bar>
+        </customHeader>
+        <content>
+
+            <OverflowToolbar >
+                <ToolbarSpacer/>
+                <Label text="{i18n>btnsalidaventas}"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+
+            <Panel class="sapMPanelContent" height="85%" visible="{= ${mockdata>/Picking} === false }">
+
+                <Table id="idMaterialsOCPTableSalidaTable"  items="{mockdata>/TestItems}" mode="SingleSelectMaster" 
+                    sticky="ColumnHeaders,HeaderToolbar">
+                    <!-- <headerToolbar>
+                        <OverflowToolbar>
+                            <SearchField width="90%" search="onFilterTable" placeholder="{i18n>RBcode} - {i18n>detail}" />
+                        </OverflowToolbar>
+                    </headerToolbar> -->
+                    <columns>
+
+                        <Column hAlign="Begin" width="30%" >
+                            <Text text="{i18n>lblnumot}" />
+                        </Column>
+                        <Column  hAlign="Begin" width="30%">
+                            <Text text="{i18n>lbletapa}" />
+                        </Column>
+                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" hAlign="Begin">
+                            <Text text="{i18n>lblorigen}" />
+                        </Column>
+                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" hAlign="Begin">
+                            <Text text="{i18n>labelpallet}" />
+                        </Column>
+                        <Column hAlign="Left" width="10%" >
+                            <!-- <Text text="{i18n>materials}" /> -->
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells >
+
+                                <Text text="{mockdata>OT}" />
+                                <Text text="{mockdata>ETAPA}" />
+                                <Text text="{mockdata>ORIGEN}" />
+                                <Text text="{mockdata>PALLET}" />
+                                <Button icon="sap-icon://bar-code" press="onPicking" type="Emphasized"/>
+
+
+
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+            </Panel>
+
+            <form:SimpleForm visible="{mockdata>/Picking}" columnsM="2" columnsXL="4" adjustLabelSpan="true" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+
+                <form:content>
+                    <Label text="{i18n>lblingreseot}" />
+                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
+      
+                    <Label text="{i18n>lbletapa}" />
+                    <Text text="{mockdata>/inOTAlmmacen}"/>
+
+                    <ObjectStatus title="{i18n>lblorigen}" text="xxxxxxxxxxxxxxxxx" />
+                    <Input submit="onInputScanSubmit" />
+
+
+                    <Label text="{i18n>labelpallet}" />
+                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/inOTCodigo}" />
+
+
+                    <ObjectStatus title="{i18n>lbldestino}" text="xxxxxxxxxxxxxxxxx" />
+                    <Input submit="onInputScanSubmit" />
+
+
+
+
+
+                    <!-- <Label text="{i18n>lblubicaciondestino}" />
+                    <Text text="{mockdata>/inOTAlmmacen}"/> -->
+
+                </form:content>
+            </form:SimpleForm>
+
+
+<!-- 
+            <HBox class="sapUiLargeMarginTop sapUiTinyMarginEnd sapUiTinyMarginBegin" justifyContent="SpaceBetween">
+
+                <f:Card  >
+                    <f:header>
+                        <card:Header title="{i18n>btnanterior} " iconSrc="sap-icon://navigation-left-arrow" press="onGoMovimiento" />
+                    </f:header>
+
+                </f:Card>
+
+                <f:Card class="sapUiTinyMarginEnd">
+                    <f:header>
+                        <card:Header title="{i18n>btnsiguiente} " iconSrc="sap-icon://navigation-right-arrow" press="onGoMovimiento" />
+                    </f:header>
+                </f:Card>
+            </HBox> -->
+
+
+        </content>
+        <footer>
+
+            <OverflowToolbar class="sapUiSmallMarginBottom" visible="{mockdata>/Picking}"  >
+
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" press="onCancelPicking" />
+                <ToolbarSpacer/>
+                <!-- <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/> -->
+                <ToolbarSpacer/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" />
+            </OverflowToolbar>
+
+        </footer>
+    </Page>
+
+</mvc:View>

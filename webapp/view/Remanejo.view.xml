@@ -25,7 +25,7 @@
 
             <OverflowToolbar >
                 <ToolbarSpacer/>
-                <Label text="{i18n>ttotsaliente}"/>
+                <Label text="{i18n>btnremanejopallets}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
@@ -37,7 +37,7 @@
                 </form:content>
             </form:SimpleForm>
 
-            <VBox alignItems="Center" justifyContent="SpaceBetween">
+            <VBox alignItems="Start" justifyContent="SpaceBetween">
                 <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
                     <form:content>
                         <Label text="{i18n>lblnuevonumero}" />
@@ -46,12 +46,20 @@
                     </form:content>
                 </form:SimpleForm>
 
-                <Button text="{i18n>btnimprimir}" type="Emphasized" enabled="{mockdata>/inOTValidate}"/>
+
+               
+
+                    <Button text="{i18n>btnimprimir}" type="Emphasized" enabled="{mockdata>/inOTValidate}" class="sapUiSmallMarginBegin"/>
+               
+
+
+
+
             </VBox>
         </content>
         <footer>
 
-            <OverflowToolbar  class="sapUiSmallMarginBottom">
+            <OverflowToolbar class="sapUiSmallMarginBottom">
 
                 <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
 

@@ -140,20 +140,20 @@
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewId": "OtSaliente",
-                    "viewName": "OtSaliente"
+                    "viewId": "Salidas",
+                    "viewName": "Salidas"
                 },
                 "TargetOtEntrante": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewName": "OtEntrante"
+                    "viewName": "Almacenamiento"
                 },
                 "TargetMovimiento": {
                     "viewType": "XML",
                     "transition": "slide",
                     "clearControlAggregation": false,
-                    "viewName": "OtMovimiento"
+                    "viewName": "Traslados"
                 },
                 "TargetRemanejo": {
                     "viewType": "XML",

@@ -1,4 +1,4 @@
-<mvc:View controllerName="morixe.zmmreemplazodsi.controller.OtMovimiento"
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.Traslados"
 	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
 	xmlns:form="sap.ui.layout.form"
 	xmlns="sap.m">
@@ -22,7 +22,7 @@
 		<content>
             <OverflowToolbar class="sapUiSmallMarginBottom">
                 <ToolbarSpacer/>
-                <Label text="{i18n>ttmovimiento}"/>
+                <Label text="{i18n>btntraslados}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
 

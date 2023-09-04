@@ -44,30 +44,84 @@ sap.ui.define(
               displayName: "Usuario Test (dummy.user@com)",
             },
           ],
-          MainButtons : false,
-          inOTPallet: "",
-          inOTDestino: "",
-          inOTAlmmacen: "",
-          inOTCodigo: "",
-          inOTValidate: false,
-          outOT: "",
-          outOTPosicion: "",
-          outOTMaterial: "",
-          outOTMaterialDesc: "",
-          outOTCantidad: "",
-          outOTUnidad: "",
-          outOTPallet: "",
-          outOTValidate: false,
-          movdata: {
-            movOT: "",
-            movOTPosicion: "",
-            movOTMaterial: "",
-            movOTMaterialDesc: "",
-            movOTCantidad: "",
-            movOTUnidad: "",
-            movOTPallet: "",
-            movOTValidate: false,
+          TestItems: [
+            {
+              OT : 123456,
+              ETAPA : 25,
+              ORIGEN: 87898989,
+              PALLET: 987654,
+              DESTINO: 7777
+            },
+            {
+              OT : 423456,
+              ETAPA : 15,
+              ORIGEN: 87898449,
+              PALLET: 987654,
+              DESTINO: 7777
+            },
+            {
+              OT : 323456,
+              ETAPA : 12,
+              ORIGEN: 87338989,
+              PALLET: 987654,
+              DESTINO: 7777
+            },
+            {
+              OT : 223456,
+              ETAPA : 26,
+              ORIGEN: 12898989,
+              PALLET: 447654,
+              DESTINO: 7777
+            }
+          ],
+          Almacenamiento: {
+            Apalletcodigo: "",
+            Aotnumero: "",
+            Aetapa: "",
+            Avalpalletcodigo: "",
+            Aorigen : "",
+            Avalorigen: "",
+            Adestino : "",
+            Avaldestino: "",
+            Amaterialcodigo : "",
+            Amaterialdesc : ""
           },
+          Salida: {
+            Spalletcodigo: "",
+            Sotnumero: "",
+            Setapa: "",
+            Svalpalletcodigo: "",
+            Sorigen : "",
+            Svalorigen: "",
+            Sdestino : "",
+            Svaldestino: "",
+            Smaterialcodigo : "",
+            Smaterialdesc : ""
+            
+          },
+          Traslado: {
+            Tpalletcodigo: "",
+            Totnumero: "",
+            Tetapa: "",
+            Tvalpalletcodigo: "",
+            Torigen : "",
+            Tvalorigen: "",
+            Tdestino : "",
+            Tvaldestino: "",
+            Tmaterialcodigo : "",
+            Tmaterialdesc : "",
+            Tcantidad: "",
+            Talmacen: ""
+          },
+          Remanejo: {
+            Rpalletcodigo: "",
+            Totnumero: "",
+            Tnuevonumero: ""
+          },
+          ActiveCenter : "",
+          Picking : false,
+          MainButtons : false
+      
         });
         this.setModel(oMockDataModel, "mockdata");
       },

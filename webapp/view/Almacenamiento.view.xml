@@ -1,4 +1,4 @@
-<mvc:View controllerName="morixe.zmmreemplazodsi.controller.OtEntrante"
+<mvc:View controllerName="morixe.zmmreemplazodsi.controller.Almacenamiento"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:form="sap.ui.layout.form"
     xmlns="sap.m">
@@ -23,36 +23,17 @@
         <content>
             <OverflowToolbar >
                 <ToolbarSpacer/>
-                <Label text="{i18n>ttotentrante}"/>
+                <Label text="{i18n>lblalmacenamientoprd}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-            <form:SimpleForm visible="false" editable="true" layout="ResponsiveGridLayout" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <Label text="{i18n>labelpallet}" />
-                    <Input id="idInmput" submit="onPalletScan" />
-
-                    <Label text="{i18n>lbldestino}" />
-                    <Input submit="onPalletScan" type="Text" />
-
-                    <Label text="{i18n>lblcodverificador}" />
-                    <Input submit="onPalletScan" />
-
-                    <Label text="{i18n>lblingresepallet}" />
-                    <Input submit="onPalletScan" />
-
-                </form:content>
-            </form:SimpleForm>
-
+     
 
             <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
                     <Label text="{i18n>labelcodigopallet}" />
-                    <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/inOTPallet}" />
-
-
+                    <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/Almacenamiento/Apalletcodigo}" />
 
                 </form:content>
             </form:SimpleForm>

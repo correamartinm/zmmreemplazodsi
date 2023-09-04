@@ -6,7 +6,7 @@ sap.ui.define(
   function (BaseController) {
     "use strict";
 
-    return BaseController.extend("morixe.zmmreemplazodsi.controller.OtMovimiento", {
+    return BaseController.extend("morixe.zmmreemplazodsi.controller.Traslados", {
       onInit: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
