@@ -11,7 +11,6 @@ sap.ui.define(
       "morixe.zmmreemplazodsi.controller.BaseController",
       {
         onGoMain: function () {
-
           // oMockModel.setProperty("/MainButtons", false);
           this.getOwnerComponent().getTargets().display("TargetMainView");
         },
@@ -20,16 +19,6 @@ sap.ui.define(
           jQuery.sap.delayedCall(700, this, function () {
             oControl.focus();
           });
-        },
-        _onUpdateJsonModel: function (oModel, entity, values) {
-          oModel.setProperty(entity, values);
-        },
-
-        _onGetDataJsonModel: function (model, entity) {
-          if (model) {
-            let data = model.getProperty(entity);
-            return data;
-          }
         },
 
         formatFecha: function (param) {
@@ -162,20 +151,7 @@ sap.ui.define(
           });
         },
 
-        _onShowMsgBoxConfirm: function (sMessage, sMessageTitle) {
-          return new Promise((resolve, reject) => {
-            MessageBox.confirm(sMessage, {
-              icon: MessageBox.Icon.QUESTION,
-              title: sMessageTitle,
-              onClose: function (oAction) {
-                resolve(oAction);
-              }.bind(this),
-              styleClass: "",
-              actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-              emphasizedAction: MessageBox.Action.OK,
-            });
-          });
-        },
+
 
         _onShowMsgBoxError: function (sMessage, sMessageTitle) {
           return new Promise((resolve, reject) => {

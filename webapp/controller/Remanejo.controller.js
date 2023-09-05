@@ -14,36 +14,36 @@ sap.ui.define(
         oTarget.attachDisplay(this._onObjectMatched, this);
       },
 
-
       _onObjectMatched: function (evt) {
-        this._onFocusControl(this.byId("idMovPalletInput"));        
+        this._onFocusControl(this.byId("idMovPalletInput"));
       },
 
       _onResetData: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
-        this._onUpdateJsonModel(oMockModel, "/movOT", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTPosicion", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTMaterial", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTMaterialDesc", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTCantidad", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTUnidad", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTPallet", "");
-        this._onUpdateJsonModel(oMockModel, "/movOTValidate", false);
+        oMockModel.setProperty("/Remanejo", {
+          Rpalletcodigo: "",
+          Totnumero: "",
+          Tnuevonumero: "",
+        });
       },
 
       _onGotoMainMenu: function () {
-        let sMessage = this._i18n().getText("msgvolver"),
-          sMessageTitle = this._i18n().getText("msgconsulta");
+        let objectMsg = {
+          titulo: this._i18n().getText("msgconsulta"),
+          mensaje: this._i18n().getText("msgvolver"),
+          icono: sap.m.MessageBox.Icon.QUESTION,
+          stilo: sResponsivePaddingClasses,
+          acciones: [sap.m.MessageBox.Action.CLOSE, sap.m.MessageBox.Action.OK],
+          resaltar: sap.m.MessageBox.Action.OK,
+        };
 
-        this._onShowMsgBoxConfirm(sMessage, sMessageTitle).then((rta) => {
+        this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === "OK") {
             this._onResetData();
             this.onGoMain();
           }
         });
       },
-
-
     });
   }
 );

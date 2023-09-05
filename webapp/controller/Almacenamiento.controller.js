@@ -22,26 +22,40 @@ sap.ui.define(
         },
         _onResetData: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
-          this._onUpdateJsonModel(oMockModel, "/inOTPallet", "");
-          this._onUpdateJsonModel(oMockModel, "/inOTDestino", "");
-          this._onUpdateJsonModel(oMockModel, "/inOTAlmmacen", "");
-          this._onUpdateJsonModel(oMockModel, "/inOTCodigo", "");
-          this._onUpdateJsonModel(oMockModel, "/inOTValidate", false);
+          oMockModel.setProperty("/Almacenamiento", {
+            Apalletcodigo: "",
+            Aotnumero: "",
+            Aetapa: "",
+            Avalpalletcodigo: "",
+            Aorigen: "",
+            Avalorigen: "",
+            Adestino: "",
+            Avaldestino: "",
+            Amaterialcodigo: "",
+            Amaterialdesc: "",
+          });
         },
 
         _onGotoMainMenu: function () {
-          let sMessage = this._i18n().getText("msgvolver"),
-            sMessageTitle = this._i18n().getText("msgconsulta");
+          let objectMsg = {
+            titulo: this._i18n().getText("msgconsulta"),
+            mensaje: this._i18n().getText("msgvolver"),
+            icono: sap.m.MessageBox.Icon.QUESTION,
+            stilo: sResponsivePaddingClasses,
+            acciones: [
+              sap.m.MessageBox.Action.CLOSE,
+              sap.m.MessageBox.Action.OK,
+            ],
+            resaltar: sap.m.MessageBox.Action.OK,
+          };
 
-          this._onShowMsgBoxConfirm(sMessage, sMessageTitle).then((rta) => {
+          this._onShowMsgBox(objectMsg).then((rta) => {
             if (rta === "OK") {
               this._onResetData();
               this.onGoMain();
             }
           });
         },
-
- 
 
         onInputScanSubmit: function (oEvent) {
           let oValue = oEvent.getSource().getValue(),
@@ -52,14 +66,6 @@ sap.ui.define(
             oDestino = this.byId("idDestinoInput"),
             oCodigo = this.byId("idCodigoInput");
 
-          //   oModel = this.getView().getModel(),
-          //   oView = this.getView(),
-          //   that = this;
-
-          // var oKey = oModel.createKey("/PalletSet", {
-          //   Pallet: oPallet,
-          //   Destino: oDestino,
-          // });
           if (oValue.length < 1) return;
 
           switch (oTarguetName) {
@@ -68,14 +74,13 @@ sap.ui.define(
               break;
 
             case "inDestino":
-
-
               this._onFocusControl(oCodigo);
 
               break;
             case "inCodigo":
               let rta = this._onCompareControls(oPallet, oCodigo);
-              this._onUpdateJsonModel(oMockModel, "/inOTValidate", rta);
+              oMockModel.setProperty("/inOTValidate", rta);
+              
 
               if (rta === false) {
                 oTarguet.setValueState(ValueState.Error);

@@ -32,8 +32,7 @@
 
             <Panel class="sapMPanelContent" height="85%" visible="{= ${mockdata>/Picking} === false }">
 
-                <Table id="idMaterialsOCPTableSalidaTable"  items="{mockdata>/TestItems}" mode="SingleSelectMaster" 
-                    sticky="ColumnHeaders,HeaderToolbar">
+                <Table id="idMaterialsOCPTableSalidaTable" items="{mockdata>/TestItems}" mode="SingleSelectMaster" sticky="ColumnHeaders,HeaderToolbar">
                     <!-- <headerToolbar>
                         <OverflowToolbar>
                             <SearchField width="90%" search="onFilterTable" placeholder="{i18n>RBcode} - {i18n>detail}" />
@@ -41,19 +40,19 @@
                     </headerToolbar> -->
                     <columns>
 
-                        <Column  width="30%" >
+                        <Column width="30%">
                             <Text text="{i18n>lblnumot}" />
                         </Column>
-                        <Column   width="30%">
+                        <Column width="15%">
                             <Text text="{i18n>lbletapa}" />
                         </Column>
-                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" >
+                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true">
                             <Text text="{i18n>lblorigen}" />
                         </Column>
-                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true" >
+                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true">
                             <Text text="{i18n>labelpallet}" />
                         </Column>
-                        <Column hAlign="Left" width="10%" >
+                        <Column hAlign="Left" width="10%">
                             <!-- <Text text="{i18n>materials}" /> -->
                         </Column>
                     </columns>
@@ -65,7 +64,7 @@
                                 <Text text="{mockdata>ETAPA}" />
                                 <Text text="{mockdata>ORIGEN}" />
                                 <Text text="{mockdata>PALLET}" />
-                                <Button icon="sap-icon://bar-code" press="onPicking" type="Emphasized"/>
+                                <Button icon="sap-icon://bar-code" press="onPikingData" type="Emphasized"/>
 
 
 
@@ -76,25 +75,28 @@
 
             </Panel>
 
-            <form:SimpleForm visible="{mockdata>/Picking}" columnsM="2" columnsXL="4"  labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+            <form:SimpleForm visible="{mockdata>/Picking}" columnsM="2" columnsXL="4" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
 
                 <form:content>
-                    <Label text="{i18n>lblingreseot}" />
-                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
-      
-                    <Label text="{i18n>lbletapa}" />
-                    <Text text="{mockdata>/inOTAlmmacen}"/>
+                    <!-- <Label text="{i18n>lblingreseot}" />
+                    <Text text="{mockdata>/inOTAlmmacen}"/> -->
+                    <!-- <Input id="idOtOutInput" submit="onInputOtScanSubmit" /> -->
+                    <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Salida/Sotnumero}" />
 
-                    <ObjectStatus title="{i18n>lblorigen}" text="xxxxxxxxxxxxxxxxx" />
-                    <Input submit="onInputScanSubmit" />
+                    <!-- <Label text="{i18n>lbletapa}" />
+                    <Text text="{mockdata>/inOTAlmmacen}"/> -->
+                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Salida/Setapa}" />
+
+                    <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Salida/Sorigen}" />
+                    <Input submit="onInputScanSubmit"  value="{mockdata>/Salida/Svalorigen}"/>
 
 
                     <Label text="{i18n>labelpallet}" />
-                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/inOTCodigo}" />
+                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/Salida/Svalpalletcodigo}" />
 
 
-                    <ObjectStatus title="{i18n>lbldestino}" text="xxxxxxxxxxxxxxxxx" />
-                    <Input submit="onInputScanSubmit" />
+                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Salida/Sdestino}" />
+                    <Input submit="onInputScanSubmit"  value="{mockdata>/Salida/Svaldestino}"/>
 
 
 
@@ -107,7 +109,7 @@
             </form:SimpleForm>
 
 
-<!-- 
+            <!-- 
             <HBox class="sapUiLargeMarginTop sapUiTinyMarginEnd sapUiTinyMarginBegin" justifyContent="SpaceBetween">
 
                 <f:Card  >
@@ -128,7 +130,7 @@
         </content>
         <footer>
 
-            <OverflowToolbar class="sapUiSmallMarginBottom" visible="{mockdata>/Picking}"  >
+            <OverflowToolbar class="sapUiSmallMarginBottom" visible="{mockdata>/Picking}">
 
                 <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" press="onCancelPicking" />
                 <ToolbarSpacer/>
