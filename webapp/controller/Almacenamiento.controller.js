@@ -1,14 +1,14 @@
 sap.ui.define(
   ["./BaseController", "sap/ui/core/ValueState"],
   /**
-   * @param {typeof sap.ui.core.mvc.Controller} Controller
+   * @param {typeof sap.ui.core.mvc.BaseController} BaseController
    * @param {typeof sap.ui.core.ValueState} ValueState
    */
   function (BaseController, ValueState) {
     "use strict";
 
     return BaseController.extend(
-      "morixe.zmmreemplazodsi.controller.OtEntrante",
+      "morixe.zmmreemplazodsi.controller.Almacenamiento",
       {
         onInit: function () {
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -80,7 +80,6 @@ sap.ui.define(
             case "inCodigo":
               let rta = this._onCompareControls(oPallet, oCodigo);
               oMockModel.setProperty("/inOTValidate", rta);
-              
 
               if (rta === false) {
                 oTarguet.setValueState(ValueState.Error);

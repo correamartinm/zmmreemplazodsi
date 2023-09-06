@@ -1,9 +1,11 @@
 sap.ui.define(
-  ["./BaseController"],
+  ["./BaseController",  "sap/ui/core/ValueState"],
+  
   /**
-   * @param {typeof sap.ui.core.mvc.Controller} Controller
+   * @param {typeof sap.ui.core.mvc.BaseController} BaseController
+   * @param {typeof sap.ui.core.ValueState} ValueState
    */
-  function (BaseController) {
+  function (BaseController, ValueState) {
     "use strict";
 
     return BaseController.extend("morixe.zmmreemplazodsi.controller.Remanejo", {
