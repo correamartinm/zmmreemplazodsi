@@ -50,7 +50,6 @@ sap.ui.define(
             titulo : this._i18n().getText("msgconsulta"),
             mensaje : this._i18n().getText("msgvolver"),
             icono : sap.m.MessageBox.Icon.QUESTION, 
-            stilo : sResponsivePaddingClasses,
             acciones : [sap.m.MessageBox.Action.CLOSE, sap.m.MessageBox.Action.OK],
             resaltar : 		sap.m.MessageBox.Action.OK
             };

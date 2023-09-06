@@ -154,7 +154,10 @@ sap.ui.define(
 
 
         _onShowMsgBoxError: function (sMessage, sMessageTitle) {
+
+
           return new Promise((resolve, reject) => {
+            var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";
             MessageBox.error(sMessage, {
               icon: MessageBox.Icon.ERROR,
               title: sMessageTitle,
@@ -170,8 +173,10 @@ sap.ui.define(
 
 
         _onShowMsgBox: function (MsgObj ) {
-
+          
+          
           return new Promise((resolve, reject) => {
+            var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";
             MessageBox.success(MsgObj.mensaje, {
               icon: MsgObj.icono,
               title: MsgObj.titulo,
