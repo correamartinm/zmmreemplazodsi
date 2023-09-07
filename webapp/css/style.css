@@ -1,5 +1,7 @@
 /* Enter your custom styles here */
-
+.sapCustomNoBorder {
+    border: none !important;
+  }
 .BigTitle {
     width: 120px;
     font-size: 18px;

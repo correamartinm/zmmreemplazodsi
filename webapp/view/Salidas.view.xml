@@ -26,13 +26,13 @@
 
             <OverflowToolbar >
                 <ToolbarSpacer/>
-                <Label text="{i18n>btnsalidaventas}"/>
+                <Label text="{i18n>btnsalidaventas}" />
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-            <Panel class="sapMPanelContent" height="85%" visible="{= ${mockdata>/Picking} === false }">
+            <Panel class="sapCustomNoBorder" height="85%" visible="{= ${mockdata>/Picking} === false }">
 
-                <Table id="idMaterialsOCPTableSalidaTable" items="{mockdata>/TestItems}" mode="SingleSelectMaster" sticky="ColumnHeaders,HeaderToolbar">
+                <Table id="idMaterialsOCPTableSalidaTable" items="{mockdata>/TestItems}" mode="SingleSelectMaster" sticky="ColumnHeaders,HeaderToolbar" alternateRowColors="true" class="sapCustomNoBorder">
                     <!-- <headerToolbar>
                         <OverflowToolbar>
                             <SearchField width="90%" search="onFilterTable" placeholder="{i18n>RBcode} - {i18n>detail}" />
