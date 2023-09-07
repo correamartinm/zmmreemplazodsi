@@ -30,7 +30,7 @@ sap.ui.define(
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === "OK") {
-            this._onResetData();
+            // this._onResetData();
             this.onGoMain();
           }
         });

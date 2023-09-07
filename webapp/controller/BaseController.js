@@ -157,14 +157,14 @@ sap.ui.define(
 
 
           return new Promise((resolve, reject) => {
-            var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";
+            
             MessageBox.error(sMessage, {
               icon: MessageBox.Icon.ERROR,
               title: sMessageTitle,
               onClose: function (oAction) {
                 resolve(oAction);
               }.bind(this),
-              styleClass: sResponsivePaddingClasses,
+              styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer",
               actions: MessageBox.Action.CLOSE,
               emphasizedAction: MessageBox.Action.CLOSE,
             });
@@ -176,14 +176,14 @@ sap.ui.define(
           
           
           return new Promise((resolve, reject) => {
-            var sResponsivePaddingClasses = "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer";
-            MessageBox.success(MsgObj.mensaje, {
+            
+            MessageBox.show(MsgObj.mensaje, {
               icon: MsgObj.icono,
               title: MsgObj.titulo,
               onClose: function (oAction) {
                 resolve(oAction);
               }.bind(this),
-              styleClass: sResponsivePaddingClasses,
+              styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer",
               actions: MsgObj.acciones,
               emphasizedAction: MsgObj.resaltar,
             });
