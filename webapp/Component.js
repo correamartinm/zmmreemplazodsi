@@ -120,8 +120,7 @@ sap.ui.define(
           },
           ActiveCenter : "",
           Picking : false,
-          MainButtons : false
-      
+          MainButtons : false   
         });
         this.setModel(oMockDataModel, "mockdata");
       },

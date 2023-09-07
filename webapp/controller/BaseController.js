@@ -146,44 +146,32 @@ sap.ui.define(
           var oDta = JSON.parse(oError.responseText);
           var oText = oDta.error.message.value;
 
-          this._onShowMsgBoxError(oText, sMessageTitle).then((rta) => {
-            // alert(rta);
+          let objectMsg = {
+            titulo: sMessageTitle,
+            mensaje: oText,
+            icono: sap.m.MessageBox.Icon.ERROR,
+            acciones: [sap.m.MessageBox.Action.CLOSE],
+            resaltar: sap.m.MessageBox.Action.CLOSE,
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            if (rta === "CLOSE") {
+            
+            }
           });
         },
 
 
-
-        _onShowMsgBoxError: function (sMessage, sMessageTitle) {
-
-
+        _onShowMsgBox: function (MsgObj) {
           return new Promise((resolve, reject) => {
-            
-            MessageBox.error(sMessage, {
-              icon: MessageBox.Icon.ERROR,
-              title: sMessageTitle,
-              onClose: function (oAction) {
-                resolve(oAction);
-              }.bind(this),
-              styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer",
-              actions: MessageBox.Action.CLOSE,
-              emphasizedAction: MessageBox.Action.CLOSE,
-            });
-          });
-        },
-
-
-        _onShowMsgBox: function (MsgObj ) {
-          
-          
-          return new Promise((resolve, reject) => {
-            
             MessageBox.show(MsgObj.mensaje, {
               icon: MsgObj.icono,
               title: MsgObj.titulo,
               onClose: function (oAction) {
                 resolve(oAction);
               }.bind(this),
-              styleClass: "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer",
+              styleClass:
+                "sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer",
               actions: MsgObj.acciones,
               emphasizedAction: MsgObj.resaltar,
             });
