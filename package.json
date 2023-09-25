@@ -10,7 +10,7 @@
   ],
   "main": "webapp/index.html",
   "devDependencies": {
-    "@sap/ux-ui5-tooling": "^1.10.6",
+    "@sap/ux-ui5-tooling": "^1.11.0",
     "@ui5/cli": "^3.0.0"
   },
   "scripts": {

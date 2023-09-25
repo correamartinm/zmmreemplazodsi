@@ -74,6 +74,29 @@ sap.ui.define(
               DESTINO: 7777
             }
           ],
+          Materiales : [
+            {
+              Codigo : "0001",
+              Descripcion : "Material Test 1",
+              Lote: "123",
+              Cantidad: "10"
+            }, {
+              Codigo : "0002",
+              Descripcion : "Material Test 2",
+              Lote: "654",
+              Cantidad: "12"
+            }, {
+              Codigo : "0003",
+              Descripcion : "Material Test 3",
+              Lote: "987",
+              Cantidad: "14"
+            }, {
+              Codigo : "0004",
+              Descripcion : "Material Test 4",
+              Lote: "13",
+              Cantidad: "20"
+            }
+          ],
           Almacenamiento: {
             Apalletcodigo: "",
             Aotnumero: "",
@@ -120,6 +143,7 @@ sap.ui.define(
           },
           ActiveCenter : "",
           Picking : false,
+          Remanejo : 1,
           MainButtons : false   
         });
         this.setModel(oMockDataModel, "mockdata");

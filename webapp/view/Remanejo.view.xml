@@ -29,98 +29,89 @@
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-            <VBox >
-                <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
+            <VBox visible="{= ${mockdata>/Remanejo} === 1 }">
+                <!-- <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
                     <form:content>
                         <Label text="{i18n>lblpalletcontenido}" />
                         <Input submit="onInputPalletContenidoSubmit" />
 
 
                     </form:content>
-                </form:SimpleForm>
+                </form:SimpleForm> -->
 
-                    <Table id="idMaterialsAdded" items="{mockdata>/PalletMaterials}" mode="SingleSelectMaster" selectionChange="onSelectItemAddedMaterials"  growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6">
-                        <headerToolbar>
-                            <OverflowToolbar >
-                              <ndc:BarcodeScannerButton id="cmp2QRBUTTON" scanSuccess="onScanSuccess" scanFail="onScanError" inputLiveUpdate="onScanLiveupdate" />
-                   
-                                <SearchField width="80%" placeholder="{i18n>RBcode} - {i18n>materials}" search="onSearchMaterial" change="onSearchMaterial"/>
-                            </OverflowToolbar>
-                        </headerToolbar>
-                        <columns>
-                            <Column >
-                                <Text text="{i18n>lblmaterial}" />
-                            </Column>
-                            <Column >
-                                <Text text="{i18n>lbllote}" />
-                            </Column>
-                            <Column >
-                                <Text text="{i18n>lblcantidad}" />
-                            </Column>
-                        </columns>
-                        <items>
-                            <ColumnListItem vAlign="Middle">
-                                <cells>
-                                    <Label text="{path: 'mockdata>MATNR', formatter: '.formatter.formatREFNR'}" />
-                                </cells>
-                                <cells>
-                                    <Label text="{mockdata>MATXT}" wrapping="true" />
-                                </cells>
-                                <cells>
-                                    <Label text="{mockdata>MATXT}" wrapping="true" />
-                                </cells>
-                            </ColumnListItem>
-                        </items>
-                    </Table>
-
-            </VBox>
-            <VBox alignItems="Start" justifyContent="SpaceBetween">
-                <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
-                    <form:content>
-                        <Label text="{i18n>lblnuevonumero}" />
-                        <Input id="idOtOutInput3" submit="onInputOtScanSubmit" />
-
-                    </form:content>
-                </form:SimpleForm>
-
-
-
-
-                <Button text="{i18n>btnimprimir}" type="Emphasized" enabled="{mockdata>/inOTValidate}" class="sapUiSmallMarginBegin"/>
-
-
-            </VBox>
-
-            <VBox alignItems="Start" justifyContent="SpaceBetween">
-                <Table id="idMaterialStock" items="{mockdata>/PalletMaterials}" mode="SingleSelectMaster" selectionChange="onSelectItem"  growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
+                <Table id="idMaterialsAdded" items="{mockdata>/Materiales}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6">
                     <headerToolbar>
                         <OverflowToolbar >
-                          <ndc:BarcodeScannerButton id="cmp2QRBUTTON" scanSuccess="onScanSuccess" scanFail="onScanError" inputLiveUpdate="onScanLiveupdate" />
-               
-                            <SearchField width="80%" placeholder="{i18n>RBcode} - {i18n>materials}" search="onSearchMaterial" change="onSearchMaterial"/>
+
+
+                            <SearchField width="85%" placeholder="{i18n>lblnummaterial}" search="onSearchMaterial" change="onSearchMaterial"/>
+                            <ToolbarSpacer/>
+
+                            <Button icon="sap-icon://add" press="onAgregarButtonPress" type="Emphasized"/>
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>
-                        <Column >
+                        <Column hAlign="Center">
+                            <Text text="{i18n>lblmaterial}" />
+                        </Column>
+                        <Column hAlign="Center">
                             <Text text="{i18n>lbllote}" />
                         </Column>
-                        <Column >
+                        <Column hAlign="Center">
+                            <Text text="{i18n>lblcantidad}" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <Label text="{mockdata>Codigo}" wrapping="true" />
+                            </cells>
+                            <cells>
+                                <Label text="{mockdata>Descripcion}" wrapping="true" />
+                            </cells>
+                            <cells>
+                                <Label text="{mockdata>Cantidad}" wrapping="true" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+
+            </VBox>
+
+
+
+            <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="SpaceBetween">
+                <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onSelectItem" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
+                    <headerToolbar>
+                        <OverflowToolbar >
+
+
+                            <SearchField width="80%" placeholder="{i18n>lblmaterial} - {i18n>lblmaterialdesc}" search="onSearchMaterial" change="onSearchMaterial"/>
+
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column hAlign="Center">
+                            <Text text="{i18n>lbllote}" />
+                        </Column>
+                        <Column hAlign="Center">
                             <Text text="{i18n>lbldisponible}" />
                         </Column>
-                        <Column >
+                        <Column hAlign="Center">
                             <Text text="{i18n>lbltomar}" />
                         </Column>
                     </columns>
                     <items>
                         <ColumnListItem vAlign="Middle">
                             <cells>
-                                <Label text="{path: 'mockdata>MATNR', formatter: '.formatter.formatREFNR'}" />
+                                <Label text="{mockdata>Lote}" wrapping="true" />
                             </cells>
                             <cells>
-                                <Label text="{mockdata>MATXT}" wrapping="true" />
+                                <Label text="{mockdata>Cantidad}" wrapping="true" />
                             </cells>
                             <cells>
-                                <Label text="{mockdata>MATXT}" wrapping="true" />
+                                <Input                          />
+
                             </cells>
 
                         </ColumnListItem>
@@ -129,21 +120,31 @@
 
 
 
-                <Button text="{i18n>btnimprimir}" type="Emphasized" enabled="{mockdata>/inOTValidate}" class="sapUiSmallMarginBegin"/>
+
 
 
             </VBox>
+
         </content>
         <footer >
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
 
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
+                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
+                <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" press="onAgregarSeleccionButtonPress" />
+
             </OverflowToolbar>
+
+
+
+
+
+
+
 
         </footer>
     </Page>

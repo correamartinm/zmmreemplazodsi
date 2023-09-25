@@ -29,6 +29,15 @@ sap.ui.define(
         });
       },
 
+      onAgregarButtonPress: function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        oMockModel.setProperty("/Remanejo", 3);
+      },
+      onAgregarSeleccionButtonPress: function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        oMockModel.setProperty("/Remanejo", 1);
+      },
+
       _onGotoMainMenu: function () {
         let objectMsg = {
           titulo: this._i18n().getText("msgconsulta"),
