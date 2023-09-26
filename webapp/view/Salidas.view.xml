@@ -128,6 +128,11 @@
                     <Label text="{i18n>btnanterior}" />
                 </VBox>
 
+                <VBox alignContent="Center" alignItems="Center">
+                    <!-- <core:Icon src="sap-icon://navigation-right-arrow" color="blue" class="size2" press=""/> -->
+                    <Button text="{i18n>btnleerpallet}" type="Default"/>
+
+                </VBox>
 
                 <VBox alignContent="Center" alignItems="Center">
                     <core:Icon src="sap-icon://navigation-right-arrow" color="blue" class="size2" press=""/>

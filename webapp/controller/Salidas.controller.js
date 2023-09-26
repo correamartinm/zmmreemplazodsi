@@ -82,6 +82,44 @@ sap.ui.define(
           oTarget.setValueState(ValueState.Error);
         }
       },
+      _onShowMsg1: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgcodigo"),
+          icono: sap.m.MessageBox.Icon.QUESTION,
+          acciones: [
+            this._i18n().getText("btnvolver")
+          ],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+            
+          // }
+        });
+      },
+
+      _onShowMsg2: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgpalletcontenido"),
+          icono: sap.m.MessageBox.Icon.QUESTION,
+          acciones: [
+            this._i18n().getText("btnvolver"),
+            this._i18n().getText("btnconfirm")
+          
+            
+          ],
+          resaltar:  this._i18n().getText("btnconfirm"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          if (rta === "CLOSE") {
+            
+          }
+        });
+      },
     });
   }
 );
