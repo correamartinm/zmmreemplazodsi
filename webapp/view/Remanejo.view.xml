@@ -124,7 +124,7 @@
                                 <Label text="{mockdata>Cantidad}" wrapping="true" />
                             </cells>
                             <cells>
-                                <Input                          />
+                                <Input valueStateText="{i18n>msgtrascantidad}" liveChange="oncheckcantidad" />
 
                             </cells>
 
@@ -144,12 +144,13 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }" press="_onGotoMainMenu"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
                 <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" press="onAgregarSeleccionButtonPress" />
+                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
 
             </OverflowToolbar>
 

@@ -38,6 +38,11 @@ sap.ui.define(
         oMockModel.setProperty("/Remanejo", 1);
       },
 
+      onCancelarSeleccionButtonPress: function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        oMockModel.setProperty("/Remanejo", 1);
+      },
+
       _onGotoMainMenu: function () {
         let objectMsg = {
           titulo: this._i18n().getText("msgconsulta"),
