@@ -120,7 +120,7 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" press="onCancelPicking" />
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"  press="_onGotoMainMenu"/>
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
                 <ToolbarSpacer/>

@@ -20,9 +20,7 @@ sap.ui.define(
             oControl.focus();
           });
         },
-
-
-  
+ 
 
         formatFecha: function (param) {
           let oFecha,
@@ -137,6 +135,23 @@ sap.ui.define(
           });
         },
 
+        _onGotoMainMenu: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("msgconsulta"),
+            mensaje: this._i18n().getText("msgvolver"),
+            icono: sap.m.MessageBox.Icon.QUESTION,
+            acciones: [sap.m.MessageBox.Action.CLOSE, sap.m.MessageBox.Action.OK],
+            resaltar: sap.m.MessageBox.Action.OK,
+          };
+  
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            if (rta === "OK") {
+              // this._onResetData();
+              this.onGoMain();
+            }
+          });
+        },
+
         _i18n: function () {
           return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
@@ -163,7 +178,6 @@ sap.ui.define(
             }
           });
         },
-
 
         _onShowMsgBox: function (MsgObj) {
           return new Promise((resolve, reject) => {

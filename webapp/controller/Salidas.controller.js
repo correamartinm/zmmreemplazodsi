@@ -19,22 +19,7 @@ sap.ui.define(
         this._onFocusControl(this.byId("idOtOutInput"));
       },
 
-      _onGotoMainMenu: function () {
-        let objectMsg = {
-          titulo: this._i18n().getText("msgconsulta"),
-          mensaje: this._i18n().getText("msgvolver"),
-          icono: sap.m.MessageBox.Icon.QUESTION,
-          acciones: [sap.m.MessageBox.Action.CLOSE, sap.m.MessageBox.Action.OK],
-          resaltar: sap.m.MessageBox.Action.OK,
-        };
 
-        this._onShowMsgBox(objectMsg).then((rta) => {
-          if (rta === "OK") {
-            // this._onResetData();
-            this.onGoMain();
-          }
-        });
-      },
 
       onPicking: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata"),
