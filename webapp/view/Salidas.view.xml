@@ -31,57 +31,21 @@
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-            <Panel class="sapCustomNoBorder" height="85%" visible="false">
-                <!-- visible="{= ${mockdata>/Picking} === false }" -->
-                <Table id="idMaterialsOCPTableSalidaTable" items="{mockdata>/TestItems}" mode="SingleSelectMaster" sticky="ColumnHeaders,HeaderToolbar" alternateRowColors="true" class="sapCustomNoBorder">
-                    <!-- <headerToolbar>
-                        <OverflowToolbar>
-                            <SearchField width="90%" search="onFilterTable" placeholder="{i18n>RBcode} - {i18n>detail}" />
-                        </OverflowToolbar>
-                    </headerToolbar> -->
-                    <columns>
+            <HBox alignContent="Center" alignItems="Center" justifyContent="End" class="sapUiTinyMarginTop sapUiTinyMarginEnd">
+                
+                <Label text="{i18n>lblposicion}: " />
+                    <Label text="1/X"  class="BigSize sapUiTinyMarginBegin"/>
+            </HBox>
 
-                        <Column width="30%">
-                            <Text text="{i18n>lblnumot}" />
-                        </Column>
-                        <Column width="15%">
-                            <Text text="{i18n>lbletapa}" />
-                        </Column>
-                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true">
-                            <Text text="{i18n>lblorigen}" />
-                        </Column>
-                        <Column popinDisplay="Inline" minScreenWidth="Tablet" demandPopin="true">
-                            <Text text="{i18n>labelpallet}" />
-                        </Column>
-                        <Column hAlign="Left" width="10%">
-                            <!-- <Text text="{i18n>materials}" /> -->
-                        </Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem>
-                            <cells >
-
-                                <Text text="{mockdata>OT}" />
-                                <Text text="{mockdata>ETAPA}" />
-                                <Text text="{mockdata>ORIGEN}" />
-                                <Text text="{mockdata>PALLET}" />
-                                <Button icon="sap-icon://bar-code" press="onPikingData" type="Emphasized"/>
-
-
-
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-
-            </Panel>
-
-            <form:SimpleForm columnsM="2" columnsXL="4" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+            <form:SimpleForm columnsM="2" columnsXL="4" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" >
                 <!-- visible="{mockdata>/Picking}" -->
                 <form:content>
-                    <Label text="{i18n>lblnumot}" />
-                    <Label text="{i18n>lblnumot}" />
-                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" description="{i18n>lbletapa}: XXXX"/>
+
+                    <!-- <ObjectStatus title="{i18n>lblnumot}" text="Pos: 1/X" /> -->
+                    <Label text="{i18n>lblingreseot}" />
+                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
+
+                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
                     <!-- <Label text="{i18n>lblingreseot}" />
                     <Text text="{mockdata>/inOTAlmmacen}"/> -->
                     <!-- <Input id="idOtOutInput" submit="onInputOtScanSubmit" /> -->

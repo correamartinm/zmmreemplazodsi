@@ -9,7 +9,7 @@
             <Bar class="custHeader" design="Header">
                 <contentLeft>
                     <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
-                  
+
                 </contentLeft>
                 <contentMiddle>
                     <ObjectIdentifier />
@@ -23,40 +23,37 @@
         <content>
             <OverflowToolbar >
                 <ToolbarSpacer/>
-                <Label text="{i18n>lblalmacenamientoprd}"/>
+                <Label text="{i18n>lblalmacenamiento}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-     
+
 
             <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
-                    <Label text="{i18n>labelcodigopallet}" />
+                    <Label text="{i18n>lblingresepallet}" />
                     <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/Almacenamiento/Apalletcodigo}" />
 
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
+                    <Text text="{i18n>ttdesctipoalmacenlt}" class="cursiva" />
 
                     <!-- <ObjectStatus title="{i18n>lblnumalmacen}" text="{i18n>lblingreseot}" /> -->
 
-                    <Label text="{i18n>lblnumot}" />
-                    <Text text="{mockdata>/inOTAlmmacen}"/>
-
-                    <Label text="{i18n>lbletapa}" />
-                    <Input submit="onInputScanSubmit" />
+                    <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXX" />
+                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
 
 
-                    <Label text="{i18n>lblubicaciondestino}" />
+
                     <Text text="{mockdata>/inOTAlmmacen}"/>
 
 
-                    <Label text="{i18n>lblcodverificador}" />
-                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/inOTCodigo}" />
 
+                    <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
+                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
+
+
+           
+                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
 
 
                 </form:content>
@@ -65,7 +62,7 @@
         </content>
         <footer>
 
-            <OverflowToolbar  class="sapUiSmallMarginBottom">
+            <OverflowToolbar class="sapUiSmallMarginBottom">
                 <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onShowMsg2" />
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onShowMsg1"/>

@@ -46,7 +46,7 @@
 				
 						<f:Card class="sapUiTinyMarginBottom" >
 							<f:header>
-								<card:Header title="{i18n>lblalmacenamientoprd} " iconSrc="sap-icon://add-product" press="onGoOtEntrante"    />
+								<card:Header title="{i18n>lblalmacenamiento} " iconSrc="sap-icon://add-product" press="onGoOtEntrante"    />
 							</f:header>
 						</f:Card>
 

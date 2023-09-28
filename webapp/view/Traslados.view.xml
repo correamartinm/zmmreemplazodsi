@@ -27,36 +27,41 @@
             </OverflowToolbar>
 
 
-            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop" visible="true">
+            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" visible="{= ${mockdata>/Etiquetado} === true }" class="sapUiTinyMarginTop">
                 <form:content>
 
-                    <Label text="{i18n>labelpallet}" />
+                   
+                <Label text="{i18n>labelpallet}:" labelFor="idMovPalletInput" />
                     <Input id="idMovPalletInput" submit="onPalletScan" />
 
 
+                    <Text text="{i18n>ttdescmaterialplt}" class="cursiva" />
                 </form:content>
             </form:SimpleForm>
 
-            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop" visible="false">
+
+
+            <form:SimpleForm visible="{= ${mockdata>/Etiquetado} === false }" columnsM="4" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
-
-                    <Label text="{i18n>labelpallet}" />
-                    <Input id="idTraPalletMaterial" submit="onPalletScan" />
-
-                    <Label text="{i18n>lblcantidad}" />
-                    <Input id="idTraPalletCantidad" submit="onPalletScan" />
+                    <Label text="{i18n>lblmaterial}" />
+                        <Input id="idTraPalletMaterial" submit="onPalletScan" showValueHelp="true"  valueHelpIconSrc="sap-icon://bar-code"/>
+        
+                        <Label text="{i18n>lblcantidad}" />
+                        <Input id="idTraPalletCantidad" submit="onPalletScan" />
 
                 </form:content>
             </form:SimpleForm>
+
+
 
 
 
             <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent">
                 <form:content>
 
-                    <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/movdata/movOT}" />
+                    <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXXXXXX" />
 
-                    <ObjectStatus title="{i18n>lbletapa}" text="{i18n>lblingreseot}" />
+                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
 
 
                     <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXXXXX" />
@@ -64,6 +69,8 @@
 
                     <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
+
+                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
 
 
                 </form:content>
@@ -75,11 +82,12 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" />
 
                 <ToolbarSpacer/>
 
-                <Button text="{i18n>btnsinetiqueta}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
+                <Button text="{i18n>btnconetiqueta}" press="onEtiquetado" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === false }"/>
+                <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
                 <ToolbarSpacer/>
                 <Button text="{i18n>btncontinuar}" type="Emphasized" press="onAgregarSeleccionButtonPress" width="30%"/>
 

@@ -44,6 +44,13 @@ sap.ui.define(
           });
         },
 
+        onEtiquetado: function () {
+          
+          let oMockModel = this.getOwnerComponent().getModel("mockdata");
+          let oValue =  oMockModel.getProperty("/Etiquetado");
+          oMockModel.setProperty("/Etiquetado", !oValue);
+
+        },
         _onGotoMainMenu: function () {
 
           let objectMsg = {

@@ -53,6 +53,13 @@
     font-weight: bold;
 }
 
+.cursiva {
+    color: rgb(97, 97, 97);
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+}
+
 .BigSize {
     color: Navy;
     font-size: 15px;

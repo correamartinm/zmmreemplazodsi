@@ -144,6 +144,7 @@ sap.ui.define(
           ActiveCenter : "",
           Picking : false,
           Remanejo : 1,
+          Etiquetado : true,
           MainButtons : false   
         });
         this.setModel(oMockDataModel, "mockdata");

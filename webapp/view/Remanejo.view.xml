@@ -78,15 +78,29 @@
 
             </VBox>
 
+            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
+                <form:content>
 
+                    <Label text="{i18n>lblmaterial}" />
+                    <Input id="idRemanejoMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+
+                    <Text text="{i18n>ttdescmaterial}" class="cursiva" />
+                </form:content>
+            </form:SimpleForm>
 
             <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="SpaceBetween">
+
+
+
+
+
+
                 <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onSelectItem" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
                     <headerToolbar>
                         <OverflowToolbar >
 
 
-                            <SearchField width="80%" placeholder="{i18n>lblmaterial} - {i18n>lblmaterialdesc}" search="onSearchMaterial" change="onSearchMaterial"/>
+                            <SearchField width="80%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/>
 
                         </OverflowToolbar>
                     </headerToolbar>
