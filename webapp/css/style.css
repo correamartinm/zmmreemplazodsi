@@ -170,17 +170,10 @@ text-transform: uppercase;
     text-transform: lowercase;
 }
 
-.overdue {
-	-webkit-animation: anim-overdue 1500ms;
-}
+
 
 .overdue {
 	color: LightCyan;
 }
 
 
-@-webkit-keyframes anim-overdue {
-	50%  {
-		background-color: LightCyan;
-	}
-}
