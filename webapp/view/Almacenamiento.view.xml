@@ -26,10 +26,21 @@
                 <Label text="{i18n>lblalmacenamiento}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
+            <Toolbar >
+                <content>
+                    <Text text="Mensajes"/>
+                    <ToolbarSpacer/>
+                    <Button text="1" type="Emphasized"  press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
+                    <Button text="2" type="Emphasized"  press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
+                    <Button text="3" type="Emphasized"  press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
+                    <Button text="4" type="Emphasized"  press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
+                    <Button text="5" type="Emphasized"  press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
+                </content>
+            </Toolbar>
 
 
 
-            <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+            <form:SimpleForm layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
 
                     <Label text="{i18n>lblingresepallet}" />
@@ -42,32 +53,32 @@
                     <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXX" />
                     <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
 
-
-
                     <Text text="{mockdata>/inOTAlmmacen}"/>
-
 
 
                     <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
 
 
-           
-                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
+
+                    <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
 
 
                 </form:content>
             </form:SimpleForm>
 
+
+
+
         </content>
         <footer>
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"  press="_onGotoMainMenu"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onShowMsg1"/>
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="onClearScreen"/>
                 <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onShowMsg2"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press=""/>
             </OverflowToolbar>
         </footer>
     </Page>

@@ -42,7 +42,65 @@ sap.ui.define(
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
         oMockModel.setProperty("/Remanejo", 1);
       },
+      _onShowMsg1: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("lblremanejo"),
+          mensaje: this._i18n().getText("msgtraslote"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [this._i18n().getText("btnvolver")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
 
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+
+      _onShowMsg2: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("lblremanejo"),
+          mensaje: this._i18n().getText("msgtrascantidad"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [
+            this._i18n().getText("btnvolver")          ],
+          resaltar: this._i18n().getText("btnconfirm"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          if (rta === "CLOSE") {
+          }
+        });
+      },
+
+      _onShowMsg3: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("lblremanejo"),
+          mensaje: this._i18n().getText("msgmover"),
+          icono: sap.m.MessageBox.Icon.QUESTION,
+          acciones: [this._i18n().getText("btnvolver"), this._i18n().getText("btnmover")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+      _onShowMsg4: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("lblremanejo"),
+          mensaje: this._i18n().getText("lblnuevonumeroplt"),
+          icono: sap.m.MessageBox.Icon.SUCCESS,
+          acciones: [this._i18n().getText("btnimprimir")],
+          resaltar: this._i18n().getText("btnimprimir"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
 
     });
   }

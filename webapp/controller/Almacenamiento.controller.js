@@ -36,22 +36,17 @@ sap.ui.define(
           });
         },
 
-
-
         _onShowMsg1: function () {
           let objectMsg = {
             titulo: this._i18n().getText("lblalmacenamiento"),
-            mensaje: this._i18n().getText("msgcodigo"),
-            icono: sap.m.MessageBox.Icon.QUESTION,
-            acciones: [
-              this._i18n().getText("btnvolver")
-            ],
+            mensaje: this._i18n().getText("msgpltnoot"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
             resaltar: this._i18n().getText("btnvolver"),
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
             // if (rta === this._i18n().getText("btnvolver")) {
-              
             // }
           });
         },
@@ -59,21 +54,64 @@ sap.ui.define(
         _onShowMsg2: function () {
           let objectMsg = {
             titulo: this._i18n().getText("lblalmacenamiento"),
+            mensaje: this._i18n().getText("msgubcincompatible"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            // if (rta === this._i18n().getText("btnvolver")) {
+            // }
+          });
+        },
+
+        _onShowMsg3: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("lblalmacenamiento"),
             mensaje: this._i18n().getText("msgpalletcontenido"),
             icono: sap.m.MessageBox.Icon.QUESTION,
             acciones: [
               this._i18n().getText("btnvolver"),
               this._i18n().getText("btnllevardestino"),
-              this._i18n().getText("btnllevarremanejo")
-              
+              this._i18n().getText("btnllevarremanejo"),
             ],
-            resaltar:  this._i18n().getText("btnvolver"),
+            resaltar: this._i18n().getText("btnvolver"),
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
             if (rta === "CLOSE") {
-              
             }
+          });
+        },
+
+        _onShowMsg4: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("lblalmacenamiento"),
+            mensaje: this._i18n().getText("msgcodigo"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            // if (rta === this._i18n().getText("btnvolver")) {
+            // }
+          });
+        },
+
+        _onShowMsg5: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("lblalmacenamiento"),
+            mensaje: this._i18n().getText("msgmovok"),
+            icono: sap.m.MessageBox.Icon.SUCCESS,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            // if (rta === this._i18n().getText("btnvolver")) {
+            // }
           });
         },
 

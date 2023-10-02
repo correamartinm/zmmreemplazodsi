@@ -19,8 +19,6 @@ sap.ui.define(
         this._onFocusControl(this.byId("idOtOutInput"));
       },
 
-
-
       onPicking: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oActualValue = oMockModel.getProperty("/Picking");
@@ -67,20 +65,18 @@ sap.ui.define(
           oTarget.setValueState(ValueState.Error);
         }
       },
+
       _onShowMsg1: function () {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
-          mensaje: this._i18n().getText("msgcodigo"),
-          icono: sap.m.MessageBox.Icon.QUESTION,
-          acciones: [
-            this._i18n().getText("btnvolver")
-          ],
+          mensaje: this._i18n().getText("msguborigen"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [this._i18n().getText("btnvolver")],
           resaltar: this._i18n().getText("btnvolver"),
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           // if (rta === this._i18n().getText("btnvolver")) {
-            
           // }
         });
       },
@@ -88,21 +84,110 @@ sap.ui.define(
       _onShowMsg2: function () {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
-          mensaje: this._i18n().getText("msgpalletcontenido"),
-          icono: sap.m.MessageBox.Icon.QUESTION,
+          mensaje: this._i18n().getText("msgcodigo"),
+          icono: sap.m.MessageBox.Icon.WARNING,
           acciones: [
-            this._i18n().getText("btnvolver"),
-            this._i18n().getText("btnconfirm")
-          
-            
-          ],
-          resaltar:  this._i18n().getText("btnconfirm"),
+            this._i18n().getText("btnvolver")          ],
+          resaltar: this._i18n().getText("btnconfirm"),
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === "CLOSE") {
-            
           }
+        });
+      },
+
+      _onShowMsg3: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgcodpalletmaterial"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [this._i18n().getText("btnvolver")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+
+      _onShowMsg4: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgposicionot"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [
+            this._i18n().getText("btnvolver")
+           
+          ],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          if (rta === "CLOSE") {
+          }
+        });
+      },
+
+      _onShowMsg5: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgmenomat"),
+          icono: sap.m.MessageBox.Icon.QUESTION,
+          acciones: [
+            this._i18n().getText("btnvolver"),
+            this._i18n().getText("btnconfirm"),
+          ],
+          resaltar: this._i18n().getText("btnconfirm"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+      _onShowMsg6: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgmono"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [this._i18n().getText("btnvolver")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+      _onShowMsg7: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgmovok"),
+          icono: sap.m.MessageBox.Icon.SUCCESS,
+          acciones: [this._i18n().getText("btnvolver"), this._i18n().getText("btnsiguientepos")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+
+      _onShowMsg8: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgotconfirmada"),
+          icono: sap.m.MessageBox.Icon.SUCCESS,
+          acciones: [this._i18n().getText("btnvolver")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
         });
       },
     });

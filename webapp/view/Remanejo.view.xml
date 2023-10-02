@@ -28,6 +28,18 @@
                 <Label text="{i18n>btnremanejopallets}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
+            <Toolbar >
+                <content>
+                    <Text text="Mensajes"/>
+                    <ToolbarSpacer/>
+                    <Button text="1" type="Emphasized"  press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
+                    <Button text="2" type="Emphasized"  press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
+                    <Button text="3" type="Emphasized"  press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
+                    <Button text="4" type="Emphasized"  press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
+
+                  
+                </content>
+            </Toolbar>
 
             <VBox visible="{= ${mockdata>/Remanejo} === 1 }">
                 <!-- <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
@@ -44,10 +56,10 @@
                         <OverflowToolbar >
 
 
-                            <SearchField width="85%" placeholder="{i18n>lblnummaterial}" search="onSearchMaterial" change="onSearchMaterial"/>
+                            <SearchField width="65%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/>
                             <ToolbarSpacer/>
 
-                            <Button icon="sap-icon://add" press="onAgregarButtonPress" type="Emphasized"/>
+                            <Button icon="sap-icon://add" press="onAgregarButtonPress" text="{i18n>btnagregarmaterial}" type="Emphasized"/>
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>

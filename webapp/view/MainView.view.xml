@@ -22,25 +22,6 @@
 		<content>
 
 
-
-			<!-- <FlexBox height="80%" alignItems="Center" direction="Column" justifyContent="Center" visible="{= ${mockdata>/MainButtons} === false }">
-
-
-				
-
-
-					<Text text="Seleccione Centro" textAlign="Center" class="sapUiSmallMarginBottom" />
-					<VBox >
-
-
-						<Button text="{i18n>btnolavarria}" type="Emphasized" press="onGoOtEntranteOLV" width="210px"/>
-						<Button text="{i18n>btncordoba}" type="Emphasized" press="onGoOtEntranteCBA" width="210px"/>
-
-					</VBox>
-				
-			</FlexBox> -->
-
-
 			<FlexBox height="80%" alignItems="Center" justifyContent="Center" >
 				<VBox >
 				

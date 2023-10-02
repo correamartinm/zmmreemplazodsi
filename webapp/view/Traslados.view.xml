@@ -25,14 +25,28 @@
                 <Label text="{i18n>btntraslados}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
+            <Toolbar >
+                <content>
+                    <Text text="Mensajes"/>
+                    <ToolbarSpacer/>
+                    <Button text="1" type="Emphasized"  press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
+                    <Button text="2" type="Emphasized"  press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
+                    <Button text="3" type="Emphasized"  press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
+                    <Button text="4" type="Emphasized"  press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
+                    <Button text="5" type="Emphasized"  press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
+                    <Button text="6" type="Emphasized"  press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
+                    <Button text="7" type="Emphasized"  press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
+                  
+                </content>
+            </Toolbar>
 
 
             <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" visible="{= ${mockdata>/Etiquetado} === true }" class="sapUiTinyMarginTop">
                 <form:content>
 
                    
-                <Label text="{i18n>labelpallet}:" labelFor="idMovPalletInput" />
-                    <Input id="idMovPalletInput" submit="onPalletScan" />
+                <Label text="{i18n>labelpallet}" labelFor="idMovPalletInput" />
+                <Input id="idMovPalletInput" submit="onPalletScan" />
 
 
                     <Text text="{i18n>ttdescmaterialplt}" class="cursiva" />
