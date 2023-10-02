@@ -35,54 +35,65 @@
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>
-                    <Button text="1" type="Emphasized"  press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
-                    <Button text="2" type="Emphasized"  press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
-                    <Button text="3" type="Emphasized"  press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
-                    <Button text="4" type="Emphasized"  press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
-                    <Button text="5" type="Emphasized"  press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
-                    <Button text="6" type="Emphasized"  press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
-                    <Button text="7" type="Emphasized"  press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
-                    <Button text="8" type="Emphasized"  press="_onShowMsg8" class="sapUiTinyMarginBegin"/>
+                    <Button text="1" type="Emphasized" press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
+                    <Button text="2" type="Emphasized" press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
+                    <Button text="3" type="Emphasized" press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
+                    <Button text="4" type="Emphasized" press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
+                    <Button text="5" type="Emphasized" press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
+                    <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
+                    <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
+                    <Button text="8" type="Emphasized" press="_onShowMsg8" class="sapUiTinyMarginBegin"/>
                 </content>
             </Toolbar>
 
 
 
             <HBox alignContent="Center" alignItems="Center" justifyContent="End" class="sapUiTinyMarginTop sapUiTinyMarginEnd">
-                
+
                 <Label text="{i18n>lblposicion}: " />
-                    <Label text="1/X"  class="BigSize sapUiTinyMarginBegin"/>
+                <Label text="1/X" class="BigSize sapUiTinyMarginBegin"/>
             </HBox>
 
-            <form:SimpleForm columnsM="2" columnsXL="4" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent" >
+            <form:SimpleForm columnsM="2" columnsXL="4" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent">
                 <!-- visible="{mockdata>/Picking}" -->
                 <form:content>
 
-                    <!-- <ObjectStatus title="{i18n>lblnumot}" text="Pos: 1/X" /> -->
+                 
                     <Label text="{i18n>lblingreseot}" />
                     <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
+                </form:content>
+            </form:SimpleForm>
+
+            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                <form:content>
 
                     <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
-                    <!-- <Label text="{i18n>lblingreseot}" />
-                    <Text text="{mockdata>/inOTAlmmacen}"/> -->
-                    <!-- <Input id="idOtOutInput" submit="onInputOtScanSubmit" /> -->
-                    <!-- <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Salida/Sotnumero}" /> -->
+                   
+                </form:content>
+            </form:SimpleForm>
 
-                    <!-- <Label text="{i18n>lbletapa}" />
-                    <Text text="{mockdata>/inOTAlmmacen}"/> -->
-                    <!-- <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Salida/Setapa}" /> -->
+            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                <form:content>
 
                     <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXXXXX" />
-                    <!-- <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Salida/Sorigen}" /> -->
+                   
                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
+                </form:content>
+            </form:SimpleForm>
 
+            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                <form:content>
 
                     <Label text="{i18n>labelpallet}" />
                     <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/Salida/Svalpalletcodigo}" />
+                </form:content>
+            </form:SimpleForm>
 
+            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                <form:content>
 
                     <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
-                    <!-- <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/> -->
+                   
 
 
 
@@ -134,11 +145,11 @@
 
         </content>
         <footer>
-            
+
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"  press="_onGotoMainMenu"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
                 <ToolbarSpacer/>

@@ -42,14 +42,6 @@
             </Toolbar>
 
             <VBox visible="{= ${mockdata>/Remanejo} === 1 }">
-                <!-- <form:SimpleForm columnsM="2" columnsXL="4" class="sapUiTinyMarginTop" backgroundDesign="Transparent">
-                    <form:content>
-                        <Label text="{i18n>lblpalletcontenido}" />
-                        <Input submit="onInputPalletContenidoSubmit" />
-
-
-                    </form:content>
-                </form:SimpleForm> -->
 
                 <Table id="idMaterialsAdded" items="{mockdata>/Materiales}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6">
                     <headerToolbar>
@@ -102,15 +94,9 @@
 
             <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="SpaceBetween">
 
-
-
-
-
-
                 <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onSelectItem" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
                     <headerToolbar>
                         <OverflowToolbar >
-
 
                             <SearchField width="80%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/>
 

@@ -3,13 +3,12 @@
     xmlns:f="sap.f"
 	xmlns="sap.m">
 
-
 	<Page title="{i18n>title}" class="Title PanelSnow">
 		<customHeader>
 			<Bar class="custHeader" design="Header">
 				<contentLeft>
 					<Button type="Emphasized" icon="sap-icon://home-share" visible="{mockdata>/MainButtons}" press="onReiniciar"/>
-					<!-- <Button type="Emphasized" icon="sap-icon://nav-back" press="onDesEmbalar"/> -->
+				
 				</contentLeft>
 				<contentMiddle>
 

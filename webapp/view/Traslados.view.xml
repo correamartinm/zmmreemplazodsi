@@ -29,14 +29,14 @@
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>
-                    <Button text="1" type="Emphasized"  press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
-                    <Button text="2" type="Emphasized"  press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
-                    <Button text="3" type="Emphasized"  press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
-                    <Button text="4" type="Emphasized"  press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
-                    <Button text="5" type="Emphasized"  press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
-                    <Button text="6" type="Emphasized"  press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
-                    <Button text="7" type="Emphasized"  press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
-                  
+                    <Button text="1" type="Emphasized" press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
+                    <Button text="2" type="Emphasized" press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
+                    <Button text="3" type="Emphasized" press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
+                    <Button text="4" type="Emphasized" press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
+                    <Button text="5" type="Emphasized" press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
+                    <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
+                    <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
+
                 </content>
             </Toolbar>
 
@@ -44,9 +44,9 @@
             <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent" visible="{= ${mockdata>/Etiquetado} === true }" class="sapUiTinyMarginTop">
                 <form:content>
 
-                   
-                <Label text="{i18n>labelpallet}" labelFor="idMovPalletInput" />
-                <Input id="idMovPalletInput" submit="onPalletScan" />
+
+                    <Label text="{i18n>labelpallet}" labelFor="idMovPalletInput" />
+                    <Input id="idMovPalletInput" submit="onPalletScan" />
 
 
                     <Text text="{i18n>ttdescmaterialplt}" class="cursiva" />
@@ -58,17 +58,13 @@
             <form:SimpleForm visible="{= ${mockdata>/Etiquetado} === false }" columnsM="4" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
                 <form:content>
                     <Label text="{i18n>lblmaterial}" />
-                        <Input id="idTraPalletMaterial" submit="onPalletScan" showValueHelp="true"  valueHelpIconSrc="sap-icon://bar-code"/>
-        
-                        <Label text="{i18n>lblcantidad}" />
-                        <Input id="idTraPalletCantidad" submit="onPalletScan" />
+                    <Input id="idTraPalletMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+
+                    <Label text="{i18n>lblcantidad}" />
+                    <Input id="idTraPalletCantidad" submit="onPalletScan" />
 
                 </form:content>
             </form:SimpleForm>
-
-
-
-
 
             <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent">
                 <form:content>
@@ -76,15 +72,23 @@
                     <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXXXXXX" />
 
                     <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
+                </form:content>
+            </form:SimpleForm>
 
+            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                <form:content>
 
                     <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXXXXX" />
                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
+                </form:content>
+            </form:SimpleForm>
 
+            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                <form:content>
                     <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
 
-                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
+                    <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
 
 
                 </form:content>
@@ -96,7 +100,7 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"  press="_onGotoMainMenu"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
 
                 <ToolbarSpacer/>
 
