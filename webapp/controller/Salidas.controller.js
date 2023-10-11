@@ -190,6 +190,23 @@ sap.ui.define(
           // }
         });
       },
+      _onShowMsg9: function () {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgrepetir"),
+          icono: sap.m.MessageBox.Icon.QUESTION,
+          acciones: [
+            this._i18n().getText("btnvolver"),
+            this._i18n().getText("btnrepetir"),
+          ],
+          resaltar: this._i18n().getText("btnconfirm"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
     });
   }
 );

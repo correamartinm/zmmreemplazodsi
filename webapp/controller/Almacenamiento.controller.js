@@ -114,6 +114,42 @@ sap.ui.define(
             // }
           });
         },
+        _onShowMsg6: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("lblalmacenamiento"),
+            mensaje: this._i18n().getText("msgmaterialnoesperado"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            // if (rta === this._i18n().getText("btnvolver")) {
+            // }
+          });
+        },
+        _onShowMsg7: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("lblalmacenamiento"),
+            mensaje: this._i18n().getText("msgcantidadnoesperada"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            // if (rta === this._i18n().getText("btnvolver")) {
+            // }
+          });
+        },
+
+
+
+        onIngresaxPallet: function () {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata");
+          let oValue =  oMockModel.getProperty("/EtiquIngxPallets");
+          oMockModel.setProperty("/EtiquIngxPallets", !oValue);
+        },
 
         onInputScanSubmit: function (oEvent) {
           let oValue = oEvent.getSource().getValue(),

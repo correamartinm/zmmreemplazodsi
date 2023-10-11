@@ -15,7 +15,7 @@
                     <ObjectIdentifier />
                 </contentMiddle>
                 <contentRight>
-                  
+
                     <Image src="./images/logo.png" height="36px"></Image>
                 </contentRight>
             </Bar>
@@ -26,7 +26,7 @@
                 <Label text="{i18n>lblalmacenamiento}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
-            <Toolbar >
+            <Toolbar visible="{= ${mockdata>/EtiquIngxPallets} === false }">
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>
@@ -37,55 +37,105 @@
                     <Button text="5" type="Emphasized" press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
                 </content>
             </Toolbar>
+            <Toolbar visible="{= ${mockdata>/EtiquIngxPallets} === true }">
+                <content>
+                    <Text text="Mensajes"/>
+                    <ToolbarSpacer/>
+                    <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
+                    <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
+                    
+                </content>
+            </Toolbar>
+
+
+            <VBox visible="{= ${mockdata>/EtiquIngxPallets} === false }">
+
+
+                <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                    <form:content>
+
+                        <Label text="{i18n>lblingresepallet}" />
+                        <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/Almacenamiento/Apalletcodigo}" />
+                        <Text text="{i18n>ttdesctipoalmacenlt}" class="cursiva" />
+
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                    <form:content>
+
+                        <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXX" />
+                        <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
+
+                        <Text text="{mockdata>/inOTAlmmacen}"/>
+
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                    <form:content>
+
+
+                        <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
+                        <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
 
 
 
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <Label text="{i18n>lblingresepallet}" />
-                    <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/Almacenamiento/Apalletcodigo}" />
-                    <Text text="{i18n>ttdesctipoalmacenlt}" class="cursiva" />
-
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXX" />
-                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
-
-                    <Text text="{mockdata>/inOTAlmmacen}"/>
-
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
+                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
 
 
-                    <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
-                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
+                    </form:content>
+                </form:SimpleForm>
+
+            </VBox>
+            <VBox visible="{= ${mockdata>/EtiquIngxPallets} === true }">
+                <form:SimpleForm columnsM="4" columnsXL="4" editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                    <form:content>
+                        <Label text="{i18n>lblmaterial}" />
+                        <Input id="idAlmPalletMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+
+                        <Label text="{i18n>lblcantidad}" />
+                        <Input id="idAlmPalletCantidad" submit="onPalletScan" />
+
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm columnsM="2" columnsXL="4" editable="true" backgroundDesign="Transparent">
+                    <form:content>
+
+                        <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXXXXXX" />
+
+                        <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                    <form:content>
+
+                        <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXXXXX" />
+                        <!-- <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/> -->
+                    </form:content>
+                </form:SimpleForm>
+
+                <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
+                    <form:content>
+                        <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
+                        <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
+
+                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
 
 
-
-                    <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
-
-
-                </form:content>
-            </form:SimpleForm>
-
-
-
-
+                    </form:content>
+                </form:SimpleForm>
+            </VBox>
         </content>
         <footer>
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
                 <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="onClearScreen"/>
+                <Button text="{i18n>btningpallet}" visible="{= ${mockdata>/EtiquIngxPallets} === false }" type="Emphasized" width="30%"  press="onIngresaxPallet"/>
+                    <Button text="{i18n>btningpallet}" visible="{= ${mockdata>/EtiquIngxPallets} === true }" type="Accept" width="30%" press="onIngresaxPallet"/>
                 <ToolbarSpacer/>
                 <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press=""/>
             </OverflowToolbar>

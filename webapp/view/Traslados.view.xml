@@ -36,6 +36,11 @@
                     <Button text="5" type="Emphasized" press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
                     <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
                     <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
+                    <Button text="8" type="Emphasized" press="_onShowMsg8" class="sapUiTinyMarginBegin"/>
+                    <Button text="9" type="Emphasized" press="_onShowMsg9" class="sapUiTinyMarginBegin"/>
+                    <Button text="10" type="Emphasized" press="_onShowMsg10" class="sapUiTinyMarginBegin"/>
+                    <Button text="11" type="Emphasized" press="_onShowMsg11" class="sapUiTinyMarginBegin"/>
+
 
                 </content>
             </Toolbar>
@@ -100,14 +105,14 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
 
+                    <ToolbarSpacer/>
+                <Button text="{i18n>btnconetiqueta}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === false }"/>
+                <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
+                <Button text="{i18n>btnbuscar}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
                 <ToolbarSpacer/>
-
-                <Button text="{i18n>btnconetiqueta}" press="onEtiquetado" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === false }"/>
-                <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
-                <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onAgregarSeleccionButtonPress" width="30%"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onAgregarSeleccionButtonPress" width="22%"/>
 
             </OverflowToolbar>
         </footer>

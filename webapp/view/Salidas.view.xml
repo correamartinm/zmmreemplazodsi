@@ -43,6 +43,7 @@
                     <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
                     <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
                     <Button text="8" type="Emphasized" press="_onShowMsg8" class="sapUiTinyMarginBegin"/>
+                    <Button text="9" type="Emphasized" press="_onShowMsg9" class="sapUiTinyMarginBegin"/>
                 </content>
             </Toolbar>
 
@@ -58,7 +59,7 @@
                 <!-- visible="{mockdata>/Picking}" -->
                 <form:content>
 
-                 
+
                     <Label text="{i18n>lblingreseot}" />
                     <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
                 </form:content>
@@ -68,7 +69,7 @@
                 <form:content>
 
                     <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
-                   
+
                 </form:content>
             </form:SimpleForm>
 
@@ -76,7 +77,7 @@
                 <form:content>
 
                     <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXXXXX" />
-                   
+
                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
                 </form:content>
             </form:SimpleForm>
@@ -93,7 +94,7 @@
                 <form:content>
 
                     <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
-                   
+                        <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
 
 
 
@@ -149,11 +150,12 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
+                <Button text="{i18n>btncancelar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
+                    <ToolbarSpacer/>
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}"/>
+                <Button text="{i18n>btnbuscar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}"/>
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}"/>
-                <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="30%" />
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="22%" />
             </OverflowToolbar>
 
         </footer>
