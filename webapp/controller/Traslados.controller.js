@@ -45,12 +45,17 @@ sap.ui.define(
         },
 
         onEtiquetado: function () {
-
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
           let oValue =  oMockModel.getProperty("/Etiquetado");
           oMockModel.setProperty("/Etiquetado", !oValue);
-
         },
+
+        onTrasladoContinuar: function () {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+              oTrasladoValues =  oMockModel.getProperty("/Traslado");
+          oMockModel.setProperty("/Etiquetado", !oValue);
+        },
+
 
         _onShowMsg1: function () {
           let objectMsg = {

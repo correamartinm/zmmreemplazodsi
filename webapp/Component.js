@@ -134,7 +134,8 @@ sap.ui.define(
             Tmaterialcodigo : "",
             Tmaterialdesc : "",
             Tcantidad: "",
-            Talmacen: ""
+            Talmacen: "",
+            Talmacendesc: ""
           },
           Remanejo: {
             Rpalletcodigo: "",

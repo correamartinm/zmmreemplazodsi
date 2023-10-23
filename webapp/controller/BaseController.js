@@ -14,28 +14,36 @@ sap.ui.define(
           // oMockModel.setProperty("/MainButtons", false);
           this.getOwnerComponent().getTargets().display("TargetMainView");
         },
+        _onGotoMainMenu: function () {
+          let objectMsg = {
+            titulo: this._i18n().getText("msgconsulta"),
+            mensaje: this._i18n().getText("msgvolver"),
+            icono: sap.m.MessageBox.Icon.QUESTION,
+            acciones: [
+              sap.m.MessageBox.Action.CLOSE,
+              sap.m.MessageBox.Action.OK,
+            ],
+            resaltar: sap.m.MessageBox.Action.OK,
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            if (rta === "OK") {
+              // this._onResetData();
+              this.onGoMain();
+            }
+          });
+        },
+
+        _i18n: function () {
+          return this.getOwnerComponent().getModel("i18n").getResourceBundle();
+        },
 
         _onFocusControl: function (oControl) {
           jQuery.sap.delayedCall(700, this, function () {
             oControl.focus();
           });
         },
- 
 
-        formatFecha: function (param) {
-          let oFecha,
-            oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({
-              pattern: "dd/MM/yyyy hh:mm",
-              UTC: true,
-            });
-
-          if (param !== null && param !== undefined && param !== "") {
-            oFecha = oDateFormat.format(param);
-            return oFecha;
-          } else {
-            return param;
-          }
-        },
         _onCompareControls: function (oControl1, oControl2) {
           let oValue1 = oControl1.getValue(),
             oValue2 = oControl2.getValue();
@@ -135,27 +143,6 @@ sap.ui.define(
           });
         },
 
-        _onGotoMainMenu: function () {
-          let objectMsg = {
-            titulo: this._i18n().getText("msgconsulta"),
-            mensaje: this._i18n().getText("msgvolver"),
-            icono: sap.m.MessageBox.Icon.QUESTION,
-            acciones: [sap.m.MessageBox.Action.CLOSE, sap.m.MessageBox.Action.OK],
-            resaltar: sap.m.MessageBox.Action.OK,
-          };
-  
-          this._onShowMsgBox(objectMsg).then((rta) => {
-            if (rta === "OK") {
-              // this._onResetData();
-              this.onGoMain();
-            }
-          });
-        },
-
-        _i18n: function () {
-          return this.getOwnerComponent().getModel("i18n").getResourceBundle();
-        },
-
         _onErrorHandle: function (oError) {
           var oErrorMsg = JSON.parse(oError.responseText);
           var oText = oErrorMsg.error.message.value;
@@ -174,7 +161,6 @@ sap.ui.define(
 
           this._onShowMsgBox(objectMsg).then((rta) => {
             if (rta === "CLOSE") {
-            
             }
           });
         },

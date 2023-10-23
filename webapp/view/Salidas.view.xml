@@ -54,75 +54,95 @@
                 <Label text="{i18n>lblposicion}: " />
                 <Label text="1/X" class="BigSize sapUiTinyMarginBegin"/>
             </HBox>
+            
+            <form:Form editable="true">
+                <form:layout>
+                    <form:ColumnLayout columnsM="1" columnsL="1" columnsXL="1" labelCellsLarge="2"/>
+                </form:layout>
+                <form:formContainers>
+        
+                    <form:FormContainer>
+                        <form:formElements>
+        
+                            <form:FormElement label="{i18n>lblingreseot}">
+                                <form:fields>
+                                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+        
+                            <form:FormElement >
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+        
+                        
+                            <form:FormElement >
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXX" />
+                            
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
 
-            <form:SimpleForm columnsM="2" columnsXL="4" labelSpanL="2" layout="ResponsiveGridLayout" editable="true" backgroundDesign="Transparent">
-                <!-- visible="{mockdata>/Picking}" -->
-                <form:content>
+                            <form:FormElement >
+                                <form:fields>
+                            
+                                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+        
+                            <form:FormElement  label="{i18n>labelpallet}">
+                                <form:fields>
+                                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/Salida/Svalpalletcodigo}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+                            
+        
+                            <form:FormElement  >
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXX" />
+                                    
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
 
-
-                    <Label text="{i18n>lblingreseot}" />
-                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
-
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXXXXX" />
-
-                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <Label text="{i18n>labelpallet}" />
-                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/Salida/Svalpalletcodigo}" />
-                </form:content>
-            </form:SimpleForm>
-
-            <form:SimpleForm editable="true" backgroundDesign="Transparent" class="sapUiTinyMarginTop">
-                <form:content>
-
-                    <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
-                        <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
-
-
-
-
-
-                    <!-- <Label text="{i18n>lblubicaciondestino}" />
-                    <Text text="{mockdata>/inOTAlmmacen}"/> -->
-
-                </form:content>
-            </form:SimpleForm>
+                            <form:FormElement  >
+                                <form:fields>
+                                    
+                                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>  
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+        
+        
+        
+        
+        
+                        </form:formElements>
+        
+                    </form:FormContainer>
+        
+                    <!-- Fin de do Contenedor -->
+        
+                </form:formContainers>
+            </form:Form>
 
 
 
             <HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround" alignContent="Center" alignItems="Center">
-                <!-- class="sapUiLargeMarginTop sapUiTinyMarginEnd sapUiTinyMarginBegin"  -->
-                <!-- <f:Card  >
-                    <f:header>
-                        <card:Header iconSrc="sap-icon://navigation-left-arrow" press="onGoMovimiento" iconBackgroundColor="Accent5"/>
-                    </f:header>
 
-                </f:Card> -->
                 <VBox alignContent="Center" alignItems="Center">
                     <core:Icon src="sap-icon://navigation-left-arrow" color="blue" class="size2" press=""/>
                     <Label text="{i18n>btnanterior}" />
                 </VBox>
 
                 <VBox alignContent="Center" alignItems="Center">
-                    <!-- <core:Icon src="sap-icon://navigation-right-arrow" color="blue" class="size2" press=""/> -->
+
                     <Button text="{i18n>btnleerpallet}" type="Default"/>
 
                 </VBox>
@@ -134,13 +154,6 @@
                 </VBox>
 
 
-
-
-                <!-- <f:Card  >
-                    <f:header>
-                        <card:Header iconSrc="sap-icon://navigation-right-arrow" press="onGoMovimiento" iconBackgroundColor="Accent5" />
-                    </f:header>
-                </f:Card> -->
             </HBox>
 
 
