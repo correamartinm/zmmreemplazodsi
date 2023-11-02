@@ -98,44 +98,14 @@ sap.ui.define(
             }
           ],
           Almacenamiento: {
-            Apalletcodigo: "",
-            Aotnumero: "",
-            Aetapa: "",
-            Avalpalletcodigo: "",
-            Aorigen : "",
-            Avalorigen: "",
-            Adestino : "",
-            Avaldestino: "",
-            Amaterialcodigo : "",
-            Amaterialdesc : ""
+           
           },
           Salida: {
-            Spalletcodigo: "",
-            Sotnumero: "",
-            Setapa: "",
-            Svalpalletcodigo: "",
-            Sorigen : "",
-            Svalorigen: "",
-            Sdestino : "",
-            Svaldestino: "",
-            Smaterialcodigo : "",
-            Smaterialdesc : ""
+           
             
           },
           Traslado: {
-            Tpalletcodigo: "",
-            Totnumero: "",
-            Tetapa: "",
-            Tvalpalletcodigo: "",
-            Torigen : "",
-            Tvalorigen: "",
-            Tdestino : "",
-            Tvaldestino: "",
-            Tmaterialcodigo : "",
-            Tmaterialdesc : "",
-            Tcantidad: "",
-            Talmacen: "",
-            Talmacendesc: ""
+           
           },
           Remanejo: {
             Rpalletcodigo: "",

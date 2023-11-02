@@ -22,18 +22,7 @@ sap.ui.define(
         },
         _onResetData: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
-          oMockModel.setProperty("/Almacenamiento", {
-            Apalletcodigo: "",
-            Aotnumero: "",
-            Aetapa: "",
-            Avalpalletcodigo: "",
-            Aorigen: "",
-            Avalorigen: "",
-            Adestino: "",
-            Avaldestino: "",
-            Amaterialcodigo: "",
-            Amaterialdesc: "",
-          });
+          oMockModel.setProperty("/Almacenamiento", {});
         },
 
         _onShowMsg1: function () {
@@ -143,49 +132,61 @@ sap.ui.define(
           });
         },
 
-
-
         onIngresaxPallet: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
-          let oValue =  oMockModel.getProperty("/EtiquIngxPallets");
+          let oValue = oMockModel.getProperty("/EtiquIngxPallets");
           oMockModel.setProperty("/EtiquIngxPallets", !oValue);
         },
 
-        onInputScanSubmit: function (oEvent) {
-          let oValue = oEvent.getSource().getValue(),
-            oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oTarguetName = oEvent.getSource().getName(),
-            oTarguet = oEvent.getSource(),
-            oPallet = this.byId("idOtInPalletInput"),
-            oDestino = this.byId("idDestinoInput"),
-            oCodigo = this.byId("idCodigoInput");
+        onInputScanSubmit: async function (oEvent) {
+          let oValue = oEvent.getSource().getValue();
 
           if (oValue.length < 1) return;
 
-          switch (oTarguetName) {
-            case "inPallet":
-              this._onFocusControl(oDestino);
-              break;
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView();
 
-            case "inDestino":
-              this._onFocusControl(oCodigo);
+          let oPath = oModel.createKey("/AlmacenamientoSet", {
+            Pallet: oValue,
+          });
 
-              break;
-            case "inCodigo":
-              let rta = this._onCompareControls(oPallet, oCodigo);
-              oMockModel.setProperty("/inOTValidate", rta);
-
-              if (rta === false) {
-                oTarguet.setValueState(ValueState.Error);
-              } else {
-                oTarguet.setValueState(ValueState.None);
-              }
-
-              break;
-            // default:
-            //   break;
-          }
+          let rta = this._onreadModel(oModel, oView, oPath);
+          debugger;
+          oMockModel.setProperty("/Almacenamiento", rta.results);
         },
+
+        onInputDestinoSubmit: async function (oEvent) {
+          let oValue = oEvent.getSource().getValue();
+
+          if (oValue.length < 1) return;
+
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oData = oMockModel.getProperty("/Almacenamiento");
+            let oPath = oModel.createKey("/AlmacenamientoSet", {
+              Pallet: oData.Pallet,
+          });
+
+          if (oValue === oData.Destino) {
+            
+          // *******************************************
+          let rta = this._onreadModel(oModel, oView, oPath);
+          debugger;
+          oMockModel.setProperty("/Almacenamiento", {});
+
+        } else {
+          oEvent.getSource().setValue(null);
+          this._onFocusControl(oEvent.getSource());
+          
+        }
+
+        },
+
+
+
+
       }
     );
   }

@@ -29,6 +29,17 @@
                     "icon": ""
                 }
             }
+        },
+        "dataSources": {
+            "ZGW_WM_MOVIMIENTO_PALLET_SRV": {
+                "uri": "/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            }
         }
     },
     "sap.ui": {
@@ -71,6 +82,18 @@
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
                     "bundleName": "morixe.zmmreemplazodsi.i18n.i18n"
+                }
+            },
+            "": {
+                "preload": true,
+                "dataSource": "ZGW_WM_MOVIMIENTO_PALLET_SRV",
+                "settings": {
+                    "defaultBindingMode": "TwoWay",
+                    "defaultCountMode": "Inline",
+                    "refreshAfterChange": false,
+                    "metadataUrlParams": {
+                        "sap-value-list": "none"
+                    }
                 }
             }
         },
@@ -161,7 +184,6 @@
                     "clearControlAggregation": false,
                     "viewName": "Remanejo"
                 }
-
             }
         },
         "rootView": {

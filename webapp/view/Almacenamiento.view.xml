@@ -26,26 +26,7 @@
                 <Label text="{i18n>lblalmacenamiento}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
-            <Toolbar visible="{= ${mockdata>/EtiquIngxPallets} === false }">
-                <content>
-                    <Text text="Mensajes"/>
-                    <ToolbarSpacer/>
-                    <Button text="1" type="Emphasized" press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
-                    <Button text="2" type="Emphasized" press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
-                    <Button text="3" type="Emphasized" press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
-                    <Button text="4" type="Emphasized" press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
-                    <Button text="5" type="Emphasized" press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
-                </content>
-            </Toolbar>
-            <Toolbar visible="{= ${mockdata>/EtiquIngxPallets} === true }">
-                <content>
-                    <Text text="Mensajes"/>
-                    <ToolbarSpacer/>
-                    <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
-                    <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
-
-                </content>
-            </Toolbar>
+           
 
 
             <VBox visible="{= ${mockdata>/EtiquIngxPallets} === false }">
@@ -53,7 +34,7 @@
 
                 <form:Form editable="true">
                     <form:layout>
-                        <form:ColumnLayout columnsM="1" columnsL="1" columnsXL="1" labelCellsLarge="1"/>
+                        <form:ColumnLayout  columnsL="1" columnsXL="1" labelCellsLarge="1"/>
                     </form:layout>
                     <form:formContainers>
 
@@ -62,14 +43,14 @@
 
                                 <form:FormElement label="{i18n>lblingresepallet}">
                                     <form:fields>
-                                        <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/Almacenamiento/Apalletcodigo}" />
+                                        <Input name="inPallet" id="idOtInPalletInput" submit="onInputScanSubmit" value="{mockdata>/Almacenamiento/Pallet}" />
 
                                     </form:fields>
 
                                 </form:FormElement>
                                 <form:FormElement  >
                                     <form:fields>
-                                        <Text text="{i18n>ttdesctipoalmacenlt}" class="cursiva" />
+                                        <Text text="{mockdata>/Almacenamiento/Descripcion}" class="cursiva" />
 
                                     </form:fields>
                                 </form:FormElement>
@@ -77,8 +58,8 @@
 
                                 <form:FormElement>
                                     <form:fields>
-                                        <ObjectStatus title="{i18n>lblnumot}" text="XXXXXXXXXXX" />
-                                        <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
+                                        <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Almacenamiento/Ot}" />
+                                        <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Almacenamiento/Etapa}" />
 
                                     </form:fields>
                                 </form:FormElement>
@@ -93,14 +74,14 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXXXXXXXX" />
+                                        <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Almacenamiento/Destino}" />
 
                                     </form:fields>
                                 </form:FormElement>
                                 <form:FormElement  >
                                     <form:fields>
 
-                                        <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svaldestino}"/>
+                                        <Input submit="onInputDestinoSubmit" />
 
 
 
@@ -110,7 +91,7 @@
                                 <form:FormElement  >
                                     <form:fields>
 
-                                        <Text text="{i18n>ttdesctipoalmacen}" class="cursiva" />
+                                        <Text text="{mockdata>/Almacenamiento/DescripcionAlmacen}" class="cursiva" />
 
 
                                     </form:fields>
@@ -135,7 +116,7 @@
 
                 <form:Form editable="true">
                     <form:layout>
-                        <form:ColumnLayout columnsM="2" columnsL="2" columnsXL="2" labelCellsLarge="4"/>
+                        <form:ColumnLayout  columnsL="1" />
                     </form:layout>
                     <form:formContainers>
 
@@ -145,6 +126,8 @@
                                 <form:FormElement label="{i18n>lblmaterial}">
                                     <form:fields>
                                         <Input id="idAlmPalletMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+                                        
+                                     
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->

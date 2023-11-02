@@ -28,7 +28,7 @@
                 <Label text="{i18n>btnremanejopallets}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
-            <Toolbar >
+            <Toolbar visible="false">
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>

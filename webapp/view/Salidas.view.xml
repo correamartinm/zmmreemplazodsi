@@ -31,7 +31,7 @@
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-            <Toolbar >
+            <Toolbar visible="false" >
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>
@@ -145,7 +145,8 @@
 
                 <VBox alignContent="Center" alignItems="Center">
 
-                    <Button text="{i18n>btnleerpallet}" type="Default"/>
+                    <Button text="{i18n>btnleerpallet}" type="Default" width="100px"/>
+                        <Button text="{i18n>btnbuscar}" type="Default" width="100px" enabled="{mockdata>/inOTValidate}"/>
 
                 </VBox>
 
@@ -168,7 +169,7 @@
                 <Button text="{i18n>btncancelar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
                     <ToolbarSpacer/>
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}"/>
-                <Button text="{i18n>btnbuscar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}"/>
+               
                 <ToolbarSpacer/>
                 <Button text="{i18n>btncontinuar}" type="Emphasized" width="22%" />
             </OverflowToolbar>
