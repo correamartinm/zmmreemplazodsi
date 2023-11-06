@@ -73,16 +73,20 @@ sap.ui.define(
         },
 
         _onfilterModel: function (oModel, oView, oEntity, oFilters) {
+          return new Promise((resolve, reject) => {
           oView.setBusy(true);
           oModel.read(oEntity, {
             filters: [oFilters],
             success: jQuery.proxy(function (oData) {
               oView.setBusy(false);
+              resolve(oData);
             }, this),
             error: function (oError) {
               oView.setBusy(false);
+              resolve(oError);
             },
           });
+        });
         },
 
         _oncreateModel: function (oModel, oView, oEntity, oPayload) {

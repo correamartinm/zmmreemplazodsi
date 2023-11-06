@@ -117,7 +117,8 @@ sap.ui.define(
           Remanejo : 1,
           Etiquetado : true,
           MainButtons : false,
-          EtiquIngxPallets : false   
+          EtiquIngxPallets : false   ,
+          Devolucion : false   
         });
         this.setModel(oMockDataModel, "mockdata");
       },

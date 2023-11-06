@@ -17,8 +17,29 @@ sap.ui.define(
           oTarget.attachDisplay(this._onObjectMatched, this);
         },
 
-        _onObjectMatched: function (evt) {
+        _onObjectMatched: async function (evt) {
           this._onFocusControl(this.byId("idOtInPalletInput"));
+
+          let oModel = this.getOwnerComponent().getModel(),
+            oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oView = this.getView(),
+            oEntity = "/DevolucionSet", rta,
+            oFilters = [];
+
+          let oPath = oModel.createKey("/DevolucionSet", {
+            Pallet: "1234",
+          });
+
+          //  rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
+
+           rta = await this._onreadModel(oModel, oView, oPath);
+          debugger;
+
+
+          if (rta.results.length > 0) {
+            oMockModel.setProperty("/Devolucion", true);
+          }
+
         },
         _onResetData: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
@@ -165,28 +186,20 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oData = oMockModel.getProperty("/Almacenamiento");
-            let oPath = oModel.createKey("/AlmacenamientoSet", {
-              Pallet: oData.Pallet,
+          let oPath = oModel.createKey("/AlmacenamientoSet", {
+            Pallet: oData.Pallet,
           });
 
           if (oValue === oData.Destino) {
-            
-          // *******************************************
-          let rta = this._onreadModel(oModel, oView, oPath);
-          debugger;
-          oMockModel.setProperty("/Almacenamiento", {});
-
-        } else {
-          oEvent.getSource().setValue(null);
-          this._onFocusControl(oEvent.getSource());
-          
-        }
-
+            // *******************************************
+            let rta = this._onreadModel(oModel, oView, oPath);
+            debugger;
+            oMockModel.setProperty("/Almacenamiento", {});
+          } else {
+            oEvent.getSource().setValue(null);
+            this._onFocusControl(oEvent.getSource());
+          }
         },
-
-
-
-
       }
     );
   }

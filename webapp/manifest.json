@@ -36,7 +36,7 @@
                 "type": "OData",
                 "settings": {
                     "annotations": [],
-                    "localUri": "localService/metadata.xml",
+                    "localUri": "localService/ZGW_WM_MOVIMIENTO_PALLET_SRV/metadata.xml",
                     "odataVersion": "2.0"
                 }
             }
