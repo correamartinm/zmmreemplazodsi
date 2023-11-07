@@ -66,9 +66,15 @@ sap.ui.define(
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-                oEvent.getSource().setValue(null);
-                that._onFocusControl(oEvent.getSource());
-                that._onErrorHandle(oError);
+                if (oEvent !== undefined){
+
+                  oEvent.getSource().setValue(null);
+                  that._onFocusControl(oEvent.getSource());
+                  that._onErrorHandle(oError);
+                } else {
+               
+                  that._onFocusControl(that.getView().byId("idAlmPalletScan"));
+                }
               },
             });
           });

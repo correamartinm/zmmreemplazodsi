@@ -26,7 +26,7 @@
                 <Label text="{i18n>lblalmacenamiento}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
-           
+
 
 
             <VBox visible="{= ${mockdata>/EtiquIngxPallets} === false }">
@@ -34,7 +34,7 @@
 
                 <form:Form editable="true">
                     <form:layout>
-                        <form:ColumnLayout  columnsL="1" columnsXL="1" labelCellsLarge="1"/>
+                        <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="1"/>
                     </form:layout>
                     <form:formContainers>
 
@@ -43,7 +43,7 @@
 
                                 <form:FormElement label="{i18n>lblingresepallet}">
                                     <form:fields>
-                                        <Input name="inPallet" id="idAlmPalletScan" submit="onInputPalleScanSubmit" value="{mockdata>/Almacenamiento/Pallet}" type="Number" />
+                                        <Input name="inPallet" id="idAlmPalletScan" submit="onInputPalleScanSubmit" value="{mockdata>/AlmacenamientoScan/Pallet}" type="Number" />
 
                                     </form:fields>
 
@@ -81,7 +81,7 @@
                                 <form:FormElement  >
                                     <form:fields>
 
-                                        <Input  id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Number"/>
+                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Number" value="{mockdata>/AlmacenamientoScan/Destino}"/>
 
 
 
@@ -116,7 +116,7 @@
 
                 <form:Form editable="true">
                     <form:layout>
-                        <form:ColumnLayout  columnsL="1" />
+                        <form:ColumnLayout columnsL="1" />
                     </form:layout>
                     <form:formContainers>
 
@@ -124,27 +124,27 @@
                             <form:formElements>
                                 <form:FormElement >
                                     <form:fields>
-                                        <ObjectStatus  title="{i18n>lblmaterial}" text="{mockdata>/Devolucion/Material} - {mockdata>/Devolucion/DescripcionMaterial}" class="uptitle" />                                      
+                                        <ObjectStatus title="{i18n>lblmaterial}" text="{mockdata>/Devolucion/Material} - {mockdata>/Devolucion/DescripcionMaterial}" class="uptitle" />
                                     </form:fields>
                                 </form:FormElement>
 
                                 <form:FormElement >
-                                    <form:fields>                                  
-                                        <Input id="idAlmDevPalletMaterial" submit="onMaterialScan" value="" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"  />
+                                    <form:fields>
+                                        <Input id="idAlmDevPalletMaterial" submit="onMaterialScan" value="{mockdata>/DevolucionScan/Material}" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code" />
                                     </form:fields>
                                 </form:FormElement>
 
                                 <!-- Fin Elemento -->
                                 <form:FormElement >
                                     <form:fields>
-                                        <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/Devolucion/Cantidad}" class="uptitle" />                                      
+                                        <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/Devolucion/Cantidad}" class="uptitle" />
                                     </form:fields>
                                 </form:FormElement>
 
 
                                 <form:FormElement >
-                                    <form:fields>                                        
-                                        <Input id="idAlmDevPalletCantidad" submit="onCantidadScan" value="{mockdata>/Almacenamiento/Cantidad}"/>
+                                    <form:fields>
+                                        <Input id="idAlmDevPalletCantidad" submit="onCantidadScan" value="{mockdata>/DevolucionScan/Cantidad}"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->
@@ -160,7 +160,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Devolucion/Origen}" class="uptitle"  />
+                                        <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Devolucion/Origen}" class="uptitle" />
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->
@@ -174,7 +174,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <Input id="idAlmDevDestinoScan" submit="onDestinoScan" value="{mockdata>/Devolucion/Svaldestino}"/>
+                                        <Input id="idAlmDevDestinoScan" submit="onDestinoScan" value="{mockdata>/DevolucionScan/Destino}"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->
@@ -195,7 +195,7 @@
                     </form:formContainers>
                 </form:Form>
 
-               
+
             </VBox>
 
 
@@ -206,11 +206,11 @@
             <OverflowToolbar class="sapUiSmallMarginBottom">
                 <Button text="{i18n>btncancelar}" type="Emphasized" width="27%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
                 <ToolbarSpacer/>
-                <Button text="{i18n>btningpallet}"  type="Emphasized" press="onIngresaxPallet" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
-                <Button text="{i18n>btnlimpiar}"  type="Emphasized" press="onClearScreen" />
+                <Button text="{i18n>btningpallet}" type="Emphasized" press="onIngresaxPallet" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" />
                 <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" enabled="{mockdata>/inOTValidateAlm}" press="onConfirmaAlmacenamiento" visible="{= ${mockdata>/EtiquIngxPallets} === false }"/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" enabled="{mockdata>/inOTValidateDev}" press="onConfirmaDevolucion" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidAlmacenamiento}" press="onConfirmaAlmacenamiento" visible="{= ${mockdata>/EtiquIngxPallets} === false }"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidDevolucnio}" press="onConfirmaDevolucion" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
             </OverflowToolbar>
         </footer>
     </Page>

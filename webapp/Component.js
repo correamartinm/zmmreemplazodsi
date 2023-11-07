@@ -46,81 +46,88 @@ sap.ui.define(
           ],
           TestItems: [
             {
-              OT : 123456,
-              ETAPA : 25,
+              OT: 123456,
+              ETAPA: 25,
               ORIGEN: 87898989,
               PALLET: 987654,
-              DESTINO: 7777
+              DESTINO: 7777,
             },
             {
-              OT : 423456,
-              ETAPA : 15,
+              OT: 423456,
+              ETAPA: 15,
               ORIGEN: 87898449,
               PALLET: 987654,
-              DESTINO: 7777
+              DESTINO: 7777,
             },
             {
-              OT : 323456,
-              ETAPA : 12,
+              OT: 323456,
+              ETAPA: 12,
               ORIGEN: 87338989,
               PALLET: 987654,
-              DESTINO: 7777
+              DESTINO: 7777,
             },
             {
-              OT : 223456,
-              ETAPA : 26,
+              OT: 223456,
+              ETAPA: 26,
               ORIGEN: 12898989,
               PALLET: 447654,
-              DESTINO: 7777
-            }
+              DESTINO: 7777,
+            },
           ],
-          Materiales : [
+          Materiales: [
             {
-              Codigo : "0001",
-              Descripcion : "Material Test 1",
+              Codigo: "0001",
+              Descripcion: "Material Test 1",
               Lote: "123",
-              Cantidad: "10"
-            }, {
-              Codigo : "0002",
-              Descripcion : "Material Test 2",
+              Cantidad: "10",
+            },
+            {
+              Codigo: "0002",
+              Descripcion: "Material Test 2",
               Lote: "654",
-              Cantidad: "12"
-            }, {
-              Codigo : "0003",
-              Descripcion : "Material Test 3",
+              Cantidad: "12",
+            },
+            {
+              Codigo: "0003",
+              Descripcion: "Material Test 3",
               Lote: "987",
-              Cantidad: "14"
-            }, {
-              Codigo : "0004",
-              Descripcion : "Material Test 4",
+              Cantidad: "14",
+            },
+            {
+              Codigo: "0004",
+              Descripcion: "Material Test 4",
               Lote: "13",
-              Cantidad: "20"
-            }
+              Cantidad: "20",
+            },
           ],
-          Almacenamiento: {
-            
+          Almacenamiento: {},
+          AlmacenamientoScan: {
+            Pallet : "",
+            Destino : ""
           },
-          Salida: {
-           
-            
+
+          DevolucionScan: {
+            Material : "",
+            Cantidad : "",
+            Destino : ""
           },
-          Traslado: {
-           
-          },
+
+          Salida: {},
+          Traslado: {},
           Remanejo: {
             Rpalletcodigo: "",
             Totnumero: "",
-            Tnuevonumero: ""
+            Tnuevonumero: "",
           },
-          ActiveCenter : "",
-          Picking : false,
-          Remanejo : 1,
-          Etiquetado : true,
-          MainButtons : false,
-          EtiquIngxPallets : false   ,
-          inOTValidateAlm : false   ,
-          inOTValidateDev : false   ,
-          Devolucion : {}  
+          ActiveCenter: "",
+          Picking: false,
+          Remanejo: 1,
+          Etiquetado: true,
+          MainButtons: false,
+          EtiquIngxPallets: false,
+          AlmValidAlmacenamiento: false,
+          AlmValidDevolucnio: false,
+          Devolucion: {},
         });
         this.setModel(oMockDataModel, "mockdata");
       },

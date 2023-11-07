@@ -29,9 +29,9 @@ sap.ui.define(
             Pallet: "1234",
           });
 
-          //  rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
+          // rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
 
-          rta = await this._onreadModel(oModel, oView, oPath);
+           rta = await this._onreadModel(oModel, oView, oPath);
           debugger;
 
           if (rta.length > 0) {
@@ -46,16 +46,21 @@ sap.ui.define(
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
           oMockModel.setProperty("/Almacenamiento", {});
           oMockModel.setProperty("/Devolucion", {});
+          oMockModel.setProperty("/AlmacenamientoScan", {});
+          oMockModel.setProperty("/DevolucionScan", {});
           oMockModel.setProperty("/EtiquIngxPallets", false);
-          this.getView().byId("idAlmPalletScan").setValue(null);
-          this.getView().byId("idAlmDestinoScan").setValue(null);
-          this.getView().byId("idAlmDevPalletMaterial").setValue(null);
-          this.getView().byId("idAlmDevPalletCantidad").setValue(null);
-          this.getView().byId("idAlmDevDestinoScan").setValue(null);
 
-          this._onFocusControl(this.getView().byId("idAlmPalletScan"));
+          oMockModel.setProperty("/AlmValidAlmacenamiento", false);
+          oMockModel.setProperty("/AlmValidDevolucnio", false);
 
+          // this.getView().byId("idAlmPalletScan").setValue(null);
+          // this.getView().byId("idAlmDestinoScan").setValue(null);
+          // this.getView().byId("idAlmDevPalletMaterial").setValue(null);
+          // this.getView().byId("idAlmDevPalletCantidad").setValue(null);
+          // this.getView().byId("idAlmDevDestinoScan").setValue(null);
 
+          this._onObjectMatched();
+          // this._onFocusControl(this.getView().byId("idAlmPalletScan"));
         },
 
         onIngresaxPallet: function () {
@@ -115,15 +120,13 @@ sap.ui.define(
             });
 
           if (oValue !== oData.Destino) {
-            oEvent.getSource().setValue(null);
-            this._onFocusControl(oEvent.getSource());
+            this._onShowMsg4(oEvent);
           } else {
-            // *******************************************
-            let rta = this._onreadModel(oModel, oView, oPath);
-            debugger;
-            oMockModel.setProperty("/Almacenamiento", {});
+            this.onValidAlmacenamiento();
           }
         },
+
+        // Ingreso por Devolucion  *************************************
 
         onMaterialScan: function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
@@ -133,11 +136,11 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Devolucion");
           oMaterial = oData.Cantidad;
           if (oValue !== oMaterial) {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            this._onShowMsg6(oEvent);
           } else {
           }
         },
+
 
         onCantidadScan: function (oEvent) {
           if (oEvent.getSource().getValue().length < 1) return;
@@ -148,9 +151,9 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Devolucion");
           oCantidad = oData.Cantidad;
           if (oValue !== oCantidad) {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            this._onShowMsg7(oEvent);
           } else {
+            this.onValidDevolucion();
           }
         },
 
@@ -163,38 +166,87 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Almacenamiento");
           oDestino = oData.Destino;
           if (oValue !== oDestino) {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            this._onShowMsg4(oEvent);
           } else {
+            this.onValidDevolucion();
           }
         },
 
-        onConfirmaAlmacenamiento: function (oEvent) {
+        // Validaciones *****************************
+
+        onValidAlmacenamiento: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView(),
-            oValue = oEvent.getSource().getValue(),
             oData = oMockModel.getProperty("/Almacenamiento");
-          oMaterial = oData.Cantidad;
-          if (oValue !== oMaterial) {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+          oScan = oMockModel.getProperty("/AlmacenamientoScan");
+          oPallet = oData.Pallet;
+          oDestino = oData.Destino;
+          oPalletScan = oScan.Pallet;
+          oDestinoScan = oScan.Destino;
+          if (oPallet === oPalletScan && oDestino === oDestinoScan) {
+            oMockModel.setProperty("/AlmValidAlmacenamiento", true);
           } else {
+            oMockModel.setProperty("/AlmValidAlmacenamiento", false);
           }
         },
 
-        onConfirmaDevolucion: function (oEvent) {
+        onValidDevolucion: function () {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oData = oMockModel.getProperty("/Devolucion");
+          oScan = oMockModel.getProperty("/DevolucionScan");
+          oMaterial = oData.Ean11;
+          oCantidad = oData.Cantidad;
+          oDestino = oData.Destino;
+
+          oMaterialScan = oScan.Material;
+          oCantidadScan = oScan.Cantidad;
+          oDestinoScan = oScan.Destino;
+
+          if (
+            oMaterial === oMaterialScan &&
+            oDestino === oDestinoScan &&
+            oCantidad === oCantidadScan
+          ) {
+            oMockModel.setProperty("/AlmValidDevolucnio", true);
+          } else {
+            oMockModel.setProperty("/AlmValidDevolucnio", false);
+          }
+        },
+
+        onConfirmaAlmacenamiento: async function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
-            oValue = oEvent.getSource().getValue(),
-            oData = oMockModel.getProperty("/Devolucion");
-          oMaterial = oData.Cantidad;
-          if (oValue !== oMaterial) {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
-          } else {
-          }
+            oEntity = "/Almacenamiento";
+          oPayload = oMockModel.getProperty("/Almacenamiento");
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+        },
+
+        onConfirmaDevolucion: async function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oEntity = "/Devolucion";
+          oPayload = oMockModel.getProperty("/Devolucion");
+
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+        },
+
+        onLlevarRemanejo: async function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oEntity = "/Almacenamiento";
+          oData = oMockModel.getProperty("/Almacenamiento");
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+        },
+
+        onLlevarDestino: async function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oEntity = "/Almacenamiento";
+          oData = oMockModel.getProperty("/Almacenamiento");
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
         },
 
         _onShowMsg1: function (oEvent) {
@@ -241,12 +293,27 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            if (rta === "CLOSE") {
+            switch (rta) {
+              case this._i18n().getText("btnvolver"):
+                oEvent.getSource().setValue("");
+                this._onFocusControl(oEvent.getSource());
+                break;
+
+              case this._i18n().getText("btnllevardestino"):
+                this.onLlevarDestino();
+                break;
+
+              case this._i18n().getText("btnllevarremanejo"):
+                this.onLlevarRemanejo();
+                break;
+
+              default:
+                break;
             }
           });
         },
 
-        _onShowMsg4: function () {
+        _onShowMsg4: function (oEvent) {
           let objectMsg = {
             titulo: this._i18n().getText("lblalmacenamiento"),
             mensaje: this._i18n().getText("msgubcincompatible"),
@@ -256,8 +323,8 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
           });
         },
 
@@ -275,7 +342,7 @@ sap.ui.define(
             // }
           });
         },
-        _onShowMsg6: function () {
+        _onShowMsg6: function (oEvent) {
           let objectMsg = {
             titulo: this._i18n().getText("lblalmacenamiento"),
             mensaje: this._i18n().getText("msgmaterialnoesperado"),
@@ -285,11 +352,11 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
           });
         },
-        _onShowMsg7: function () {
+        _onShowMsg7: function (oEvent) {
           let objectMsg = {
             titulo: this._i18n().getText("lblalmacenamiento"),
             mensaje: this._i18n().getText("msgcantidadnoesperada"),
@@ -299,8 +366,8 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
           });
         },
       }
