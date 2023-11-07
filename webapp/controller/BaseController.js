@@ -55,7 +55,7 @@ sap.ui.define(
           }
         },
 
-        _onreadModel: function (oModel, oView, oPath) {
+        _onreadModel: function (oModel, oView, oPath, oEvent) {
           return new Promise((resolve, reject) => {
             let that = this;
             oView.setBusy(true);
@@ -66,6 +66,8 @@ sap.ui.define(
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
+                oEvent.getSource().setValue(null);
+                that._onFocusControl(oEvent.getSource());
                 that._onErrorHandle(oError);
               },
             });

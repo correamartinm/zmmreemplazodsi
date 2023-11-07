@@ -98,7 +98,7 @@ sap.ui.define(
             }
           ],
           Almacenamiento: {
-           
+            
           },
           Salida: {
            
@@ -118,7 +118,9 @@ sap.ui.define(
           Etiquetado : true,
           MainButtons : false,
           EtiquIngxPallets : false   ,
-          Devolucion : false   
+          inOTValidateAlm : false   ,
+          inOTValidateDev : false   ,
+          Devolucion : {}  
         });
         this.setModel(oMockDataModel, "mockdata");
       },
