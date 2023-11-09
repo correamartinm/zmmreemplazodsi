@@ -57,37 +57,37 @@
 
                             <form:FormElement label="{i18n>labelpallet}" visible="{= ${mockdata>/Etiquetado} === true }">
                                 <form:fields>
-                                    <Input id="idMovPalletInput" submit="onPalletScan" value="{mockdata>/Traslado/Tpalletcodigo}"/>
+                                    <Input id="idMovPalletInput" submit="onInputPalleScanSubmit" value="{mockdata>/TrasladoScan/Pallet}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === true }">
                                 <form:fields>
-                                    <Text text="{mockdata>/Traslado/Tmaterialdesc}" class="cursiva" />
+                                    <Text text="{mockdata>/Traslado/DescripcionMaterial}" class="cursiva" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input id="idTraPalletMaterial" submit="onPalletScan" value="{mockdata>/Traslado/Tmaterialcodigo}" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input id="idTraPalletMaterial" submit="onMaterialScan" value="{mockdata>/TrasladoScan/Material}" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement label="{i18n>lblcantidad}" visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input id="idTraPalletCantidad" submit="onPalletScan" value="{mockdata>/Traslado/Tcantidad}"/>
+                                    <Input id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Traslado/Totnumero}" />
+                                    <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Traslado/Ot}" />
 
-                                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Traslado/Tetapa}" />
+                                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Traslado/Etapa}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -97,7 +97,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Traslado/Torigen}" />
+                                    <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Traslado/Origen}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -105,28 +105,28 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputScanSubmit" value="{mockdata>/Traslado/Tvalorigen}"/>
+                                    <Input submit="onInputOrigenSubmit" value="{mockdata>/TrasladoScan/Origen}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Traslado/Tdestino}" />
+                                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Traslado/Destino}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputScanSubmit" value="{mockdata>/Traslado/Tvaldestino}"/>
+                                    <Input submit="onInputDestinoSubmit" value="{mockdata>/TrasladoScan/Destino}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Text text="{mockdata>/Traslado/Talmacendesc}" class="cursiva" />
+                                    <Text text="{mockdata>/Traslado/DescripcionAlmacen}" class="cursiva" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -156,7 +156,8 @@
                 <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="28%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
                 <Button text="{i18n>btnbuscar}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
 
-                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="23%"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === false }" enabled="{mockdata>/AlmValidTraslado}"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoSinEtiquetaContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === true }" enabled="{mockdata>/AlmValidTrasladoSinEtiqueta}"/>
 
             </OverflowToolbar>
         </footer>

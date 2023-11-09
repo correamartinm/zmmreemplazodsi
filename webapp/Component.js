@@ -117,6 +117,8 @@ sap.ui.define(
 
           Salida: {},
           Traslado: {},
+          TrasladoScan: {},
+
           Remanejo: {
             Rpalletcodigo: "",
             Totnumero: "",
@@ -130,6 +132,11 @@ sap.ui.define(
           EtiquIngxPallets: false,
           AlmValidAlmacenamiento: false,
           AlmValidDevolucion: false,
+
+          AlmValidTraslado: false,
+          AlmValidTrasladoSinEtiqueta: false,
+
+
           Devolucion: {},
         });
         this.setModel(oMockDataModel, "mockdata");

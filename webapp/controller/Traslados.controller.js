@@ -16,38 +16,142 @@ sap.ui.define(
           oTarget.attachDisplay(this._onObjectMatched, this);
         },
 
-        _onObjectMatched: function (evt) {
+        _onObjectMatched: async function (evt) {
+          this.onClearScreen();
           this._onFocusControl(this.byId("idMovPalletInput"));
-        },
-        /**
-         * @override
-         */
-        onAfterRendering: function () {
-          this._onFocusControl(this.byId("idMovPalletInput"));
+         
         },
 
-        _onResetData: function () {
-          let oMockModel = this.getOwnerComponent().getModel("mockdata");
-          oMockModel.setProperty("/Traslado", {
-            Tpalletcodigo: "",
-            Totnumero: "",
-            Tetapa: "",
-            Tvalpalletcodigo: "",
-            Torigen: "",
-            Tvalorigen: "",
-            Tdestino: "",
-            Tvaldestino: "",
-            Tmaterialcodigo: "",
-            Tmaterialdesc: "",
-            Tcantidad: "",
-            Talmacen: "",
-          });
-        },
 
         onEtiquetado: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
           let oValue =  oMockModel.getProperty("/Etiquetado");
           oMockModel.setProperty("/Etiquetado", !oValue);
+        },
+
+
+        onInputPalleScanSubmit: async function (oEvent) {
+          let oValue = oEvent.getSource().getValue();
+
+          if (oValue.length < 1) return;
+
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView();
+
+          let oPath = oModel.createKey("/TrasladoSet", {
+            Ot: "",
+            Posicion : "",
+            Pallet: oValue,
+            Accion : ""
+          });
+
+          let rta = await this._onreadModel(oModel, oView, oPath, oEvent);
+          console.log(rta);
+
+          switch (rta.Tipo) {
+            case "01":
+              this._onShowMsg1(oEvent);
+              break;
+            case "02":
+              this._onShowMsg2(oEvent);
+              break;
+            case "03":
+              this._onShowMsg3(oEvent);
+              break;
+
+            case "":
+              this.onLlevarDestino(oEvent);
+
+              break;
+
+            default:
+              break;
+          }
+          oMockModel.setProperty("/Traslado", rta);
+        },
+
+        // Ingreso por TrasladoSinEtiqueta  *************************************
+
+        onMaterialScan: function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oValue = oEvent.getSource().getValue(),
+            oData = oMockModel.getProperty("/TrasladoSinEtiqueta");
+          oMaterial = oData.Cantidad;
+          if (oValue !== oMaterial) {
+            this._onShowMsg6(oEvent);
+          } else {
+          }
+        },
+
+        onCantidadScan: function (oEvent) {
+          if (oEvent.getSource().getValue().length < 1) return;
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oValue = oEvent.getSource().getValue(),
+            oView = this.getView(),
+            oData = oMockModel.getProperty("/TrasladoSinEtiqueta");
+          oCantidad = oData.Cantidad;
+          if (oValue !== oCantidad) {
+            this._onShowMsg7(oEvent);
+          } else {
+            this.onValidTrasladoSinEtiqueta();
+          }
+        },
+
+         // Ingreso por Datos en comun  ******************************************
+
+         onInputOrigenSubmit: async function (oEvent) {
+          if (oEvent.getSource().getValue().length < 1) return;
+
+          let oValue = oEvent.getSource().getValue(),
+            oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oData = oMockModel.getProperty("/Traslado");
+
+          if (oValue !== oData.Origen) {
+
+            this._onShowMsg4(oEvent);
+
+          } else {
+            // this.onValidTraslado();
+          }
+        },
+
+        onInputDestinoSubmit: async function (oEvent) {
+          if (oEvent.getSource().getValue().length < 1) return;
+
+          let oValue = oEvent.getSource().getValue(),
+            oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oData = oMockModel.getProperty("/Traslado");
+
+          if (oValue !== oData.Destino) {
+            // this._onShowMsg4(oEvent);
+          } else {
+            this.onValidTraslado();
+          }
+        },
+
+
+        // Validaciones *****************************
+
+        onValidTraslado: function () {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oData = oMockModel.getProperty("/Traslado"),
+            oScan = oMockModel.getProperty("/TrasladoScan"),
+            oPallet = oData.Pallet,
+            oDestino = oData.Destino,
+            oPalletScan = oScan.Pallet,
+            oDestinoScan = oScan.Destino;
+          if (
+            oPallet.trim() === oPalletScan.trim() &&
+            oDestino.trim() === oDestinoScan.trim()
+          ) {
+            oMockModel.setProperty("/AlmValidTraslado", true);
+          } else {
+            oMockModel.setProperty("/AlmValidTraslado", false);
+          }
         },
 
         onTrasladoContinuar: function () {
