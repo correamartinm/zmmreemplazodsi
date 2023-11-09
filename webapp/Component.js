@@ -100,7 +100,10 @@ sap.ui.define(
               Cantidad: "20",
             },
           ],
-          Almacenamiento: {},
+          Almacenamiento: {
+            Pallet: "",
+            Destino: ""
+          },
           AlmacenamientoScan: {
             Pallet: "",
             Destino: "",

@@ -18,6 +18,7 @@ sap.ui.define(
         },
 
         _onObjectMatched: async function (evt) {
+          this.onClearScreen();
           let oModel = this.getOwnerComponent().getModel(),
             oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oView = this.getView(),
@@ -32,7 +33,6 @@ sap.ui.define(
           // rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
 
           rta = await this._onreadModel(oModel, oView, oPath);
-          debugger;
 
           if (rta.length > 0) {
             oMockModel.setProperty("/Devolucion", rta);
@@ -44,23 +44,19 @@ sap.ui.define(
         },
         onClearScreen: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
-          oMockModel.setProperty("/Almacenamiento", {});
+          oMockModel.setProperty("/Almacenamiento", {
+            Pallet: "",
+            Destino: "",
+          });
           oMockModel.setProperty("/Devolucion", {});
           oMockModel.setProperty("/AlmacenamientoScan", {});
-          oMockModel.setProperty("/DevolucionScan", {});
+          oMockModel.setProperty("/DevolucionScan", { Material: "" });
           oMockModel.setProperty("/EtiquIngxPallets", false);
 
           oMockModel.setProperty("/AlmValidAlmacenamiento", false);
           oMockModel.setProperty("/AlmValidDevolucion", false);
 
-          // this.getView().byId("idAlmPalletScan").setValue(null);
-          // this.getView().byId("idAlmDestinoScan").setValue(null);
-          // this.getView().byId("idAlmDevPalletMaterial").setValue(null);
-          // this.getView().byId("idAlmDevPalletCantidad").setValue(null);
-          // this.getView().byId("idAlmDevDestinoScan").setValue(null);
-
-          this._onObjectMatched();
-          // this._onFocusControl(this.getView().byId("idAlmPalletScan"));
+          // this._onObjectMatched();
         },
 
         onIngresaxPallet: function () {
@@ -102,7 +98,7 @@ sap.ui.define(
               break;
 
             case "":
-              this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
+              this.onLlevarDestino(oEvent);
 
               break;
 
@@ -117,12 +113,7 @@ sap.ui.define(
 
           let oValue = oEvent.getSource().getValue(),
             oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView(),
-            oData = oMockModel.getProperty("/Almacenamiento"),
-            oPath = oModel.createKey("/AlmacenamientoSet", {
-              Pallet: oData.Pallet,
-            });
+            oData = oMockModel.getProperty("/Almacenamiento");
 
           if (oValue !== oData.Destino) {
             this._onShowMsg4(oEvent);
@@ -245,16 +236,19 @@ sap.ui.define(
             oView = this.getView(),
             oEntity = "/Almacenamiento";
           oData = oMockModel.getProperty("/Almacenamiento");
-          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+          // let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
         },
 
         onLlevarDestino: async function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView(),
-            oEntity = "/Almacenamiento";
-          oData = oMockModel.getProperty("/Almacenamiento");
-          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+            oData = oMockModel.getProperty("/Almacenamiento");
+          oData.Pallet = oData.Pallet.trim();
+          if (oData.Destino === "Zona intermedia") {
+            oMockModel.setProperty("/AlmacenamientoScan", oData);
+            this.onValidAlmacenamiento();
+          } else {
+            this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
+          }
         },
 
         _onShowMsg1: function (oEvent) {
@@ -267,8 +261,7 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            this.onClearScreen();
           });
         },
 
@@ -282,8 +275,7 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            this.onClearScreen();
           });
         },
 
@@ -303,8 +295,7 @@ sap.ui.define(
           this._onShowMsgBox(objectMsg).then((rta) => {
             switch (rta) {
               case this._i18n().getText("btnvolver"):
-                oEvent.getSource().setValue("");
-                this._onFocusControl(oEvent.getSource());
+                this.onClearScreen();
                 break;
 
               case this._i18n().getText("btnllevardestino"):
@@ -332,8 +323,7 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            this.onClearScreen();
           });
         },
 

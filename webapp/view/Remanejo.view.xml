@@ -10,7 +10,7 @@
         <customHeader>
             <Bar class="custHeader" design="Header">
                 <contentLeft>
-                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                    <Button type="Critical" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
                 </contentLeft>
                 <contentMiddle>
                     <ObjectIdentifier />
@@ -32,12 +32,12 @@
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>
-                    <Button text="1" type="Emphasized"  press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
-                    <Button text="2" type="Emphasized"  press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
-                    <Button text="3" type="Emphasized"  press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
-                    <Button text="4" type="Emphasized"  press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
+                    <Button text="1" type="Emphasized" press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
+                    <Button text="2" type="Emphasized" press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
+                    <Button text="3" type="Emphasized" press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
+                    <Button text="4" type="Emphasized" press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
 
-                  
+
                 </content>
             </Toolbar>
 
@@ -84,37 +84,37 @@
 
             <form:Form editable="true">
                 <form:layout>
-                    <form:ColumnLayout  columnsL="1" columnsXL="1" labelCellsLarge="1"/>
+                    <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="1"/>
                 </form:layout>
                 <form:formContainers>
-        
+
                     <form:FormContainer>
                         <form:formElements>
-        
-                            <form:FormElement label="{i18n>lblmaterial}"  visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
+
+                            <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
                                 <form:fields>
-                                    <Input id="idRemanejoMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>  
+                                    <Input id="idRemanejoMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-                            <form:FormElement  visible="{= ${mockdata>/Remanejo} === 3 }" >
+
+                            <form:FormElement visible="{= ${mockdata>/Remanejo} === 3 }">
                                 <form:fields>
                                     <Text text="{i18n>ttdescmaterial}" class="cursiva" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-        
-        
-        
-        
+
+
+
+
+
                         </form:formElements>
-        
+
                     </form:FormContainer>
-        
+
                     <!-- Fin de do Contenedor -->
-        
+
                 </form:formContainers>
             </form:Form>
 
@@ -163,9 +163,9 @@
         <footer >
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
+                <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }" press="_onGotoMainMenu"/>
+                <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }" press="_onGotoMainMenu"/>
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
 
                 <ToolbarSpacer/>

@@ -8,7 +8,7 @@
         <customHeader>
             <Bar class="custHeader" design="Header">
                 <contentLeft>
-                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                    <Button type="Critical" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
                 </contentLeft>
                 <contentMiddle>
                     <ObjectIdentifier />
@@ -48,97 +48,97 @@
 
             <form:Form editable="true">
                 <form:layout>
-                    <form:ColumnLayout  columnsL="1" columnsXL="1" labelCellsLarge="1"/>
+                    <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="1"/>
                 </form:layout>
                 <form:formContainers>
-        
+
                     <form:FormContainer>
                         <form:formElements>
-        
-                            <form:FormElement label="{i18n>labelpallet}" visible="{= ${mockdata>/Etiquetado} === true }" >
+
+                            <form:FormElement label="{i18n>labelpallet}" visible="{= ${mockdata>/Etiquetado} === true }">
                                 <form:fields>
                                     <Input id="idMovPalletInput" submit="onPalletScan" value="{mockdata>/Traslado/Tpalletcodigo}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-                            <form:FormElement  visible="{= ${mockdata>/Etiquetado} === true }" >
+
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === true }">
                                 <form:fields>
                                     <Text text="{mockdata>/Traslado/Tmaterialdesc}" class="cursiva" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-                            <form:FormElement  label="{i18n>lblmaterial}" visible="{= ${mockdata>/Etiquetado} === false }">
+
+                            <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
                                     <Input id="idTraPalletMaterial" submit="onPalletScan" value="{mockdata>/Traslado/Tmaterialcodigo}" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
+
                             <form:FormElement label="{i18n>lblcantidad}" visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
                                     <Input id="idTraPalletCantidad" submit="onPalletScan" value="{mockdata>/Traslado/Tcantidad}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
+
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Traslado/Totnumero}" />
-        
-                                        <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Traslado/Tetapa}" />
+
+                                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Traslado/Tetapa}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-        
-                         
-        
+
+
+
+
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Traslado/Torigen}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-        
+
+
                             <form:FormElement >
                                 <form:fields>
                                     <Input submit="onInputScanSubmit" value="{mockdata>/Traslado/Tvalorigen}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
+
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Traslado/Tdestino}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
+
                             <form:FormElement >
                                 <form:fields>
                                     <Input submit="onInputScanSubmit" value="{mockdata>/Traslado/Tvaldestino}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
+
                             <form:FormElement >
                                 <form:fields>
                                     <Text text="{mockdata>/Traslado/Talmacendesc}" class="cursiva" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-        
-        
+
+
+
                         </form:formElements>
-        
+
                     </form:FormContainer>
-        
+
                     <!-- Fin de do Contenedor -->
-        
+
                 </form:formContainers>
             </form:Form>
 
@@ -148,14 +148,15 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
+                <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" press="_onGotoMainMenu"/>
+                <!-- text="{i18n>btncancelar}" -->
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnconetiqueta}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === false }"/>
-                <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
+                <Button text="{i18n>btnconetiqueta}" press="onEtiquetado" type="Emphasized" width="28%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === false }"/>
+                <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="28%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
                 <Button text="{i18n>btnbuscar}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
-                <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="22%"/>
+
+                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="23%"/>
 
             </OverflowToolbar>
         </footer>

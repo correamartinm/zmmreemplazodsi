@@ -8,7 +8,7 @@
         <customHeader>
             <Bar class="custHeader" design="Header">
                 <contentLeft>
-                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                    <Button type="Critical" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
 
                 </contentLeft>
                 <contentMiddle>
@@ -43,7 +43,7 @@
 
                                 <form:FormElement label="{i18n>lblingresepallet}">
                                     <form:fields>
-                                        <Input name="inPallet" id="idAlmPalletScan" submit="onInputPalleScanSubmit" value="{mockdata>/AlmacenamientoScan/Pallet}" type="Number" />
+                                        <Input name="inPallet" id="idAlmPalletScan" submit="onInputPalleScanSubmit" value="{mockdata>/AlmacenamientoScan/Pallet}" enabled="{= ${mockdata>/Almacenamiento/Pallet} === '' }" type="Number" />
 
                                     </form:fields>
 
@@ -81,7 +81,7 @@
                                 <form:FormElement  >
                                     <form:fields>
 
-                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Text" value="{mockdata>/AlmacenamientoScan/Destino}"/>
+                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Text" value="{mockdata>/AlmacenamientoScan/Destino}" enabled="{= ${mockdata>/Almacenamiento/Pallet} !== '' }"/>
 
 
 
@@ -130,7 +130,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <Input id="idAlmDevPalletMaterial" submit="onMaterialScan" value="{mockdata>/DevolucionScan/Material}" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code" />
+                                        <Input id="idAlmDevPalletMaterial" submit="onMaterialScan" value="{mockdata>/DevolucionScan/Material}" enabled="{= ${mockdata>/DevolucionScan/Material} === '' }" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code" />
                                     </form:fields>
                                 </form:FormElement>
 
@@ -144,7 +144,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <Input id="idAlmDevPalletCantidad" submit="onCantidadScan" value="{mockdata>/DevolucionScan/Cantidad}"/>
+                                        <Input id="idAlmDevPalletCantidad" submit="onCantidadScan" value="{mockdata>/DevolucionScan/Cantidad}" enabled="{= ${mockdata>/DevolucionScan/Material} !== '' }"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->
@@ -204,10 +204,11 @@
         <footer>
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="27%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
+                <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" press="_onGotoMainMenu"/>
+                <!-- text="{i18n>btncancelar}" -->
                 <ToolbarSpacer/>
-                <Button text="{i18n>btningpallet}" type="Emphasized" press="onIngresaxPallet" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" />
+                <Button text="{i18n>btningpallet}" type="Emphasized" press="onIngresaxPallet" width="27%" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" width="27%" />
                 <ToolbarSpacer/>
                 <Button text="{i18n>btncontinuar}" tooltip="={mockdata>/AlmValidAlmacenamiento}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidAlmacenamiento}" press="onConfirmaAlmacenamiento" visible="{= ${mockdata>/EtiquIngxPallets} === false }"/>
                 <Button text="{i18n>btncontinuar}" tooltip="={mockdata>/AlmValidDevolucion}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidDevolucion}" press="onConfirmaDevolucion" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>

@@ -39,7 +39,7 @@ sap.ui.define(
         },
 
         _onFocusControl: function (oControl) {
-          jQuery.sap.delayedCall(700, this, function () {
+          jQuery.sap.delayedCall(600, this, function () {
             oControl.focus();
           });
         },

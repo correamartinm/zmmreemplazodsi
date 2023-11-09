@@ -2,8 +2,6 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:form="sap.ui.layout.form"
     xmlns:core="sap.ui.core"
-    xmlns:card="sap.f.cards"
-    xmlns:f="sap.f"
     xmlns="sap.m">
 
 
@@ -11,8 +9,8 @@
         <customHeader>
             <Bar class="custHeader" design="Header">
                 <contentLeft>
-                    <Button type="Emphasized" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
-
+                    <Button type="Critical" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
+                  
                 </contentLeft>
                 <contentMiddle>
                     <ObjectIdentifier />
@@ -31,7 +29,7 @@
                 <ToolbarSpacer/>
             </OverflowToolbar>
 
-            <Toolbar visible="false" >
+            <Toolbar visible="false">
                 <content>
                     <Text text="Mensajes"/>
                     <ToolbarSpacer/>
@@ -54,16 +52,16 @@
                 <Label text="{i18n>lblposicion}: " />
                 <Label text="1/X" class="BigSize sapUiTinyMarginBegin"/>
             </HBox>
-            
+
             <form:Form editable="true">
                 <form:layout>
                     <form:ColumnLayout columnsM="1" columnsL="1" columnsXL="1" labelCellsLarge="2"/>
                 </form:layout>
                 <form:formContainers>
-        
+
                     <form:FormContainer>
                         <form:formElements>
-        
+
                             <form:FormElement label="{i18n>lblingreseot}">
                                 <form:fields>
                                     <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
@@ -71,18 +69,18 @@
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
+
                             <form:FormElement >
                                 <form:fields>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-                        
+
+
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXX" />
-                            
+
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -90,47 +88,47 @@
                             <form:FormElement >
                                 <form:fields>
                                     <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
-                            
+
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-                            <form:FormElement  label="{i18n>labelpallet}">
+
+                            <form:FormElement label="{i18n>labelpallet}">
                                 <form:fields>
                                     <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/Salida/Svalpalletcodigo}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-                            
-        
-                            <form:FormElement  label="{i18n>lbldestino}">
+
+
+                            <form:FormElement label="{i18n>lbldestino}">
                                 <form:fields>
                                     <!-- <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXX" /> -->
-                                     
-                                        <Text  text="XXXXXXXXXXX"/>
-                                        <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>  
-                                    
+
+                                    <Text text="XXXXXXXXXXX"/>
+                                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
+
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement  >
                                 <form:fields>
-                                    
+
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-        
-        
-        
-        
-        
+
+
+
+
+
                         </form:formElements>
-        
+
                     </form:FormContainer>
-        
+
                     <!-- Fin de do Contenedor -->
-        
+
                 </form:formContainers>
             </form:Form>
 
@@ -146,7 +144,7 @@
                 <VBox alignContent="Center" alignItems="Center">
 
                     <Button text="{i18n>btnleerpallet}" type="Default" width="100px"/>
-                        <Button text="{i18n>btnbuscar}" type="Default" width="100px" enabled="{mockdata>/inOTValidate}"/>
+                    <Button text="{i18n>btnbuscar}" type="Default" width="100px" enabled="{mockdata>/inOTValidate}"/>
 
                 </VBox>
 
@@ -166,12 +164,14 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
 
-                <Button text="{i18n>btncancelar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" press="_onGotoMainMenu"/>
-                    <ToolbarSpacer/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}"/>
-               
+                <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" press="_onGotoMainMenu"/>
+                <!-- text="{i18n>btncancelar}" -->
+
                 <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="22%" />
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="27%" enabled="{mockdata>/inOTValidate}"/>
+
+                <ToolbarSpacer/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" />
             </OverflowToolbar>
 
         </footer>
