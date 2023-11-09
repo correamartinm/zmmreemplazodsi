@@ -66,13 +66,11 @@ sap.ui.define(
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-                if (oEvent !== undefined){
-
+                if (oEvent !== undefined) {
                   oEvent.getSource().setValue(null);
                   that._onFocusControl(oEvent.getSource());
                   that._onErrorHandle(oError);
                 } else {
-               
                   that._onFocusControl(that.getView().byId("idAlmPalletScan"));
                 }
               },
@@ -82,62 +80,62 @@ sap.ui.define(
 
         _onfilterModel: function (oModel, oView, oEntity, oFilters) {
           return new Promise((resolve, reject) => {
-          oView.setBusy(true);
-          oModel.read(oEntity, {
-            filters: [oFilters],
-            success: jQuery.proxy(function (oData) {
-              oView.setBusy(false);
-              resolve(oData);
-            }, this),
-            error: function (oError) {
-              oView.setBusy(false);
-              resolve(oError);
-            },
+            oView.setBusy(true);
+            oModel.read(oEntity, {
+              filters: [oFilters],
+              success: jQuery.proxy(function (oData) {
+                oView.setBusy(false);
+                resolve(oData);
+              }, this),
+              error: function (oError) {
+                oView.setBusy(false);
+                resolve(oError);
+              },
+            });
           });
-        });
         },
 
         _oncreateModel: function (oModel, oView, oEntity, oPayload) {
-          oView.setBusy(true);
-          oModel.create(oEntity, oPayload, {
-            success: function (oData) {
-              oView.setBusy(false);
+          return new Promise((resolve, reject) => {
+            oView.setBusy(true);
+            let that = this;
+            oModel.create(oEntity, oPayload, {
+              success: function (oData) {
+                oView.setBusy(false);
+                resolve(oData);
+                oModel.refresh(true);
+              }.bind(this),
 
-              if (oData.Tipo === "E") {
-                // Error
-              } else {
-                oModel.refresh;
-                // Correcto
-              }
-            }.bind(this),
-
-            error: function (oError) {
-              oView.setBusy(false);
-
-              // Reiniciar
-            }.bind(this),
+              error: function (oError) {
+                oView.setBusy(false);
+                that._onErrorHandle(oError);
+                // Reiniciar
+              }.bind(this),
+            });
           });
         },
 
         onupdateModel: function (oModel, oView, oPath, oPayload) {
-          oView.setBusy(true);
-          oModel.update(oPath, oPayload, {
-            success: function (oData) {
-              oView.setBusy(false);
+          return new Promise((resolve, reject) => {
+            oView.setBusy(true);
+            oModel.update(oPath, oPayload, {
+              success: function (oData) {
+                oView.setBusy(false);
 
-              if (oData.Tipo === "E") {
-                // Error
-              } else {
-                oModel.refresh;
-                // Correcto
-              }
-            }.bind(this),
+                if (oData.Tipo === "E") {
+                  // Error
+                } else {
+                  oModel.refresh;
+                  // Correcto
+                }
+              }.bind(this),
 
-            error: function (oError) {
-              oView.setBusy(false);
+              error: function (oError) {
+                oView.setBusy(false);
 
-              // Reiniciar
-            }.bind(this),
+                // Reiniciar
+              }.bind(this),
+            });
           });
         },
 
@@ -158,10 +156,10 @@ sap.ui.define(
         _onErrorHandle: function (oError) {
           var oErrorMsg = JSON.parse(oError.responseText);
           var oText = oErrorMsg.error.message.value;
-          var oText = oErrorMsg.error.innererror.errordetails[0];
+          // var oText = oErrorMsg.error.innererror.errordetails[0];
           var sMessageTitle = this._i18n().getText("msgerror");
-          var oDta = JSON.parse(oError.responseText);
-          var oText = oDta.error.message.value;
+          // var oDta = JSON.parse(oError.responseText);
+          // var oText = oDta.error.message.value;
 
           let objectMsg = {
             titulo: sMessageTitle,
@@ -173,6 +171,7 @@ sap.ui.define(
 
           this._onShowMsgBox(objectMsg).then((rta) => {
             if (rta === "CLOSE") {
+              this.onClearScreen();
             }
           });
         },

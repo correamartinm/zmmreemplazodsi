@@ -31,9 +31,9 @@
 						</f:Card>
 
 
-						<f:Card class="sapUiTinyMarginBottom">
+						<f:Card class="sapUiTinyMarginBottom" >
 							<f:header>
-								<card:Header title="{i18n>btnsalidaventas} " iconSrc="./images/Salida.jpg" press="onGoOtSaliente" />
+								<card:Header title="{i18n>btnsalidaventas} " iconSrc="./images/Salida.jpg" press="onGoOtSaliente"  />
 							</f:header>
 						</f:Card>
 

@@ -31,7 +31,7 @@ sap.ui.define(
 
           // rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
 
-           rta = await this._onreadModel(oModel, oView, oPath);
+          rta = await this._onreadModel(oModel, oView, oPath);
           debugger;
 
           if (rta.length > 0) {
@@ -51,7 +51,7 @@ sap.ui.define(
           oMockModel.setProperty("/EtiquIngxPallets", false);
 
           oMockModel.setProperty("/AlmValidAlmacenamiento", false);
-          oMockModel.setProperty("/AlmValidDevolucnio", false);
+          oMockModel.setProperty("/AlmValidDevolucion", false);
 
           // this.getView().byId("idAlmPalletScan").setValue(null);
           // this.getView().byId("idAlmDestinoScan").setValue(null);
@@ -88,17 +88,22 @@ sap.ui.define(
           });
 
           let rta = await this._onreadModel(oModel, oView, oPath, oEvent);
-          debugger;
+          console.log(rta);
 
-          switch (rta.TipoMensaje) {
-            case "1":
+          switch (rta.Tipo) {
+            case "01":
               this._onShowMsg1(oEvent);
               break;
-            case "2":
+            case "02":
               this._onShowMsg2(oEvent);
               break;
-            case "3":
+            case "03":
               this._onShowMsg3(oEvent);
+              break;
+
+            case "":
+              this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
+
               break;
 
             default:
@@ -141,7 +146,6 @@ sap.ui.define(
           }
         },
 
-
         onCantidadScan: function (oEvent) {
           if (oEvent.getSource().getValue().length < 1) return;
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
@@ -176,13 +180,16 @@ sap.ui.define(
 
         onValidAlmacenamiento: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oData = oMockModel.getProperty("/Almacenamiento");
-          oScan = oMockModel.getProperty("/AlmacenamientoScan");
-          oPallet = oData.Pallet;
-          oDestino = oData.Destino;
-          oPalletScan = oScan.Pallet;
-          oDestinoScan = oScan.Destino;
-          if (oPallet === oPalletScan && oDestino === oDestinoScan) {
+            oData = oMockModel.getProperty("/Almacenamiento"),
+            oScan = oMockModel.getProperty("/AlmacenamientoScan"),
+            oPallet = oData.Pallet,
+            oDestino = oData.Destino,
+            oPalletScan = oScan.Pallet,
+            oDestinoScan = oScan.Destino;
+          if (
+            oPallet.trim() === oPalletScan.trim() &&
+            oDestino.trim() === oDestinoScan.trim()
+          ) {
             oMockModel.setProperty("/AlmValidAlmacenamiento", true);
           } else {
             oMockModel.setProperty("/AlmValidAlmacenamiento", false);
@@ -191,24 +198,23 @@ sap.ui.define(
 
         onValidDevolucion: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oData = oMockModel.getProperty("/Devolucion");
-          oScan = oMockModel.getProperty("/DevolucionScan");
-          oMaterial = oData.Ean11;
-          oCantidad = oData.Cantidad;
-          oDestino = oData.Destino;
-
-          oMaterialScan = oScan.Material;
-          oCantidadScan = oScan.Cantidad;
-          oDestinoScan = oScan.Destino;
+            oData = oMockModel.getProperty("/Devolucion"),
+            oScan = oMockModel.getProperty("/DevolucionScan"),
+            oMaterial = oData.Ean11,
+            oCantidad = oData.Cantidad,
+            oDestino = oData.Destino,
+            oMaterialScan = oScan.Material,
+            oCantidadScan = oScan.Cantidad,
+            oDestinoScan = oScan.Destino;
 
           if (
-            oMaterial === oMaterialScan &&
-            oDestino === oDestinoScan &&
-            oCantidad === oCantidadScan
+            oMaterial.trim() === oMaterialScan.trim() &&
+            oDestin.trim().trim() === oDestinoScan.trim() &&
+            oCantidad.trim() === oCantidadScan.trim()
           ) {
-            oMockModel.setProperty("/AlmValidDevolucnio", true);
+            oMockModel.setProperty("/AlmValidDevolucion", true);
           } else {
-            oMockModel.setProperty("/AlmValidDevolucnio", false);
+            oMockModel.setProperty("/AlmValidDevolucion", false);
           }
         },
 
@@ -216,19 +222,21 @@ sap.ui.define(
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
-            oEntity = "/Almacenamiento";
-          oPayload = oMockModel.getProperty("/Almacenamiento");
+            oEntity = "/AlmacenamientoSet",
+            oPayload = oMockModel.getProperty("/Almacenamiento");
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+          if (rta !== undefined > 0) this._onShowMsg5;
         },
 
         onConfirmaDevolucion: async function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
-            oEntity = "/Devolucion";
-          oPayload = oMockModel.getProperty("/Devolucion");
+            oEntity = "/DevolucionSet",
+            oPayload = oMockModel.getProperty("/Devolucion");
 
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+          if (rta !== undefined > 0) this._onShowMsg5;
         },
 
         onLlevarRemanejo: async function (oEvent) {
@@ -301,6 +309,7 @@ sap.ui.define(
 
               case this._i18n().getText("btnllevardestino"):
                 this.onLlevarDestino();
+                //  this._onFocusControl(oEvent.getSource());
                 break;
 
               case this._i18n().getText("btnllevarremanejo"):

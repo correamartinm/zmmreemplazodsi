@@ -81,7 +81,7 @@
                                 <form:FormElement  >
                                     <form:fields>
 
-                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Number" value="{mockdata>/AlmacenamientoScan/Destino}"/>
+                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Text" value="{mockdata>/AlmacenamientoScan/Destino}"/>
 
 
 
@@ -209,8 +209,8 @@
                 <Button text="{i18n>btningpallet}" type="Emphasized" press="onIngresaxPallet" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" />
                 <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidAlmacenamiento}" press="onConfirmaAlmacenamiento" visible="{= ${mockdata>/EtiquIngxPallets} === false }"/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidDevolucnio}" press="onConfirmaDevolucion" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
+                <Button text="{i18n>btncontinuar}" tooltip="={mockdata>/AlmValidAlmacenamiento}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidAlmacenamiento}" press="onConfirmaAlmacenamiento" visible="{= ${mockdata>/EtiquIngxPallets} === false }"/>
+                <Button text="{i18n>btncontinuar}" tooltip="={mockdata>/AlmValidDevolucion}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidDevolucion}" press="onConfirmaDevolucion" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
             </OverflowToolbar>
         </footer>
     </Page>

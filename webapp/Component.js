@@ -102,14 +102,14 @@ sap.ui.define(
           ],
           Almacenamiento: {},
           AlmacenamientoScan: {
-            Pallet : "",
-            Destino : ""
+            Pallet: "",
+            Destino: "",
           },
 
           DevolucionScan: {
-            Material : "",
-            Cantidad : "",
-            Destino : ""
+            Material: "",
+            Cantidad: "",
+            Destino: "",
           },
 
           Salida: {},
@@ -126,7 +126,7 @@ sap.ui.define(
           MainButtons: false,
           EtiquIngxPallets: false,
           AlmValidAlmacenamiento: false,
-          AlmValidDevolucnio: false,
+          AlmValidDevolucion: false,
           Devolucion: {},
         });
         this.setModel(oMockDataModel, "mockdata");
