@@ -110,10 +110,11 @@ sap.ui.define(
             oValue = oEvent.getSource().getValue(),
             oData = oMockModel.getProperty("/Traslado");
           oMaterial = oData.Cantidad;
-          
+
           if (oValue !== oMaterial) {
-            this._onShowMsg6(oEvent);
+            this._onShowMsg10(oEvent);
           } else {
+            this._onFocusControl(this.byId("idTraPalletCantidad"));
           }
         },
 
@@ -127,9 +128,9 @@ sap.ui.define(
           oCantidad = oData.Cantidad;
 
           if (oValue !== oCantidad) {
-            this._onShowMsg7(oEvent);
+            this._onShowMsg87(oEvent);
           } else {
-            this.onValidTrasladoSinEtiqueta();
+            this._onFocusControl(this.byId("idTraOrigen"));
           }
         },
 
@@ -143,9 +144,9 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Traslado");
 
           if (oValue !== oData.Origen) {
-            this._onShowMsg4(oEvent);
+            this._onShowMsg12(oEvent);
           } else {
-            // this.onValidTraslado();
+            this._onFocusControl(this.byId("idTraDestino"));
           }
         },
 
@@ -157,9 +158,20 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Traslado");
 
           if (oValue !== oData.Destino) {
-            // this._onShowMsg4(oEvent);
+            this._onShowMsg4(oEvent);
           } else {
+            this.onValidarMovimiento();
+          }
+        },
+
+        onValidarMovimiento: function () {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oData = oMockModel.getProperty("/Etiquetado");
+
+          if (oData === true) {
             this.onValidTraslado();
+          } else {
+            this.onValidTrasladoSinEtiqueta();
           }
         },
 
@@ -219,7 +231,7 @@ sap.ui.define(
             oEntity = "/AlmacenamientoSet",
             oPayload = oMockModel.getProperty("/Traslado");
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
-          if (rta !== undefined > 0);
+          if (rta !== undefined) this.onShowMessagesTraslado(rta);
         },
 
         onShowMessagesTraslado: function (rta) {
@@ -229,6 +241,17 @@ sap.ui.define(
               break;
             case "02":
               this._onShowMsg2();
+              break;
+
+            case "05":
+              this._onShowMsg5();
+              break;
+            case "06":
+              this._onShowMsg6();
+              break;
+
+            case "07":
+              this._onShowMsg7();
               break;
 
             default:
@@ -246,8 +269,7 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            this.onClearScreen();
           });
         },
         _onShowMsg2: function () {
@@ -260,8 +282,7 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            if (rta === "CLOSE") {
-            }
+            this.onClearScreen();
           });
         },
 
@@ -280,7 +301,7 @@ sap.ui.define(
           });
         },
 
-        _onShowMsg4: function () {
+        _onShowMsg4: function (oEvent) {
           let objectMsg = {
             titulo: this._i18n().getText("lbltraslado"),
             mensaje: this._i18n().getText("msgdestinonoesperado"),
@@ -290,8 +311,8 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
           });
         },
 
@@ -322,8 +343,12 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            if (rta === this._i18n().getText("btnvolver")) {
+              this.onClearScreen();
+            } else {
+              this.onClearScreen();
+              this.onBuscarOt();
+            }
           });
         },
 
@@ -337,11 +362,10 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            this.onClearScreen();
           });
         },
-        _onShowMsg8: function () {
+        _onShowMsg8: function (oEvent) {
           let objectMsg = {
             titulo: this._i18n().getText("lbltraslado"),
             mensaje: this._i18n().getText("msgcantidadnoesperada"),
@@ -350,12 +374,16 @@ sap.ui.define(
               this._i18n().getText("btnvolver"),
               this._i18n().getText("btncantmenor"),
             ],
-            resaltar: this._i18n().getText("btnvolver"),
+            resaltar: this._i18n().getText("btncantmenor"),
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            if (rta === this._i18n().getText("btnvolver")) {
+              this.onClearScreen();
+            } else {
+              oEvent.getSource().setValue("");
+              this._onFocusControl(oEvent.getSource());
+            }
           });
         },
         _onShowMsg9: function () {
@@ -372,7 +400,7 @@ sap.ui.define(
             // }
           });
         },
-        _onShowMsg10: function () {
+        _onShowMsg10: function (oEvent) {
           let objectMsg = {
             titulo: this._i18n().getText("lbltraslado"),
             mensaje: this._i18n().getText("msgeanerrormaterial"),
@@ -382,8 +410,8 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
           });
         },
         _onShowMsg11: function () {
@@ -401,6 +429,20 @@ sap.ui.define(
           this._onShowMsgBox(objectMsg).then((rta) => {
             // if (rta === this._i18n().getText("btnvolver")) {
             // }
+          });
+        },
+        _onShowMsg12: function (oEvent) {
+          let objectMsg = {
+            titulo: this._i18n().getText("lbltraslado"),
+            mensaje: this._i18n().getText("msguborigen"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
           });
         },
       }

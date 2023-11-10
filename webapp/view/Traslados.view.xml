@@ -69,14 +69,26 @@
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
-                            <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Etiquetado} === false }">
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>lblmaterial}" text="{mockdata>/Traslado/Material} - {mockdata>/Traslado/DescripcionMaterial}" class="uptitle" />
+                                </form:fields>
+                            </form:FormElement>
+
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
                                     <Input id="idTraPalletMaterial" submit="onMaterialScan" value="{mockdata>/TrasladoScan/Material}" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
-                            <form:FormElement label="{i18n>lblcantidad}" visible="{= ${mockdata>/Etiquetado} === false }">
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/TrasladoScan/Cantidad}" class="uptitle" />
+                                </form:fields>
+                            </form:FormElement>
+
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
                                     <Input id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
                                 </form:fields>
@@ -97,7 +109,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Traslado/Origen}" />
+                                    <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Traslado/Origen}" class="uptitle"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -105,21 +117,21 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputOrigenSubmit" value="{mockdata>/TrasladoScan/Origen}"/>
+                                    <Input submit="onInputOrigenSubmit" id="idTraOrigen" value="{mockdata>/TrasladoScan/Origen}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Traslado/Destino}" />
+                                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Traslado/Destino}" class="uptitle" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputDestinoSubmit" value="{mockdata>/TrasladoScan/Destino}"/>
+                                    <Input submit="onInputDestinoSubmit"  id="idTraDestino" value="{mockdata>/TrasladoScan/Destino}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
