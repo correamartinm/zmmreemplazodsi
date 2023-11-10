@@ -78,6 +78,23 @@ sap.ui.define(
           });
         },
 
+        _onreadModelTraslado: function (oModel, oView, oPath) {
+          return new Promise((resolve, reject) => {
+            let that = this;
+            oView.setBusy(true);
+            oModel.read(oPath, {
+              success: jQuery.proxy(function (oData) {
+                oView.setBusy(false);
+                resolve(oData);
+              }, this),
+              error: function (oError) {
+                oView.setBusy(false);
+
+              },
+            });
+          });
+        },
+
         _onfilterModel: function (oModel, oView, oEntity, oFilters) {
           return new Promise((resolve, reject) => {
             oView.setBusy(true);
