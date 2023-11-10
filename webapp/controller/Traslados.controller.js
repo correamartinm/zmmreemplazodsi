@@ -27,57 +27,55 @@ sap.ui.define(
             Pallet: "",
             Destino: "",
           });
-          oMockModel.setProperty("/TrasladoSinEtiqueta", {});
-
           oMockModel.setProperty("/TrasladoScan", {});
-          oMockModel.setProperty("/TrasladoSinEtiquetaScan", { Material: "" });
-          
-
+          oMockModel.setProperty("/Etiquetado", true);
           oMockModel.setProperty("/AlmValidTraslado", false);
           oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", false);
 
           // this._onObjectMatched();
         },
 
-        onEtiquetado: function () {
+        onEtiquetado: async function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
           let oValue = oMockModel.getProperty("/Etiquetado");
           oMockModel.setProperty("/Etiquetado", !oValue);
 
           if (!oValue === false) {
-            let 
-            oModel = this.getOwnerComponent().getModel(),
+            let oModel = this.getOwnerComponent().getModel(),
+              oView = this.getView();
+
+            let oPath = oModel.createKey("/TrasladoSet", {
+              Ot: "",
+              Posicion: "",
+              Pallet: "",
+              Accion: "S",
+            });
+
+            let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+            if (rta !== undefined) {
+              oMockModel.setProperty("/Traslado", rta);
+            }
+            this._onFocusControl(this.byId("idTraPalletMaterial"));
+          } else {
+            this.onClearScreen();
+            this._onFocusControl(this.byId("idMovPalletInput"));
+          }
+        },
+
+        onBuscarOt: async function () {
+          let oModel = this.getOwnerComponent().getModel(),
             oView = this.getView();
 
           let oPath = oModel.createKey("/TrasladoSet", {
             Ot: "",
             Posicion: "",
             Pallet: "",
-            Accion: "S",
+            Accion: "B",
           });
 
           let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-          
+
           oMockModel.setProperty("/Traslado", rta);
-        }
-
-        },
-
-        onBuscarOt: async function () {
-          let 
-          oModel = this.getOwnerComponent().getModel(),
-          oView = this.getView();
-
-        let oPath = oModel.createKey("/TrasladoSet", {
-          Ot: "",
-          Posicion: "",
-          Pallet: "",
-          Accion: "B",
-        });
-
-        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-        
-        oMockModel.setProperty("/Traslado", rta);
         },
 
         onInputPalleScanSubmit: async function (oEvent) {
@@ -98,26 +96,8 @@ sap.ui.define(
 
           let rta = await this._onreadModelTraslado(oModel, oView, oPath);
           console.log(rta);
+          this.onShowMessagesTraslado(rta);
 
-          switch (rta.Tipo) {
-            case "01":
-              this._onShowMsg1(oEvent);
-              break;
-            case "02":
-              this._onShowMsg2(oEvent);
-              break;
-            case "03":
-              this._onShowMsg3(oEvent);
-              break;
-
-            case "":
-              this.onLlevarDestino(oEvent);
-
-              break;
-
-            default:
-              break;
-          }
           oMockModel.setProperty("/Traslado", rta);
         },
 
@@ -128,8 +108,9 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oValue = oEvent.getSource().getValue(),
-            oData = oMockModel.getProperty("/TrasladoSinEtiqueta");
+            oData = oMockModel.getProperty("/Traslado");
           oMaterial = oData.Cantidad;
+          
           if (oValue !== oMaterial) {
             this._onShowMsg6(oEvent);
           } else {
@@ -142,8 +123,9 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oValue = oEvent.getSource().getValue(),
             oView = this.getView(),
-            oData = oMockModel.getProperty("/TrasladoSinEtiqueta");
+            oData = oMockModel.getProperty("/Traslado");
           oCantidad = oData.Cantidad;
+
           if (oValue !== oCantidad) {
             this._onShowMsg7(oEvent);
           } else {
@@ -188,11 +170,15 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Traslado"),
             oScan = oMockModel.getProperty("/TrasladoScan"),
             oPallet = oData.Pallet,
+            oOrigen = oData.Origen,
             oDestino = oData.Destino,
             oPalletScan = oScan.Pallet,
+            oOrigenScan = oScan.Origen,
             oDestinoScan = oScan.Destino;
+
           if (
             oPallet.trim() === oPalletScan.trim() &&
+            oOrigen.trim() === oOrigenScan.trim() &&
             oDestino.trim() === oDestinoScan.trim()
           ) {
             oMockModel.setProperty("/AlmValidTraslado", true);
@@ -201,10 +187,53 @@ sap.ui.define(
           }
         },
 
-        onTrasladoContinuar: function () {
+        onValidTrasladoSinEtiqueta: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oTrasladoValues = oMockModel.getProperty("/Traslado");
-          oMockModel.setProperty("/Etiquetado", !oValue);
+            oData = oMockModel.getProperty("/Traslado"),
+            oScan = oMockModel.getProperty("/TrasladoScan"),
+            oMaterial = oData.Ean11,
+            oCantidad = oData.Cantidad,
+            oOrigen = oData.Origen,
+            oDestino = oData.Destino,
+            oMaterialScan = oScan.Material,
+            oCantidadScan = oScan.Cantidad,
+            oDestinoScan = oScan.Destino,
+            oOrigenScan = oScan.Origen;
+
+          if (
+            oMaterial.trim() === oMaterialScan.trim() &&
+            oCantidadScan.trim() === oCantidad.trim() &&
+            oOrigen.trim() === oOrigenScan.trim() &&
+            oDestino.trim() === oDestinoScan.trim()
+          ) {
+            oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", true);
+          } else {
+            oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", false);
+          }
+        },
+
+        onTrasladoContinuar: async function () {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oEntity = "/AlmacenamientoSet",
+            oPayload = oMockModel.getProperty("/Traslado");
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+          if (rta !== undefined > 0);
+        },
+
+        onShowMessagesTraslado: function (rta) {
+          switch (rta.Tipo) {
+            case "01":
+              this._onShowMsg1();
+              break;
+            case "02":
+              this._onShowMsg2();
+              break;
+
+            default:
+              break;
+          }
         },
 
         _onShowMsg1: function () {

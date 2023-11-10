@@ -154,7 +154,7 @@
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnconetiqueta}" press="onEtiquetado" type="Emphasized" width="28%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === false }"/>
                 <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="28%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
-                <Button text="{i18n>btnbuscar}" press="onEtiquetado" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
+                <Button text="{i18n>btnbuscar}" press="onBuscarOt" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
 
                 <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === false }" enabled="{mockdata>/AlmValidTraslado}"/>
                 <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoSinEtiquetaContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === true }" enabled="{mockdata>/AlmValidTrasladoSinEtiqueta}"/>
