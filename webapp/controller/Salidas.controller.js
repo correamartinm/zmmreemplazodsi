@@ -6,7 +6,7 @@ sap.ui.define(
    */
   function (BaseController, ValueState) {
     "use strict";
-
+    let oArrayOt = [];
     return BaseController.extend("morixe.zmmreemplazodsi.controller.Salidas", {
       onInit: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
@@ -16,53 +16,178 @@ sap.ui.define(
       },
 
       _onObjectMatched: function (evt) {
+        this.onClearScreen();
+      },
+
+      onClearScreen: function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        oMockModel.setProperty("/Salida", {
+          Pallet: "",
+          Destino: "",
+        });
+        // oArrayOt = [];
+        oMockModel.setProperty("/SalidaScan", {});
+        oMockModel.setProperty("/SalidaValida", false);
+
         this._onFocusControl(this.byId("idOtOutInput"));
       },
 
-      onPicking: function () {
-        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-          oActualValue = oMockModel.getProperty("/Picking");
-        oMockModel.setProperty("/Picking", !oActualValue);
-      },
-      onPikingData: function (oEvent) {
-        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-          obj = oEvent.getSource().getBindingContext("mockdata").getObject(),
-          oItem = {
-            Spalletcodigo: obj.PALLET,
-            Sotnumero: obj.OT,
-            Setapa: obj.ETAPA,
-            Svalpalletcodigo: "",
-            Sorigen: obj.ORIGEN,
-            Svalorigen: "",
-            Sdestino: obj.DESTINO,
-            Svaldestino: "",
-            Smaterialcodigo: "",
-            Smaterialdesc: "",
-          };
-        oMockModel.setProperty("/Salida", oItem);
-        this.onPicking();
+      onInputOtScanSubmit: async function () {
+        let oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView();
+
+        let oPath = oModel.createKey("/SalidaSet", {
+          Ot: "",
+          Posicion: "",
+          Pallet: "",
+          Accion: "B",
+        });
+
+        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+        if (rta !== undefined) {
+          oMockModel.setProperty("/Salida", rta);
+          this._onFocusControl(this.byId("idTraPalletMaterial"));
+        }
       },
 
-      onCancelPicking: function () {
-        this._onResetPikingData();
-        this.onPicking();
-      },
-      _onResetPikingData: function () {
-        let oMockModel = this.getOwnerComponent().getModel("mockdata");
-        oMockModel.setProperty("/Salida", []);
-      },
+      onInputScanOrigenSubmit: async function (oEvent) {
+        if (oEvent.getSource().getValue().length < 1) return;
 
-      onInputOtScanSubmit: function (oEvent) {
         let oValue = oEvent.getSource().getValue(),
+          oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oData = oMockModel.getProperty("/Salida");
+
+        if (oValue !== oData.Origen) {
+          this._onShowMsg12(oEvent);
+        } else {
+          this._onFocusControl(this.byId("idSalPalletScan"));
+        }
+      },
+
+      idSalDestinoScanSubmit: async function (oEvent) {
+        if (oEvent.getSource().getValue().length < 1) return;
+
+        let oValue = oEvent.getSource().getValue(),
+          oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oData = oMockModel.getProperty("/Salida");
+
+        if (oValue !== oData.Destino) {
+          this._onShowMsg4(oEvent);
+        } else {
+          this.onValidarMovimiento();
+        }
+      },
+
+
+      onInputOtScanSubmit: async function (oEvent) {
+        let oValue = oEvent.getSource().getValue();
+
+        if (oValue.length < 1) return;
+
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView();
+
+        let oPath = oModel.createKey("/SalidaSet", {
+          Ot: "",
+          Posicion: "",
+          Pallet: oValue,
+          Accion: "P",
+        });
+
+        let rta = await this._onreadModel(oModel, oView, oPath);
+        console.log(rta);
+        this.onShowMessagesSalida(rta);
+
+        oMockModel.setProperty("/Salida", rta);
+      },
+
+      onBuscar: async function () {
+        let oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView();
+
+        let oPath = oModel.createKey("/TrasladoSet", {
+          Ot: "",
+          Posicion: "",
+          Pallet: "",
+          Accion: "B",
+        });
+
+        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+
+        oMockModel.setProperty("/Traslado", rta);
+      },
+
+      onLeerPallet: async function () {
+        let oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView();
+
+        let oPath = oModel.createKey("/TrasladoSet", {
+          Ot: "",
+          Posicion: "",
+          Pallet: "",
+          Accion: "B",
+        });
+
+        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+
+        oMockModel.setProperty("/Traslado", rta);
+      },
+
+      onValidaSalida: function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oData = oMockModel.getProperty("/Salida"),
+          oScan = oMockModel.getProperty("/SalidaScan"),
+          oPallet = oData.Pallet,
+          oOrigen = oData.Origen,
+          oDestino = oData.Destino,
+          oPalletScan = oScan.Pallet,
+          oOrigenScan = oScan.Origen,
+          oDestinoScan = oScan.Destino;
+
+        if (
+          oPallet.trim() === oPalletScan.trim() &&
+          oOrigen.trim() === oOrigenScan.trim() &&
+          oDestino.trim() === oDestinoScan.trim()
+        ) {
+          oMockModel.setProperty("/SalidaValida", true);
+        } else {
+          oMockModel.setProperty("/SalidaValida", false);
+        }
+      },
+
+      onSalidaContinuar: async function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oModel = this.getOwnerComponent().getModel(),
           oView = this.getView(),
-          oEntity = "/**********",
-          oTarget = oEvent.getSource();
-        if (oValue) {
-          oTarget.setValueState(ValueState.None);
-          // let oData = this_onreadModel(oModel, oView, oEntity);
-        } else {
-          oTarget.setValueState(ValueState.Error);
+          oEntity = "/AlmacenamientoSet",
+          oPayload = oMockModel.getProperty("/Salida");
+        let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+        if (rta !== undefined) this.onShowMessagesTraslado(rta);
+      },
+
+      onShowMessagesSalida: function (rta) {
+        switch (rta.Tipo) {
+          case "01":
+            this._onShowMsg1();
+            break;
+          case "02":
+            this._onShowMsg2();
+            break;
+
+          case "05":
+            this._onShowMsg5();
+            break;
+          case "06":
+            this._onShowMsg6();
+            break;
+
+          case "07":
+            this._onShowMsg7();
+            break;
+
+          default:
+            break;
         }
       },
 
@@ -86,8 +211,7 @@ sap.ui.define(
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgcodigo"),
           icono: sap.m.MessageBox.Icon.WARNING,
-          acciones: [
-            this._i18n().getText("btnvolver")          ],
+          acciones: [this._i18n().getText("btnvolver")],
           resaltar: this._i18n().getText("btnconfirm"),
         };
 
@@ -117,10 +241,7 @@ sap.ui.define(
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgposicionot"),
           icono: sap.m.MessageBox.Icon.WARNING,
-          acciones: [
-            this._i18n().getText("btnvolver")
-           
-          ],
+          acciones: [this._i18n().getText("btnvolver")],
           resaltar: this._i18n().getText("btnvolver"),
         };
 
@@ -166,7 +287,10 @@ sap.ui.define(
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgmovok"),
           icono: sap.m.MessageBox.Icon.SUCCESS,
-          acciones: [this._i18n().getText("btnvolver"), this._i18n().getText("btnsiguientepos")],
+          acciones: [
+            this._i18n().getText("btnvolver"),
+            this._i18n().getText("btnsiguientepos"),
+          ],
           resaltar: this._i18n().getText("btnvolver"),
         };
 

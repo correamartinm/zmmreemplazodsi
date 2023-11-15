@@ -10,7 +10,7 @@
             <Bar class="custHeader" design="Header">
                 <contentLeft>
                     <Button type="Critical" icon="sap-icon://nav-back" press="_onGotoMainMenu"/>
-                  
+
                 </contentLeft>
                 <contentMiddle>
                     <ObjectIdentifier />
@@ -50,7 +50,7 @@
             <HBox alignContent="Center" alignItems="Center" justifyContent="End" class="sapUiTinyMarginTop sapUiTinyMarginEnd">
 
                 <Label text="{i18n>lblposicion}: " />
-                <Label text="1/X" class="BigSize sapUiTinyMarginBegin"/>
+                <Label text="{mockdata>/Salida/Posicion}" class="BigSize sapUiTinyMarginBegin"/>
             </HBox>
 
             <form:Form editable="true">
@@ -65,7 +65,7 @@
                             <form:FormElement label="{i18n>lblingreseot}">
                                 <form:fields>
                                     <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
-                                    <ObjectStatus title="{i18n>lbletapa}" text="XXX" />
+                                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Salida/Etapa}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -79,7 +79,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lblorigen}" text="XXXXXXXXXXX" />
+                                    <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Salida/Origen}" class="uptitle" />
 
                                 </form:fields>
                             </form:FormElement>
@@ -87,26 +87,38 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
+                                    <Input submit="onInputScanOrigenSubmit" value="{mockdata>/SalidaScan/Origen}"/>
+
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+                            <form:FormElement >
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>labelpallet}" text="{mockdata>/Salida/Pallet}" class="uptitle" />
 
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
-                            <form:FormElement label="{i18n>labelpallet}">
+                            <form:FormElement >
                                 <form:fields>
-                                    <Input valueStateText="{i18n>msgdiferente}" name="inCodigo" id="idCodigoInput" submit="onInputScanSubmit" value="{mockdata>/Salida/Svalpalletcodigo}" />
+                                    <Input valueStateText="{i18n>msgdiferente}" id="idSalPalletScan" submit="onInputScanPalletSubmit" value="{mockdata>/SalidaScan/Pallet}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
-
-                            <form:FormElement label="{i18n>lbldestino}">
+                            <form:FormElement >
                                 <form:fields>
-                                    <!-- <ObjectStatus title="{i18n>lbldestino}" text="XXXXXXXXXXX" /> -->
+                                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Salida/Destino}" class="uptitle" />
 
-                                    <Text text="XXXXXXXXXXX"/>
-                                    <Input submit="onInputScanSubmit" value="{mockdata>/Salida/Svalorigen}"/>
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+
+                            <form:FormElement >
+                                <form:fields>
+
+                                    <Input submit="idSalDestinoScanSubmit" id="idSalDestinoScan" value="{mockdata>/SalidaScan/Destino}"/>
 
                                 </form:fields>
                             </form:FormElement>
@@ -144,7 +156,7 @@
                 <VBox alignContent="Center" alignItems="Center">
 
                     <Button text="{i18n>btnleerpallet}" type="Default" width="100px"/>
-                    <Button text="{i18n>btnbuscar}" type="Default" width="100px" enabled="{mockdata>/inOTValidate}"/>
+
 
                 </VBox>
 
@@ -168,10 +180,10 @@
                 <!-- text="{i18n>btncancelar}" -->
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" width="27%" enabled="{mockdata>/inOTValidate}"/>
-
-                <ToolbarSpacer/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="27%" />
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" width="24%" />
+                <Button text="{i18n>btnbuscar}" type="Emphasized" width="24%"/>
+             
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="24%" enabled="{mockdata>/SalidaValida}" press="onSalidaContinuar"/>
             </OverflowToolbar>
 
         </footer>

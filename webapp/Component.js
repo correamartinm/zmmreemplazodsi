@@ -109,21 +109,19 @@ sap.ui.define(
             Destino: "",
           },
 
+          Devolucion: {},
           DevolucionScan: {
             Material: "",
             Cantidad: "",
             Destino: "",
           },
 
-          Salida: {},
+          
           Traslado: {},
           TrasladoScan: {},
-
-          Remanejo: {
-            Rpalletcodigo: "",
-            Totnumero: "",
-            Tnuevonumero: "",
-          },
+          Salida: {},
+          SalidaScan: {},
+          Remanejo: {},
           ActiveCenter: "",
           Picking: false,
           Remanejo: 1,
@@ -135,9 +133,9 @@ sap.ui.define(
 
           AlmValidTraslado: false,
           AlmValidTrasladoSinEtiqueta: false,
+          SalidaValida: false
 
 
-          Devolucion: {},
         });
         this.setModel(oMockDataModel, "mockdata");
       },
