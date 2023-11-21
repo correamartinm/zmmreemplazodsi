@@ -15,8 +15,42 @@ sap.ui.define(
         oTarget.attachDisplay(this._onObjectMatched, this);
       },
 
-      _onObjectMatched: function (evt) {
+      _onObjectMatched: async function (evt) {
         this.onClearScreen();
+
+        let oModel = this.getOwnerComponent().getModel(),
+          oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oView = this.getView(),
+          oEntity = "/Salida",
+          rta,
+          oFilters = [];
+
+        // let oPath = oModel.createKey("/Salida", {
+        //   Pallet: "1234",
+        // });
+
+        // rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
+
+        // rta = await this._onreadModel(oModel, oView, oPath);
+
+        // if (rta.length > 0) {
+
+        // } else {
+
+        // }
+      },
+
+      onPalletRead: async function () {
+        this._onFocusControl(this.byId("idSalPalletScan"));
+
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oValue = oMockModel.getProperty("/SalidaxPallet");
+        oMockModel.setProperty("/SalidaxPallet", !oValue);
+        if (!oValue == true) {
+          this._onFocusControl(this.byId("idSalPalletScan"));
+        } else {
+          this.onClearScreen();
+        }
       },
 
       onClearScreen: function () {
@@ -28,6 +62,7 @@ sap.ui.define(
         // oArrayOt = [];
         oMockModel.setProperty("/SalidaScan", {});
         oMockModel.setProperty("/SalidaValida", false);
+        oMockModel.setProperty("/SalidaxPallet", false);
 
         this._onFocusControl(this.byId("idOtOutInput"));
       },
@@ -78,7 +113,6 @@ sap.ui.define(
         }
       },
 
-
       onInputOtScanSubmit: async function (oEvent) {
         let oValue = oEvent.getSource().getValue();
 
@@ -116,6 +150,39 @@ sap.ui.define(
         let rta = await this._onreadModelTraslado(oModel, oView, oPath);
 
         oMockModel.setProperty("/Traslado", rta);
+      },
+
+      onInputScanPalletSubmit: async function (oEvent) {
+        let oValue = oEvent.getSource().getValue();
+
+        if (oValue.length < 1) return;
+
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oModel = this.getOwnerComponent().getModel(),
+          oData = oMockModel.getProperty("/Salida"),
+          oTipoSalida = oMockModel.getProperty("/SalidaxPallet"),
+          oView = this.getView();
+
+        if (oTipoSalida === false) {
+          // Compara el pallet Scaneado
+          if (oValue !== oData.Pallet) {
+            this._onShowMsg4(oEvent);
+          }
+        } else {
+          //Busca Info por Pallet
+          let oPath = oModel.createKey("/SalidaSet", {
+            Ot: "",
+            Posicion: "",
+            Pallet: oValue,
+            Accion: "P",
+          });
+
+          let rta = await this._onreadModel(oModel, oView, oPath);
+          console.log(rta);
+          this.onShowMessagesSalida(rta);
+
+          oMockModel.setProperty("/Salida", rta);
+        }
       },
 
       onLeerPallet: async function () {

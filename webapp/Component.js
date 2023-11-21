@@ -120,6 +120,7 @@ sap.ui.define(
           Traslado: {},
           TrasladoScan: {},
           Salida: {},
+          SalidaxPallet: false,
           SalidaScan: {},
           Remanejo: {},
           ActiveCenter: "",

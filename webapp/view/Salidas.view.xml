@@ -64,7 +64,7 @@
 
                             <form:FormElement label="{i18n>lblingreseot}">
                                 <form:fields>
-                                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" />
+                                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" enabled="{= ${mockdata>/SalidaxPallet} === false }" />
                                     <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Salida/Etapa}" />
                                 </form:fields>
                             </form:FormElement>
@@ -87,7 +87,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputScanOrigenSubmit" value="{mockdata>/SalidaScan/Origen}"/>
+                                    <Input submit="onInputScanOrigenSubmit" value="{mockdata>/SalidaScan/Origen}" enabled="{= ${mockdata>/SalidaxPallet} === false }"/>
 
                                 </form:fields>
                             </form:FormElement>
@@ -155,7 +155,8 @@
 
                 <VBox alignContent="Center" alignItems="Center">
 
-                    <Button text="{i18n>btnleerpallet}" type="Default" width="100px"/>
+                    <Button text="{i18n>btnleerpallet}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === false }"/>
+                    <Button text="{i18n>btnleerot}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
 
 
                 </VBox>
