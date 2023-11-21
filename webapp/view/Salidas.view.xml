@@ -156,7 +156,7 @@
                 <VBox alignContent="Center" alignItems="Center">
 
                     <Button text="{i18n>btnleerpallet}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === false }"/>
-                    <Button text="{i18n>btnleerot}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
+                    <Button type="Emphasized" text="{i18n>btnleerot}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
 
 
                 </VBox>
