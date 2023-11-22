@@ -53,6 +53,7 @@ sap.ui.define(
 
             let rta = await this._onreadModelTraslado(oModel, oView, oPath);
             if (rta !== undefined) {
+              rta.Accion = "S";
               oMockModel.setProperty("/Traslado", rta);
             }
             this._onFocusControl(this.byId("idTraPalletMaterial"));
@@ -75,7 +76,10 @@ sap.ui.define(
 
           let rta = await this._onreadModelTraslado(oModel, oView, oPath);
 
-          oMockModel.setProperty("/Traslado", rta);
+          if (rta !== undefined) {
+            rta.Accion = "B";
+            oMockModel.setProperty("/Traslado", rta);
+          }
         },
 
         onInputPalleScanSubmit: async function (oEvent) {
@@ -98,23 +102,42 @@ sap.ui.define(
           console.log(rta);
           this.onShowMessagesTraslado(rta);
 
-          oMockModel.setProperty("/Traslado", rta);
+          if (rta !== undefined) {
+            rta.Accion = "P";
+            oMockModel.setProperty("/Traslado", rta);
+          }
         },
 
         // Ingreso por TrasladoSinEtiqueta  *************************************
 
-        onMaterialScan: function (oEvent) {
+        onMaterialScan: async function (oEvent) {
+          // va read MaterialesSet con lo que vino en el servicio + el scaneo
+
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oValue = oEvent.getSource().getValue(),
             oData = oMockModel.getProperty("/Traslado");
-          oMaterial = oData.Cantidad;
+          oDataScan = oMockModel.getProperty("/TrasladoScan");
+          oMaterial = oData.Material;
 
-          if (oValue !== oMaterial) {
-            this._onShowMsg10(oEvent);
+          let oPath = oModel.createKey("/MaterialSet", {
+            MaterialScan: oMaterial,
+            Ean11: oValue,
+          });
+
+          let rta = await this._onreadModelMaterial(oModel, oView, oPath);
+
+          if (rta.Respuesta === "OK") {
+            oDataScan.Cantidad = parseInt(oDataScan.Cantidad) + 1;
+            oDataScan.Cantidad = oDataScan.Cantidad.toString();
+            oMockModel.setProperty("/TrasladoScan", oDataScan);
+          }
+          if (oDataScan.Cantidad === oData.Cantidad) {
+            this._onFocusControl(this.byId("idTraDestino"));
           } else {
-            this._onFocusControl(this.byId("idTraPalletCantidad"));
+            oEvent.getSource().setValue("");
+            this._onFocusControl(this.byId(oEvent.getSource()));
           }
         },
 
@@ -128,9 +151,9 @@ sap.ui.define(
           oCantidad = oData.Cantidad;
 
           if (oValue !== oCantidad) {
-            this._onShowMsg87(oEvent);
+            this._onShowMsg8(oEvent);
           } else {
-            this._onFocusControl(this.byId("idTraOrigen"));
+            this._onFocusControl(this.byId("idTraDestino"));
           }
         },
 
@@ -151,16 +174,34 @@ sap.ui.define(
         },
 
         onInputDestinoSubmit: async function (oEvent) {
+          // Read DestinoValidacionSet
+
           if (oEvent.getSource().getValue().length < 1) return;
 
-          let oValue = oEvent.getSource().getValue(),
-            oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oValue = oEvent.getSource().getValue(),
             oData = oMockModel.getProperty("/Traslado");
+          oDataScan = oMockModel.getProperty("/TrasladoScan");
+          oMaterial = oData.Material;
 
-          if (oValue !== oData.Destino) {
-            this._onShowMsg4(oEvent);
-          } else {
-            this.onValidarMovimiento();
+          let oPath = oModel.createKey("/DestinoValidacionSet", {
+            Ot: oData.Ot,
+            Posicion: oData.Posicion,
+            Pallet: oData.Pallet,
+            Accion: oData.Accion,
+            Destino: oValue,
+          });
+
+          let rta = await this._onreadModelMaterial(oModel, oView, oPath);
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.Tipo === "") {
+              this.onValidarMovimiento();
+            } else {
+              this.onShowMessagesTraslado(rta.Datos);
+            }
           }
         },
 

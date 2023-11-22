@@ -77,20 +77,20 @@
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input id="idTraPalletMaterial" submit="onMaterialScan" value="{mockdata>/TrasladoScan/Material}" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input enabled="{= ${mockdata>/Traslado/Cantidad} !== {mockdata>/TrasladoScan/Cantidad} }" id="idTraPalletMaterial" submit="onMaterialScan" value="{mockdata>/TrasladoScan/Material}" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/TrasladoScan/Cantidad}" class="uptitle" />
+                                    <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/Traslado/Cantidad}" class="uptitle" />
                                 </form:fields>
                             </form:FormElement>
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
+                                    <Input enabled="{= ${mockdata>/Traslado/Cantidad} !== {mockdata>/TrasladoScan/Cantidad} }" id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->

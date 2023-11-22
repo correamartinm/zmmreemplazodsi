@@ -149,7 +149,7 @@
             <HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround" alignContent="Center" alignItems="Center">
 
                 <VBox alignContent="Center" alignItems="Center">
-                    <core:Icon src="sap-icon://navigation-left-arrow" color="blue" class="size2" press=""/>
+                    <core:Icon src="sap-icon://navigation-left-arrow" color="blue" class="size2" press="onPrevio"/>
                     <Label text="{i18n>btnanterior}" />
                 </VBox>
 
@@ -162,7 +162,7 @@
                 </VBox>
 
                 <VBox alignContent="Center" alignItems="Center">
-                    <core:Icon src="sap-icon://navigation-right-arrow" color="blue" class="size2" press=""/>
+                    <core:Icon src="sap-icon://navigation-right-arrow" color="blue" class="size2" press="onSiguiente"/>
                     <Label text="{i18n>btnsiguiente}" />
 
                 </VBox>
