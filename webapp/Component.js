@@ -118,7 +118,9 @@ sap.ui.define(
 
           
           Traslado: {},
-          TrasladoScan: {},
+          TrasladoScan: {
+            Cantidad: "0"
+          },
           Salida: {},
           SalidaxPallet: false,
           SalidaScan: {},

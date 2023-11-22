@@ -197,7 +197,7 @@ sap.ui.define(
           let rta = await this._onreadModelMaterial(oModel, oView, oPath);
 
           if (rta.Respuesta === "OK") {
-            if (rta.Datos.Tipo === "") {
+            if (rta.Datos.TipoMensaje === "S") {
               this.onValidarMovimiento();
             } else {
               this.onShowMessagesTraslado(rta.Datos);

@@ -77,7 +77,7 @@
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input enabled="{= ${mockdata>/Traslado/Cantidad} !== {mockdata>/TrasladoScan/Cantidad} }" id="idTraPalletMaterial" submit="onMaterialScan" value="{mockdata>/TrasladoScan/Material}" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input placeholder="{mockdata>/Traslado/Cantidad} - {mockdata>/TrasladoScan/Cantidad}" enabled="{= ${mockdata>/Traslado/Cantidad} !== ${mockdata>/TrasladoScan/Cantidad} &amp;&amp; ${mockdata>/TrasladoScan/Cantidad} !==  undefined }" id="idTraPalletMaterial" submit="onMaterialScan" value="{mockdata>/TrasladoScan/Material}" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -90,7 +90,7 @@
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input enabled="{= ${mockdata>/Traslado/Cantidad} !== {mockdata>/TrasladoScan/Cantidad} }" id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
+                                    <Input enabled="{= ${mockdata>/Traslado/Cantidad} !== ${mockdata>/TrasladoScan/Cantidad} &amp;&amp; ${mockdata>/TrasladoScan/Cantidad} !== undefined }" id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
