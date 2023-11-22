@@ -78,22 +78,6 @@ sap.ui.define(
           });
         },
 
-        _onreadModelMaterial: function (oModel, oView, oPath) {
-          return new Promise((resolve, reject) => {
-            let that = this;
-            oView.setBusy(true);
-            oModel.read(oPath, {
-              success: jQuery.proxy(function (oData) {
-                oView.setBusy(false);
-                resolve({Respuesta: "OK", Datos: oData});
-              }, this),
-              error: function (oError) {
-                oView.setBusy(false);
-                resolve({Respuesta: "ERROR", Datos: oError});
-              },
-            });
-          });
-        },
 
         _onreadModelTraslado: function (oModel, oView, oPath) {
           return new Promise((resolve, reject) => {
@@ -102,11 +86,11 @@ sap.ui.define(
             oModel.read(oPath, {
               success: jQuery.proxy(function (oData) {
                 oView.setBusy(false);
-                resolve(oData);
+                 resolve({Respuesta: "OK", Datos: oData});
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-
+                resolve({Respuesta: "ERROR", Datos: oError});
               },
             });
           });

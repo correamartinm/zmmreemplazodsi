@@ -18,7 +18,7 @@ sap.ui.define(
 
         _onObjectMatched: async function (evt) {
           this.onClearScreen();
-          this._onFocusControl(this.byId("idMovPalletInput"));
+        
         },
 
         onClearScreen: function () {
@@ -32,7 +32,7 @@ sap.ui.define(
           oMockModel.setProperty("/AlmValidTraslado", false);
           oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", false);
 
-          // this._onObjectMatched();
+          this._onFocusControl(this.byId("idMovPalletInput"));
         },
 
         onEtiquetado: async function () {
@@ -52,19 +52,24 @@ sap.ui.define(
             });
 
             let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-            if (rta !== undefined) {
-              rta.Accion = "S";
-              oMockModel.setProperty("/Traslado", rta);
+
+            if (rta.Respuesta === "OK") {
+              rta.Datos.Accion = "S";
+              oMockModel.setProperty("/Traslado", rta.Datos);
+            } else {
+              this._onErrorHandle(rta.Datos);
             }
+
             this._onFocusControl(this.byId("idTraPalletMaterial"));
           } else {
             this.onClearScreen();
-            this._onFocusControl(this.byId("idMovPalletInput"));
+           
           }
         },
 
         onBuscarOt: async function () {
           let oModel = this.getOwnerComponent().getModel(),
+            oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oView = this.getView();
 
           let oPath = oModel.createKey("/TrasladoSet", {
@@ -76,9 +81,12 @@ sap.ui.define(
 
           let rta = await this._onreadModelTraslado(oModel, oView, oPath);
 
-          if (rta !== undefined) {
-            rta.Accion = "B";
-            oMockModel.setProperty("/Traslado", rta);
+          if (rta.Respuesta === "OK") {
+            rta.Datos.Accion = "B";
+            oMockModel.setProperty("/Traslado", rta.Datos);
+            this._onFocusControl(this.byId("idMovPalletInput"));
+          } else {
+            this._onErrorHandle(rta.Datos);
           }
         },
 
@@ -102,9 +110,17 @@ sap.ui.define(
           console.log(rta);
           this.onShowMessagesTraslado(rta);
 
-          if (rta !== undefined) {
-            rta.Accion = "P";
-            oMockModel.setProperty("/Traslado", rta);
+          if (rta.Respuesta === "OK") {
+            rta.Datos.Accion = "P";
+            oMockModel.setProperty("/Traslado", rta.Datos);
+            if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03" ){
+              this._onFocusControl(this.byId("idTraDestino"));
+            } else {
+
+              this._onFocusControl(this.byId("idTraOrigen"));
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
           }
         },
 
@@ -126,13 +142,16 @@ sap.ui.define(
             Ean11: oValue,
           });
 
-          let rta = await this._onreadModelMaterial(oModel, oView, oPath);
+          let rta = await this._onreadModelTraslado(oModel, oView, oPath);
 
           if (rta.Respuesta === "OK") {
             oDataScan.Cantidad = parseInt(oDataScan.Cantidad) + 1;
             oDataScan.Cantidad = oDataScan.Cantidad.toString();
             oMockModel.setProperty("/TrasladoScan", oDataScan);
+          } else {
+            this._onErrorHandle(rta.Datos);
           }
+
           if (oDataScan.Cantidad === oData.Cantidad) {
             this._onFocusControl(this.byId("idTraDestino"));
           } else {
@@ -182,9 +201,9 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oValue = oEvent.getSource().getValue(),
-            oData = oMockModel.getProperty("/Traslado");
-          oDataScan = oMockModel.getProperty("/TrasladoScan");
-          oMaterial = oData.Material;
+            oData = oMockModel.getProperty("/Traslado"),
+            oDataScan = oMockModel.getProperty("/TrasladoScan"),
+            oMaterial = oData.Material;
 
           let oPath = oModel.createKey("/DestinoValidacionSet", {
             Ot: oData.Ot,
@@ -194,7 +213,7 @@ sap.ui.define(
             Destino: oValue,
           });
 
-          let rta = await this._onreadModelMaterial(oModel, oView, oPath);
+          let rta = await this._onreadModelTraslado(oModel, oView, oPath);
 
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje === "S") {
@@ -202,6 +221,8 @@ sap.ui.define(
             } else {
               this.onShowMessagesTraslado(rta.Datos);
             }
+          } else {
+            this._onErrorHandle(rta.Datos);
           }
         },
 
