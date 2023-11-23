@@ -118,6 +118,7 @@ sap.ui.define(
 
           
           Traslado: {},
+          TrasladoMaterialValidado: true,
           TrasladoScan: {
             Cantidad: "0"
           },
@@ -133,7 +134,6 @@ sap.ui.define(
           EtiquIngxPallets: false,
           AlmValidAlmacenamiento: false,
           AlmValidDevolucion: false,
-
           AlmValidTraslado: false,
           AlmValidTrasladoSinEtiqueta: false,
           SalidaValida: false

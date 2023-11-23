@@ -58,7 +58,7 @@ sap.ui.define(
             } else {
               this._onErrorHandle(rta.Datos);
             }
-
+            oMockModel.setProperty("/TrasladoMaterialValidado", true);
             this._onFocusControl(this.byId("idTraPalletMaterial"));
           } else {
             this.onClearScreen();
@@ -95,30 +95,36 @@ sap.ui.define(
 
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView();
+            oView = this.getView(),
+            oData = oMockModel.getProperty("/Traslado");
 
-          let oPath = oModel.createKey("/TrasladoSet", {
-            Ot: "",
-            Posicion: "",
-            Pallet: oValue,
-            Accion: "P",
-          });
-
-          let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-          console.log(rta);
-          this.onShowMessagesTraslado(rta);
-
-          if (rta.Respuesta === "OK") {
-            rta.Datos.Accion = "P";
-            oMockModel.setProperty("/Traslado", rta.Datos);
-            if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
-              this._onFocusControl(this.byId("idTraDestino"));
+          if  (oData.Pallet !== oValue){
+            let oPath = oModel.createKey("/TrasladoSet", {
+              Ot: "",
+              Posicion: "",
+              Pallet: oValue,
+              Accion: "P",
+            });
+  
+            let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+            console.log(rta);
+            this.onShowMessagesTraslado(rta);
+  
+            if (rta.Respuesta === "OK") {
+              rta.Datos.Accion = "P";
+              oMockModel.setProperty("/Traslado", rta.Datos);
+              if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
+                this._onFocusControl(this.byId("idTraDestino"));
+              } else {
+                this._onFocusControl(this.byId("idTraOrigen"));
+              }
             } else {
-              this._onFocusControl(this.byId("idTraOrigen"));
+              this._onErrorHandle(rta.Datos);
             }
-          } else {
-            this._onErrorHandle(rta.Datos);
+          }   else {
+            
           }
+
         },
 
         // Ingreso por TrasladoSinEtiqueta  *************************************
@@ -143,9 +149,11 @@ sap.ui.define(
 
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
+              oData.Ean11 = rta.Datos.Ean11;
               oDataScan.Cantidad = parseInt(oDataScan.Cantidad) + 1;
               oDataScan.Cantidad = oDataScan.Cantidad.toString();
               oMockModel.setProperty("/TrasladoScan", oDataScan);
+              oMockModel.setProperty("/Traslado", oData);
             } else {
               this.onShowMessagesTraslado(rta.Datos);
             }
@@ -167,13 +175,24 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oValue = oEvent.getSource().getValue(),
             oView = this.getView(),
-            oData = oMockModel.getProperty("/Traslado");
-          oCantidad = oData.Cantidad;
+            oData = oMockModel.getProperty("/Traslado"),
+            oDataScan = oMockModel.getProperty("/TrasladoScan"),
+            oCantidad = oData.Cantidad;
 
           if (oValue !== oCantidad) {
             this._onShowMsg8(oEvent);
           } else {
-            this._onFocusControl(this.byId("idTraDestino"));
+            if (
+              oDataScan.Ean11 !== undefined &&
+              oDataScan.Ean11 !== "" &&
+              oDataScan.Ean11 === oData.Ean11
+            ) {
+              oMockModel.setProperty("/TrasladoMaterialValidado", false);
+              this._onFocusControl(this.byId("idTraDestino"));
+            } else {
+              this._onFocusControl(this.byId("idTraPalletMaterial"));
+              oMockModel.setProperty("/TrasladoMaterialValidado", true);
+            }
           }
         },
 
@@ -309,30 +328,30 @@ sap.ui.define(
             case "03":
               this._onShowMsg3();
               break;
-
             case "05":
               this._onShowMsg5();
               break;
             case "06":
               this._onShowMsg6();
               break;
-
             case "07":
               this._onShowMsg7();
               break;
-              case "08":
+            case "08":
               this._onShowMsg8();
               break;
-              case "09":
+            case "09":
               this._onShowMsg9();
               break;
-              case "10":
-                this._onShowMsg10();
-                break;
-                case "11":
-                this._onShowMsg11();
-                break;
-
+            case "10":
+              this._onShowMsg10();
+              break;
+            case "11":
+              this._onShowMsg11();
+              break;
+            case "12":
+              this._onShowMsg12();
+              break;
             default:
               break;
           }
