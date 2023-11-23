@@ -84,6 +84,7 @@
                     <PropertyRef Name="Pallet"/>
                     <PropertyRef Name="Accion"/>
                     <PropertyRef Name="Destino"/>
+                    <PropertyRef Name="Caso"/>
                 </Key>
                 <Property Name="Ot" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Posicion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
