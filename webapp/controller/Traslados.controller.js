@@ -65,6 +65,49 @@ sap.ui.define(
           }
         },
 
+        onInputPalleScanSubmit: async function (oEvent) {
+          let oValue = oEvent.getSource().getValue();
+
+          if (oValue.length < 1) return;
+
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oData = oMockModel.getProperty("/Traslado");
+
+          if (oData.Accion === undefined) {
+            let oPath = oModel.createKey("/TrasladoSet", {
+              Ot: "",
+              Posicion: "",
+              Pallet: oValue,
+              Accion: "P",
+            });
+
+            let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+            console.log(rta);
+            this.onShowMessagesTraslado(rta);
+
+            if (rta.Respuesta === "OK") {
+              rta.Datos.Accion = "P";
+              oMockModel.setProperty("/Traslado", rta.Datos);
+              if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
+                this._onFocusControl(this.byId("idTraDestino"));
+              } else {
+                this._onFocusControl(this.byId("idTraOrigen"));
+              }
+            } else {
+              this._onErrorHandle(rta.Datos);
+            }
+          } else {
+            if (oData.Pallet !== oValue) {
+              this._onShowMsg3();
+            } else {
+              this._onFocusControl(this.byId("idTraDestino"));
+            }
+          }
+        },
+        
+        // Ingreso por Buscar *************************************
         onBuscarOt: async function () {
           let oModel = this.getOwnerComponent().getModel(),
             oMockModel = this.getOwnerComponent().getModel("mockdata"),
@@ -86,45 +129,6 @@ sap.ui.define(
           } else {
             this._onErrorHandle(rta.Datos);
           }
-        },
-
-        onInputPalleScanSubmit: async function (oEvent) {
-          let oValue = oEvent.getSource().getValue();
-
-          if (oValue.length < 1) return;
-
-          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView(),
-            oData = oMockModel.getProperty("/Traslado");
-
-          if  (oData.Pallet !== oValue){
-            let oPath = oModel.createKey("/TrasladoSet", {
-              Ot: "",
-              Posicion: "",
-              Pallet: oValue,
-              Accion: "P",
-            });
-  
-            let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-            console.log(rta);
-            this.onShowMessagesTraslado(rta);
-  
-            if (rta.Respuesta === "OK") {
-              rta.Datos.Accion = "P";
-              oMockModel.setProperty("/Traslado", rta.Datos);
-              if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
-                this._onFocusControl(this.byId("idTraDestino"));
-              } else {
-                this._onFocusControl(this.byId("idTraOrigen"));
-              }
-            } else {
-              this._onErrorHandle(rta.Datos);
-            }
-          }   else {
-            
-          }
-
         },
 
         // Ingreso por TrasladoSinEtiqueta  *************************************

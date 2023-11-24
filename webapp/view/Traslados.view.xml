@@ -25,23 +25,13 @@
                 <Label text="{i18n>btntraslados}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
-            <Toolbar visible="false">
+            <Toolbar >
                 <content>
-                    <Text text="Mensajes"/>
                     <ToolbarSpacer/>
-                    <Button text="1" type="Emphasized" press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
-                    <Button text="2" type="Emphasized" press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
-                    <Button text="3" type="Emphasized" press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
-                    <Button text="4" type="Emphasized" press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
-                    <Button text="5" type="Emphasized" press="_onShowMsg5" class="sapUiTinyMarginBegin"/>
-                    <Button text="6" type="Emphasized" press="_onShowMsg6" class="sapUiTinyMarginBegin"/>
-                    <Button text="7" type="Emphasized" press="_onShowMsg7" class="sapUiTinyMarginBegin"/>
-                    <Button text="8" type="Emphasized" press="_onShowMsg8" class="sapUiTinyMarginBegin"/>
-                    <Button text="9" type="Emphasized" press="_onShowMsg9" class="sapUiTinyMarginBegin"/>
-                    <Button text="10" type="Emphasized" press="_onShowMsg10" class="sapUiTinyMarginBegin"/>
-                    <Button text="11" type="Emphasized" press="_onShowMsg11" class="sapUiTinyMarginBegin"/>
-
-
+                  
+                    
+                    <Text text="{mockdata>/Traslado/Accion} - {mockdata>/Traslado/Caso}"/>
+                    <ToolbarSpacer/>
                 </content>
             </Toolbar>
 
@@ -57,8 +47,8 @@
 
                             <form:FormElement label="{i18n>labelpallet} " visible="{= ${mockdata>/Etiquetado} === true }">
                                 <form:fields>
-                                    <Text text="{mockdata>/Traslado/Pallet}" visible="{= ${mockdata>/Traslado/Pallet} !== '' &amp;&amp; ${mockdata>/Traslado/Pallet} !== undefined  }" class="cursiva" />
-                                    <Input id="idMovPalletInput" submit="onInputPalleScanSubmit" value="{mockdata>/TrasladoScan/Pallet}"/>
+                                    <!-- <Text text="{mockdata>/Traslado/Pallet}" visible="{= ${mockdata>/Traslado/Pallet} !== '' &amp;&amp; ${mockdata>/Traslado/Pallet} !== undefined  }" class="cursiva" /> -->
+                                    <Input id="idMovPalletInput" submit="onInputPalleScanSubmit" value="{mockdata>/TrasladoScan/Pallet}" description="{mockdata>/Traslado/Pallet}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
