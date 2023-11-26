@@ -78,6 +78,22 @@ sap.ui.define(
           });
         },
 
+        _onreadModelAlmacenamiento: function (oModel, oView, oPath) {
+          return new Promise((resolve, reject) => {
+            let that = this;
+            oView.setBusy(true);
+            oModel.read(oPath, {
+              success: jQuery.proxy(function (oData) {
+                oView.setBusy(false);
+                 resolve({Respuesta: "OK", Datos: oData});
+              }, this),
+              error: function (oError) {
+                oView.setBusy(false);
+                resolve({Respuesta: "ERROR", Datos: oError});
+              },
+            });
+          });
+        },
 
         _onreadModelTraslado: function (oModel, oView, oPath) {
           return new Promise((resolve, reject) => {
@@ -120,13 +136,13 @@ sap.ui.define(
             oModel.create(oEntity, oPayload, {
               success: function (oData) {
                 oView.setBusy(false);
-                resolve(oData);
+                resolve({Respuesta: "OK", Datos: oData});
                 oModel.refresh(true);
               }.bind(this),
 
               error: function (oError) {
                 oView.setBusy(false);
-                that._onErrorHandle(oError);
+                resolve({Respuesta: "ERROR", Datos: oError});
                 // Reiniciar
               }.bind(this),
             });
@@ -171,13 +187,19 @@ sap.ui.define(
           });
         },
 
+
+
+
         _onErrorHandle: function (oError) {
-          var oErrorMsg = JSON.parse(oError.responseText);
-          var oText = oErrorMsg.error.message.value;
-          // var oText = oErrorMsg.error.innererror.errordetails[0];
+          if (oError.Mensaje === undefined) {
+            var oErrorMsg = JSON.parse(oError.responseText);
+            var oText = oErrorMsg.error.message.value;
+          } else {
+            var oText = oError.Mensaje;
+          }
+          
           var sMessageTitle = this._i18n().getText("msgerror");
-          // var oDta = JSON.parse(oError.responseText);
-          // var oText = oDta.error.message.value;
+          
 
           let objectMsg = {
             titulo: sMessageTitle,

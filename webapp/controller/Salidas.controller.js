@@ -18,26 +18,6 @@ sap.ui.define(
       _onObjectMatched: async function (evt) {
         this.onClearScreen();
 
-        let oModel = this.getOwnerComponent().getModel(),
-          oMockModel = this.getOwnerComponent().getModel("mockdata"),
-          oView = this.getView(),
-          oEntity = "/Salida",
-          rta,
-          oFilters = [];
-
-        // let oPath = oModel.createKey("/Salida", {
-        //   Pallet: "1234",
-        // });
-
-        // rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
-
-        // rta = await this._onreadModel(oModel, oView, oPath);
-
-        // if (rta.length > 0) {
-
-        // } else {
-
-        // }
       },
 
       onPalletRead: async function () {
@@ -47,7 +27,7 @@ sap.ui.define(
           oValue = oMockModel.getProperty("/SalidaxPallet");
         oMockModel.setProperty("/SalidaxPallet", !oValue);
         if (!oValue == true) {
-          this._onFocusControl(this.byId("idSalPalletScan"));
+          this._onFocusControl(this.byId("idSalPalletScanV2"));
         } else {
           this.onClearScreen();
         }
@@ -67,7 +47,7 @@ sap.ui.define(
         this._onFocusControl(this.byId("idOtOutInput"));
       },
 
-      onInputOtScanSubmit: async function () {
+      onBuscar: async function () {
         let oModel = this.getOwnerComponent().getModel(),
           oView = this.getView();
 
@@ -79,9 +59,69 @@ sap.ui.define(
         });
 
         let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-        if (rta !== undefined) {
-          oMockModel.setProperty("/Salida", rta);
-          this._onFocusControl(this.byId("idTraPalletMaterial"));
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            rta.Accion = "B";
+            oMockModel.setProperty("/Salida", rta);
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
+        } else {
+          this._onErrorHandle(rta.Datos);
+        }
+      },
+
+      onLeerPallet: async function (oEvent) {
+        let oValue = oEvent.getSource().getValue();
+
+        let oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView();
+
+        let oPath = oModel.createKey("/SalidaSet", {
+          Ot: "",
+          Posicion: "",
+          Pallet: oValue,
+          Accion: "P",
+        });
+
+        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            rta.Accion = "P";
+            oMockModel.setProperty("/Salida", rta);
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
+        } else {
+          this._onErrorHandle(rta.Datos);
+        }
+      },
+
+      onInputOtScanSubmit: async function (oEvent) {
+        let oValue = oEvent.getSource().getValue();
+        let oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView();
+
+        let oPath = oModel.createKey("/SalidaSet", {
+          Ot: oValue,
+          Posicion: "",
+          Pallet: "",
+          Accion: "O",
+        });
+
+        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            oMockModel.setProperty("/Salida", rta);
+            this._onFocusControl(this.byId("idTraPalletMaterial"));
+          } else {
+            this._onShowMsg4(oEvent);
+          }
+        } else {
+          this._onErrorHandle(rta.Datos);
         }
       },
 
@@ -92,8 +132,8 @@ sap.ui.define(
           oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida");
 
-        if (oValue !== oData.Origen) {
-          this._onShowMsg12(oEvent);
+        if (oValue !== oData.OrigenValidacion) {
+          this._onShowMsg1(oEvent);
         } else {
           this._onFocusControl(this.byId("idSalPalletScan"));
         }
@@ -107,28 +147,30 @@ sap.ui.define(
         let oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oModel = this.getOwnerComponent().getModel(),
           oData = oMockModel.getProperty("/Salida"),
-          oTipoSalida = oMockModel.getProperty("/SalidaxPallet"),
           oView = this.getView();
 
-        if (oTipoSalida === false) {
-          // Compara el pallet Scaneado
-          if (oValue !== oData.Pallet) {
-            this._onShowMsg2(oEvent);
+        //Busca Info por Pallet
+        let oPath = oModel.createKey("/PalletValidacionSet", {
+          Material: oData.Material,
+          Pallet: oValue,
+          Entrega: oData.Entrega,
+          Almacen: oData.Almacen,
+        });
+
+        let rta = await this._onreadModel(oModel, oView, oPath);
+        console.log(rta);
+        
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            // oMockModel.setProperty("/Salida", rta);
+            this.onShowMessagesSalida(rta.Datos, oEvent);
+            this._onFocusControl(this.byId("idSalDestinoScan"));
+          } else {
+            this._onErrorHandle(rta.Datos);
           }
         } else {
-          //Busca Info por Pallet
-          let oPath = oModel.createKey("/SalidaSet", {
-            Ot: "",
-            Posicion: "",
-            Pallet: oValue,
-            Accion: "P",
-          });
-
-          let rta = await this._onreadModel(oModel, oView, oPath);
-          console.log(rta);
-          this.onShowMessagesSalida(rta);
-
-          oMockModel.setProperty("/Salida", rta);
+          this._onErrorHandle(rta.Datos);
         }
       },
 
@@ -139,70 +181,11 @@ sap.ui.define(
           oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida");
 
-        if (oValue !== oData.Destino) {
+        if (oValue !== oData.DestinoValidacion) {
           this._onShowMsg4(oEvent);
         } else {
           this.onValidarMovimiento();
         }
-      },
-
-      onInputOtScanSubmit: async function (oEvent) {
-        let oValue = oEvent.getSource().getValue();
-
-        if (oValue.length < 1) return;
-
-        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-          oModel = this.getOwnerComponent().getModel(),
-          oView = this.getView();
-
-        let oPath = oModel.createKey("/SalidaSet", {
-          Ot: "",
-          Posicion: "",
-          Pallet: oValue,
-          Accion: "P",
-        });
-
-        let rta = await this._onreadModel(oModel, oView, oPath);
-        console.log(rta);
-        this.onShowMessagesSalida(rta);
-
-        oMockModel.setProperty("/Salida", rta);
-      },
-
-      onPrevio: function () {},
-
-      onSiguiente: function () {},
-
-      onBuscar: async function () {
-        let oModel = this.getOwnerComponent().getModel(),
-          oView = this.getView();
-
-        let oPath = oModel.createKey("/TrasladoSet", {
-          Ot: "",
-          Posicion: "",
-          Pallet: "",
-          Accion: "B",
-        });
-
-        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-
-        oMockModel.setProperty("/Traslado", rta);
-      },
-
-      onLeerPallet: async function () {
-        let oModel = this.getOwnerComponent().getModel(),
-          oView = this.getView();
-
-        let oPath = oModel.createKey("/TrasladoSet", {
-          Ot: "",
-          Posicion: "",
-          Pallet: "",
-          Accion: "B",
-        });
-
-        let rta = await this._onreadModelTraslado(oModel, oView, oPath);
-
-        oMockModel.setProperty("/Traslado", rta);
       },
 
       onValidaSalida: function () {
@@ -237,20 +220,22 @@ sap.ui.define(
         if (rta !== undefined) this.onShowMessagesTraslado(rta);
       },
 
-      onShowMessagesSalida: function (rta) {
+      onShowMessagesSalida: function (rta, oEvent) {
         switch (rta.Tipo) {
           case "01":
             this._onShowMsg1();
             break;
           case "02":
-            this._onShowMsg2();
+            this._onShowMsg2(oEvent);
             break;
-
+          case "03":
+            this._onShowMsg3(oEvent);
+            break;
           case "05":
             this._onShowMsg5();
             break;
           case "06":
-            this._onShowMsg6();
+            this._onShowMsg6(oEvent);
             break;
 
           case "07":
@@ -277,7 +262,7 @@ sap.ui.define(
         });
       },
 
-      _onShowMsg2: function () {
+      _onShowMsg2: function (oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgcodigo"),
@@ -287,12 +272,13 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          if (rta === "CLOSE") {
+          if (rta === this._i18n().getText("btnvolver")) {
+            oEvent.getSource()().setValue();
           }
         });
       },
 
-      _onShowMsg3: function () {
+      _onShowMsg3: function (oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgcodpalletmaterial"),
@@ -302,12 +288,13 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          // if (rta === this._i18n().getText("btnvolver")) {
-          // }
+          if (rta === this._i18n().getText("btnvolver")) {
+            oEvent.getSource()().setValue();
+          }
         });
       },
 
-      _onShowMsg4: function () {
+      _onShowMsg4: function (oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgposicionot"),
@@ -317,12 +304,13 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          if (rta === "CLOSE") {
+          if (rta === this._i18n().getText("btnvolver")) {
+            this.onClearScreen();
           }
         });
       },
 
-      _onShowMsg5: function () {
+      _onShowMsg5: function (oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgmenomat"),
@@ -335,11 +323,12 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          // if (rta === this._i18n().getText("btnvolver")) {
-          // }
+          if (rta === this._i18n().getText("btnvolver")) {
+            oEvent.getSource()().setValue();
+          }
         });
       },
-      _onShowMsg6: function () {
+      _onShowMsg6: function (oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgmono"),

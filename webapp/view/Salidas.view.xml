@@ -64,7 +64,7 @@
 
                             <form:FormElement label="{i18n>lblingreseot}">
                                 <form:fields>
-                                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" enabled="{= ${mockdata>/SalidaxPallet} === false }" />
+                                    <Input id="idOtOutInput" submit="onInputOtScanSubmit" value="{mockdata>/SalidaScan/Ot}"  enabled="{= ${mockdata>/SalidaxPallet} === false }" />
                                     <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Salida/Etapa}" />
                                 </form:fields>
                             </form:FormElement>
@@ -100,12 +100,20 @@
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
-                            <form:FormElement >
+                            <form:FormElement visible="{= ${mockdata>/SalidaxPallet} === true }">
+                                <form:fields>
+                                    <Input valueStateText="{i18n>msgdiferente}" id="idSalPalletScanV2" submit="onLeerPallet" value="{mockdata>/SalidaScan/Pallet}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+
+                            <form:FormElement visible="{= ${mockdata>/SalidaxPallet} === false }">
                                 <form:fields>
                                     <Input valueStateText="{i18n>msgdiferente}" id="idSalPalletScan" submit="onInputScanPalletSubmit" value="{mockdata>/SalidaScan/Pallet}" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
+
 
                             <form:FormElement >
                                 <form:fields>
@@ -148,20 +156,17 @@
 
             <HBox class="sapUiLargeMarginTop" justifyContent="SpaceAround" alignContent="Center" alignItems="Center">
 
-                <VBox alignContent="Center" alignItems="Center">
+                <VBox alignContent="Center" alignItems="Center" visible="false">
                     <core:Icon src="sap-icon://navigation-left-arrow" color="blue" class="size2" press="onPrevio"/>
                     <Label text="{i18n>btnanterior}" />
                 </VBox>
 
                 <VBox alignContent="Center" alignItems="Center">
 
-                    <Button text="{i18n>btnleerpallet}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === false }"/>
-                    <Button type="Emphasized" text="{i18n>btnleerot}" width="100px" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
-
 
                 </VBox>
 
-                <VBox alignContent="Center" alignItems="Center">
+                <VBox alignContent="Center" alignItems="Center" visible="false">
                     <core:Icon src="sap-icon://navigation-right-arrow" color="blue" class="size2" press="onSiguiente"/>
                     <Label text="{i18n>btnsiguiente}" />
 
@@ -176,15 +181,20 @@
 
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
-
+                <ToolbarSpacer/>
                 <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" press="_onGotoMainMenu"/>
                 <!-- text="{i18n>btncancelar}" -->
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" width="24%" />
-                <Button text="{i18n>btnbuscar}" type="Emphasized" width="24%"/>
-             
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="24%" enabled="{mockdata>/SalidaValida}" press="onSalidaContinuar"/>
+                <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" width="20%" />
+
+                <Button  type="Emphasized" text="{i18n>btnleerpallet}" width="20%" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === false }"/>
+                <Button type="Emphasized" text="{i18n>btnleerot}" width="20%" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
+
+
+                <Button text="{i18n>btnbuscar}" type="Emphasized" width="20%" press="onBuscar" />
+
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="20%" enabled="{mockdata>/SalidaValida}" press="onSalidaContinuar"/>
             </OverflowToolbar>
 
         </footer>

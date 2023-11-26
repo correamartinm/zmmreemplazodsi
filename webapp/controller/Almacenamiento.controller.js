@@ -58,6 +58,12 @@ sap.ui.define(
 
           // this._onObjectMatched();
         },
+        onFormatDestino: function (oValue) {
+          let oValueS = oValue.substring(3, 14),
+            rta = oValueS.replace(/^(0+)/g, "");
+
+          return rta;
+        },
 
         onIngresaxPallet: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
@@ -85,7 +91,8 @@ sap.ui.define(
 
           let rta = await this._onreadModel(oModel, oView, oPath, oEvent);
           console.log(rta);
-
+          
+          oMockModel.setProperty("/Almacenamiento", rta);
           switch (rta.Tipo) {
             case "01":
               this._onShowMsg1(oEvent);
@@ -105,7 +112,6 @@ sap.ui.define(
             default:
               break;
           }
-          oMockModel.setProperty("/Almacenamiento", rta);
         },
 
         onInputDestinoSubmit: async function (oEvent) {
@@ -113,9 +119,10 @@ sap.ui.define(
 
           let oValue = oEvent.getSource().getValue(),
             oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oData = oMockModel.getProperty("/Almacenamiento");
+            oData = oMockModel.getProperty("/Almacenamiento"),
+            oDestino = oData.DestinoEntrada;
 
-          if (oValue !== oData.Destino) {
+          if (this.onFormatDestino(oValue) !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
             this.onValidAlmacenamiento();
@@ -159,8 +166,9 @@ sap.ui.define(
             oValue = oEvent.getSource().getValue(),
             oView = this.getView(),
             oData = oMockModel.getProperty("/Almacenamiento");
-          oDestino = oData.Destino;
-          if (oValue !== oDestino) {
+          oDestino = oData.DestinoEntrada;
+
+          if (this.onFormatDestino(oValue) !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
             this.onValidDevolucion();
@@ -174,9 +182,17 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Almacenamiento"),
             oScan = oMockModel.getProperty("/AlmacenamientoScan"),
             oPallet = oData.Pallet,
-            oDestino = oData.Destino,
             oPalletScan = oScan.Pallet,
+            oDestino,
+            oDestinoScan;
+          if (oData.Destino !== "Zona intermedia") {
+            oDestino = oData.DestinoEntrada;
+            oDestinoScan = this.onFormatDestino(oScan.Destino);
+          } else {
+            oDestino = oData.Destino;
             oDestinoScan = oScan.Destino;
+          }
+
           if (
             oPallet.trim() === oPalletScan.trim() &&
             oDestino.trim() === oDestinoScan.trim()
@@ -216,7 +232,16 @@ sap.ui.define(
             oEntity = "/AlmacenamientoSet",
             oPayload = oMockModel.getProperty("/Almacenamiento");
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
-          if (rta !== undefined > 0) this._onShowMsg5;
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje !== "E") {
+              this._onShowMsg5();
+            } else {
+              this._onErrorHandle(rta.Datos);
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
         },
 
         onConfirmaDevolucion: async function (oEvent) {
@@ -227,16 +252,24 @@ sap.ui.define(
             oPayload = oMockModel.getProperty("/Devolucion");
 
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
-          if (rta !== undefined > 0) this._onShowMsg5;
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje !== "E") {
+              this._onShowMsg5();
+            } else {
+              this._onErrorHandle(rta.Datos);
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
         },
 
         onLlevarRemanejo: async function (oEvent) {
-          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView(),
-            oEntity = "/Almacenamiento";
-          oData = oMockModel.getProperty("/Almacenamiento");
-          // let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+
+          // this._onErrorHandle({Mensaje: "Remanejo Pendiente de Implementación"});
+          this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
+        
+
         },
 
         onLlevarDestino: async function (oEvent) {
@@ -337,8 +370,7 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            this.onClearScreen();
           });
         },
         _onShowMsg6: function (oEvent) {

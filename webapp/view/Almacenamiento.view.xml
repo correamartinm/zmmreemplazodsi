@@ -81,7 +81,7 @@
                                 <form:FormElement  >
                                     <form:fields>
 
-                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Text" value="{mockdata>/AlmacenamientoScan/Destino}" enabled="{= ${mockdata>/Almacenamiento/Pallet} !== '' }"/>
+                                        <Input id="idAlmDestinoScan" submit="onInputDestinoSubmit" type="Text" value="{mockdata>/AlmacenamientoScan/Destino}" enabled="{= ${mockdata>/Almacenamiento/Pallet} !== '' &amp;&amp; ${mockdata>/Almacenamiento/Destino} !== 'Zona intermedia'  }"/>
 
 
 
@@ -130,7 +130,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <Input id="idAlmDevPalletMaterial" submit="onMaterialScan" value="{mockdata>/DevolucionScan/Material}" enabled="{= ${mockdata>/DevolucionScan/Material} === '' }" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code" />
+                                        <Input id="idAlmDevPalletMaterial" submit="onMaterialScan" value="{mockdata>/DevolucionScan/Material}" enabled="{= ${mockdata>/DevolucionScan/Material} === ''  }" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code" />
                                     </form:fields>
                                 </form:FormElement>
 
@@ -144,7 +144,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <Input id="idAlmDevPalletCantidad" submit="onCantidadScan" value="{mockdata>/DevolucionScan/Cantidad}" enabled="{= ${mockdata>/DevolucionScan/Material} !== '' }"/>
+                                        <Input id="idAlmDevPalletCantidad" submit="onCantidadScan" value="{mockdata>/DevolucionScan/Cantidad}" enabled="{= ${mockdata>/DevolucionScan/Material} !== ''  }"/>
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->
@@ -174,7 +174,7 @@
 
                                 <form:FormElement >
                                     <form:fields>
-                                        <Input id="idAlmDevDestinoScan" submit="onDestinoScan" value="{mockdata>/DevolucionScan/Destino}"/>
+                                        <Input id="idAlmDevDestinoScan" submit="onDestinoScan" value="{mockdata>/DevolucionScan/Destino}" />
                                     </form:fields>
                                 </form:FormElement>
                                 <!-- Fin Elemento -->
