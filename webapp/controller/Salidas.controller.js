@@ -182,7 +182,7 @@ sap.ui.define(
         if (oValue !== oData.DestinoValidacion) {
           this._onShowMsg4(oEvent);
         } else {
-          this.onValidarMovimiento();
+          this.onValidaSalida();
         }
       },
 
@@ -194,7 +194,7 @@ sap.ui.define(
           oOrigen = oData.OrigenValidacion,
           oDestino = oData.DestinoValidacion,
           oPalletScan = oScan.Pallet,
-          oOrigenScan = oScan.Origen,
+          oOrigenScan = this.onFormatCodigo(oScan.Origen),
           oDestinoScan = oScan.Destino;
 
         if (

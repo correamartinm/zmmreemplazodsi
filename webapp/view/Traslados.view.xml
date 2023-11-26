@@ -109,7 +109,7 @@
                             <form:FormElement >
                                 <form:fields>
                                     <Input  submit="onInputOrigenSubmit" id="idTraOrigen" value="{mockdata>/TrasladoScan/Origen}"
-                                        enabled="{= ${mockdata>/Traslado/Accion} !== 'P'  &amp;&amp; ${mockdata>/Traslado/Caso} !== '01' || ${mockdata>/Traslado/Caso} !== '03' }"
+                                        enabled="{= ${mockdata>/Traslado/Accion} !== 'P'  &amp;&amp; ${mockdata>/Traslado/Caso} !== '01' &amp;&amp; ${mockdata>/Traslado/Caso} !== '03' }"
                                         />
                                 </form:fields>
                             </form:FormElement>

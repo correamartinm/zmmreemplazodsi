@@ -73,6 +73,7 @@ sap.ui.define(
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
+            oDataScan = oMockModel.getProperty("/TrasladoScan"),
             oData = oMockModel.getProperty("/Traslado");
 
           if (oData.Accion === undefined) {
@@ -90,7 +91,10 @@ sap.ui.define(
             if (rta.Respuesta === "OK") {
               rta.Datos.Accion = "P";
               oMockModel.setProperty("/Traslado", rta.Datos);
+              oDataScan.Origen = rta.Datos.Origen;
+
               if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
+                oMockModel.setProperty("/TrasladoScan", oDataScan);
                 this._onFocusControl(this.byId("idTraDestino"));
               } else {
                 this._onFocusControl(this.byId("idTraOrigen"));
@@ -106,7 +110,7 @@ sap.ui.define(
             }
           }
         },
-        
+
         // Ingreso por Buscar *************************************
         onBuscarOt: async function () {
           let oModel = this.getOwnerComponent().getModel(),
@@ -244,7 +248,7 @@ sap.ui.define(
             if (rta.Datos.TipoMensaje === "S") {
               this.onValidarMovimiento();
             } else {
-              this.onShowMessagesTraslado(rta.Datos);
+              this.onShowMessagesTraslado(rta.Datos, oEvent);
             }
           } else {
             this._onErrorHandle(rta.Datos);
@@ -321,7 +325,7 @@ sap.ui.define(
           if (rta !== undefined) this.onShowMessagesTraslado(rta);
         },
 
-        onShowMessagesTraslado: function (rta) {
+        onShowMessagesTraslado: function (rta, oEvent) {
           switch (rta.Tipo) {
             case "01":
               this._onShowMsg1();
@@ -331,6 +335,9 @@ sap.ui.define(
               break;
             case "03":
               this._onShowMsg3();
+              break;
+            case "04":
+              this._onShowMsg4(oEvent);
               break;
             case "05":
               this._onShowMsg5();
