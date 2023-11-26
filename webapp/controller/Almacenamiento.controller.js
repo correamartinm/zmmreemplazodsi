@@ -58,12 +58,6 @@ sap.ui.define(
 
           // this._onObjectMatched();
         },
-        onFormatDestino: function (oValue) {
-          let oValueS = oValue.substring(3, 14),
-            rta = oValueS.replace(/^(0+)/g, "");
-
-          return rta;
-        },
 
         onIngresaxPallet: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
@@ -91,7 +85,7 @@ sap.ui.define(
 
           let rta = await this._onreadModel(oModel, oView, oPath, oEvent);
           console.log(rta);
-          
+
           oMockModel.setProperty("/Almacenamiento", rta);
           switch (rta.Tipo) {
             case "01":
@@ -122,7 +116,7 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Almacenamiento"),
             oDestino = oData.DestinoEntrada;
 
-          if (this.onFormatDestino(oValue) !== oDestino) {
+          if (this.onFormatCodigo(oValue) !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
             this.onValidAlmacenamiento();
@@ -168,7 +162,7 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Almacenamiento");
           oDestino = oData.DestinoEntrada;
 
-          if (this.onFormatDestino(oValue) !== oDestino) {
+          if (this.onFormatCodigo(oValue) !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
             this.onValidDevolucion();
@@ -187,7 +181,7 @@ sap.ui.define(
             oDestinoScan;
           if (oData.Destino !== "Zona intermedia") {
             oDestino = oData.DestinoEntrada;
-            oDestinoScan = this.onFormatDestino(oScan.Destino);
+            oDestinoScan = this.onFormatCodigo(oScan.Destino);
           } else {
             oDestino = oData.Destino;
             oDestinoScan = oScan.Destino;
@@ -265,11 +259,8 @@ sap.ui.define(
         },
 
         onLlevarRemanejo: async function (oEvent) {
-
           // this._onErrorHandle({Mensaje: "Remanejo Pendiente de Implementación"});
           this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
-        
-
         },
 
         onLlevarDestino: async function (oEvent) {

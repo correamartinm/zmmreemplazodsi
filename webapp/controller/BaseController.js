@@ -44,6 +44,13 @@ sap.ui.define(
           });
         },
 
+        onFormatCodigo: function (oValue) {
+          let oValueS = oValue.substring(3, 14),
+            rta = oValueS.replace(/^(0+)/g, "");
+
+          return rta;
+        },
+
         _onCompareControls: function (oControl1, oControl2) {
           let oValue1 = oControl1.getValue(),
             oValue2 = oControl2.getValue();
@@ -85,11 +92,11 @@ sap.ui.define(
             oModel.read(oPath, {
               success: jQuery.proxy(function (oData) {
                 oView.setBusy(false);
-                 resolve({Respuesta: "OK", Datos: oData});
+                resolve({ Respuesta: "OK", Datos: oData });
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-                resolve({Respuesta: "ERROR", Datos: oError});
+                resolve({ Respuesta: "ERROR", Datos: oError });
               },
             });
           });
@@ -102,11 +109,11 @@ sap.ui.define(
             oModel.read(oPath, {
               success: jQuery.proxy(function (oData) {
                 oView.setBusy(false);
-                 resolve({Respuesta: "OK", Datos: oData});
+                resolve({ Respuesta: "OK", Datos: oData });
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-                resolve({Respuesta: "ERROR", Datos: oError});
+                resolve({ Respuesta: "ERROR", Datos: oError });
               },
             });
           });
@@ -136,13 +143,13 @@ sap.ui.define(
             oModel.create(oEntity, oPayload, {
               success: function (oData) {
                 oView.setBusy(false);
-                resolve({Respuesta: "OK", Datos: oData});
+                resolve({ Respuesta: "OK", Datos: oData });
                 oModel.refresh(true);
               }.bind(this),
 
               error: function (oError) {
                 oView.setBusy(false);
-                resolve({Respuesta: "ERROR", Datos: oError});
+                resolve({ Respuesta: "ERROR", Datos: oError });
                 // Reiniciar
               }.bind(this),
             });
@@ -187,9 +194,6 @@ sap.ui.define(
           });
         },
 
-
-
-
         _onErrorHandle: function (oError) {
           if (oError.Mensaje === undefined) {
             var oErrorMsg = JSON.parse(oError.responseText);
@@ -197,9 +201,8 @@ sap.ui.define(
           } else {
             var oText = oError.Mensaje;
           }
-          
+
           var sMessageTitle = this._i18n().getText("msgerror");
-          
 
           let objectMsg = {
             titulo: sMessageTitle,

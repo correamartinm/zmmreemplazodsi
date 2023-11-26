@@ -131,7 +131,7 @@ sap.ui.define(
           oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida");
 
-        if (oValue !== oData.OrigenValidacion) {
+        if (this.onFormatCodigo(oValue) !== oData.OrigenValidacion) {
           this._onShowMsg1(oEvent);
         } else {
           this._onFocusControl(this.byId("idSalPalletScan"));
@@ -191,8 +191,8 @@ sap.ui.define(
           oData = oMockModel.getProperty("/Salida"),
           oScan = oMockModel.getProperty("/SalidaScan"),
           oPallet = oData.Pallet,
-          oOrigen = oData.Origen,
-          oDestino = oData.Destino,
+          oOrigen = oData.OrigenValidacion,
+          oDestino = oData.DestinoValidacion,
           oPalletScan = oScan.Pallet,
           oOrigenScan = oScan.Origen,
           oDestinoScan = oScan.Destino;
@@ -215,13 +215,28 @@ sap.ui.define(
           oEntity = "/AlmacenamientoSet",
           oPayload = oMockModel.getProperty("/Salida");
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
-        if (rta !== undefined) this.onShowMessagesTraslado(rta);
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            // oMockModel.setProperty("/Salida", rta);
+
+         
+            this.onShowMessagesSalida(rta.Datos, oEvent);
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
+        } else {
+          this._onErrorHandle(rta.Datos);
+        }
+
+
+      
       },
 
       onShowMessagesSalida: function (rta, oEvent) {
         switch (rta.Tipo) {
           case "01":
-            this._onShowMsg1();
+            this._onShowMsg1(oEvent);
             break;
           case "02":
             this._onShowMsg2(oEvent);
@@ -229,15 +244,27 @@ sap.ui.define(
           case "03":
             this._onShowMsg3(oEvent);
             break;
+
+          case "04":
+            this._onShowMsg4(oEvent);
+            break;
           case "05":
-            this._onShowMsg5();
+            this._onShowMsg5(oEvent);
             break;
           case "06":
             this._onShowMsg6(oEvent);
             break;
 
           case "07":
-            this._onShowMsg7();
+            this._onShowMsg7(oEvent);
+            break;
+
+          case "08":
+            this._onShowMsg8(oEvent);
+            break;
+
+          case "09":
+            this._onShowMsg9(oEvent);
             break;
 
           default:
@@ -271,7 +298,8 @@ sap.ui.define(
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === this._i18n().getText("btnvolver")) {
-            oEvent.getSource()().setValue();
+            oEvent.getSource().setValue();
+            this._onFocusControl(oEvent.getSource());
           }
         });
       },
@@ -287,7 +315,8 @@ sap.ui.define(
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === this._i18n().getText("btnvolver")) {
-            oEvent.getSource()().setValue();
+            oEvent.getSource().setValue();
+            this._onFocusControl(oEvent.getSource());
           }
         });
       },
@@ -322,7 +351,8 @@ sap.ui.define(
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === this._i18n().getText("btnvolver")) {
-            oEvent.getSource()().setValue();
+            oEvent.getSource().setValue();
+            this._onFocusControl(oEvent.getSource());
           }
         });
       },
