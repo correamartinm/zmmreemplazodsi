@@ -17,7 +17,6 @@ sap.ui.define(
 
       _onObjectMatched: async function (evt) {
         this.onClearScreen();
-
       },
 
       onPalletRead: async function () {
@@ -92,7 +91,7 @@ sap.ui.define(
             rta.Accion = "P";
             oMockModel.setProperty("/Salida", rta);
           } else {
-            this._onErrorHandle(rta.Datos);
+            this.onShowMessagesSalida(rta.Datos, oEvent);
           }
         } else {
           this._onErrorHandle(rta.Datos);
@@ -118,7 +117,7 @@ sap.ui.define(
             oMockModel.setProperty("/Salida", rta);
             this._onFocusControl(this.byId("idTraPalletMaterial"));
           } else {
-            this._onShowMsg4(oEvent);
+            this.onShowMessagesSalida(rta.Datos, oEvent);
           }
         } else {
           this._onErrorHandle(rta.Datos);
@@ -159,15 +158,14 @@ sap.ui.define(
 
         let rta = await this._onreadModel(oModel, oView, oPath);
         console.log(rta);
-        
 
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
             // oMockModel.setProperty("/Salida", rta);
-            this.onShowMessagesSalida(rta.Datos, oEvent);
+
             this._onFocusControl(this.byId("idSalDestinoScan"));
           } else {
-            this._onErrorHandle(rta.Datos);
+            this.onShowMessagesSalida(rta.Datos, oEvent);
           }
         } else {
           this._onErrorHandle(rta.Datos);
