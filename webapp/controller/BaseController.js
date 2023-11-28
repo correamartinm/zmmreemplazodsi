@@ -51,6 +51,12 @@ sap.ui.define(
           return rta;
         },
 
+        onQuitaZeros: function (oValue) {
+          let rta = oValue.replace(/^(0+)/g, "");
+
+          return rta;
+        },
+
         _onCompareControls: function (oControl1, oControl2) {
           let oValue1 = oControl1.getValue(),
             oValue2 = oControl2.getValue();

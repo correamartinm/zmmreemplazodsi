@@ -30,7 +30,7 @@
                     <ToolbarSpacer/>
                   
                     
-                    <Text text="{mockdata>/Traslado/Accion} - {mockdata>/Traslado/Caso}"/>
+                    <!-- <Text text="{mockdata>/Traslado/Accion} - {mockdata>/Traslado/Caso}"/> -->
                     <ToolbarSpacer/>
                 </content>
             </Toolbar>
@@ -95,9 +95,6 @@
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
-
-
-
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lblorigen}" text="{mockdata>/Traslado/Origen}" class="uptitle"/>
@@ -117,7 +114,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lbldestino}" text="{mockdata>/Traslado/Destino}" class="uptitle" />
+                                    <ObjectStatus title="{i18n>lbldestino} " text="{mockdata>/Traslado/Destino} {mockdata>/Traslado/DescripcionDestino}" class="uptitle" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -161,8 +158,8 @@
                 <Button text="{i18n>btnsinetiqueta}" press="onEtiquetado" type="Emphasized" width="28%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
                 <Button text="{i18n>btnbuscar}" press="onBuscarOt" type="Emphasized" width="22%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Etiquetado} === true }"/>
 
-                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === false }" enabled="{mockdata>/AlmValidTraslado}"/>
-                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoSinEtiquetaContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === true }" enabled="{mockdata>/AlmValidTrasladoSinEtiqueta}"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === true }" enabled="{mockdata>/AlmValidTraslado}"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" press="onTrasladoSinEtiquetaContinuar" width="23%" visible="{= ${mockdata>/Etiquetado} === false }" enabled="{mockdata>/AlmValidTrasladoSinEtiqueta}"/>
 
             </OverflowToolbar>
         </footer>

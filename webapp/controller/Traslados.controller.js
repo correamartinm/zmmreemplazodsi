@@ -89,15 +89,19 @@ sap.ui.define(
             this.onShowMessagesTraslado(rta);
 
             if (rta.Respuesta === "OK") {
-              rta.Datos.Accion = "P";
-              oMockModel.setProperty("/Traslado", rta.Datos);
-              oDataScan.Origen = rta.Datos.Origen;
+              if (rta.Datos.TipoMensaje === "S") {
+                rta.Datos.Accion = "P";
+                oMockModel.setProperty("/Traslado", rta.Datos);
+                oDataScan.Origen = rta.Datos.Origen;
 
-              if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
-                oMockModel.setProperty("/TrasladoScan", oDataScan);
-                this._onFocusControl(this.byId("idTraDestino"));
+                if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
+                  oMockModel.setProperty("/TrasladoScan", oDataScan);
+                  this._onFocusControl(this.byId("idTraDestino"));
+                } else {
+                  this._onFocusControl(this.byId("idTraOrigen"));
+                }
               } else {
-                this._onFocusControl(this.byId("idTraOrigen"));
+                this.onShowMessagesTraslado(rta.Datos, oEvent);
               }
             } else {
               this._onErrorHandle(rta.Datos);
@@ -272,18 +276,14 @@ sap.ui.define(
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oData = oMockModel.getProperty("/Traslado"),
             oScan = oMockModel.getProperty("/TrasladoScan"),
-            oPallet = oData.Pallet,
-            oOrigen = oData.Origen,
+            oPallet = this.onQuitaZeros(oData.Pallet),
+            oOrigen = this.onQuitaZeros(oData.Origen),
             oDestino = oData.Destino,
-            oPalletScan = oScan.Pallet,
-            oOrigenScan = oScan.Origen,
+            oPalletScan = this.onQuitaZeros(oScan.Pallet),
+            oOrigenScan = this.onQuitaZeros(oScan.Origen),
             oDestinoScan = oScan.Destino;
 
-          if (
-            oPallet.trim() === oPalletScan.trim() &&
-            oOrigen.trim() === oOrigenScan.trim() &&
-            oDestino.trim() === oDestinoScan.trim()
-          ) {
+          if (oPallet === oPalletScan && oOrigen === oOrigenScan) {
             oMockModel.setProperty("/AlmValidTraslado", true);
           } else {
             oMockModel.setProperty("/AlmValidTraslado", false);
@@ -319,10 +319,19 @@ sap.ui.define(
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
-            oEntity = "/AlmacenamientoSet",
+            oEntity = "/TrasladoSet",
             oPayload = oMockModel.getProperty("/Traslado");
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
-          if (rta !== undefined) this.onShowMessagesTraslado(rta);
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje === "S") {
+              this.onShowMessagesTraslado(rta.Datos, oEvent);
+            } else {
+              this._onErrorHandle(rta.Datos);
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
         },
 
         onShowMessagesTraslado: function (rta, oEvent) {
@@ -537,8 +546,11 @@ sap.ui.define(
           };
 
           this._onShowMsgBox(objectMsg).then((rta) => {
-            // if (rta === this._i18n().getText("btnvolver")) {
-            // }
+            if (rta === this._i18n().getText("btnrepetir")) {
+
+            } else {
+              this.onClearScreen();
+            }
           });
         },
         _onShowMsg12: function (oEvent) {
