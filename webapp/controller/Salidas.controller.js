@@ -99,8 +99,9 @@ sap.ui.define(
       },
 
       onInputOtScanSubmit: async function (oEvent) {
-        let oValue = oEvent.getSource().getValue();
-        let oModel = this.getOwnerComponent().getModel(),
+        let oValue = oEvent.getSource().getValue(),
+          oModel = this.getOwnerComponent().getModel(),
+          oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oView = this.getView();
 
         let oPath = oModel.createKey("/SalidaSet", {
@@ -220,7 +221,6 @@ sap.ui.define(
           if (rta.Datos.TipoMensaje !== "E") {
             // oMockModel.setProperty("/Salida", rta);
 
-         
             this.onShowMessagesSalida(rta.Datos, oEvent);
           } else {
             this._onErrorHandle(rta.Datos);
@@ -228,9 +228,6 @@ sap.ui.define(
         } else {
           this._onErrorHandle(rta.Datos);
         }
-
-
-      
       },
 
       onShowMessagesSalida: function (rta, oEvent) {
