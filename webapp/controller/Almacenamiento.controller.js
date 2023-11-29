@@ -85,8 +85,19 @@ sap.ui.define(
 
           let rta = await this._onreadModel(oModel, oView, oPath, oEvent);
           console.log(rta);
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje !== "E") {
+              oMockModel.setProperty("/Almacenamiento", rta.Datos);
+              this.onShowMensajes(rta.Datos, oEvent)
+            } else {
+              this.onShowMensajes(rta.Datos, oEvent)
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
+        },
 
-          oMockModel.setProperty("/Almacenamiento", rta);
+        onShowMensajes: function (rta,oEvent) {
           switch (rta.Tipo) {
             case "01":
               this._onShowMsg1(oEvent);

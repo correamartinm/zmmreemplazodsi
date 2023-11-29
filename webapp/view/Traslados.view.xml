@@ -121,7 +121,9 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputDestinoSubmit"  id="idTraDestino" value="{mockdata>/TrasladoScan/Destino}"/>
+                                    <Input submit="onInputDestinoSubmit"  id="idTraDestino" value="{mockdata>/TrasladoScan/Destino}"
+                                        enabled="{= ${mockdata>/Traslado/DestinoEntrada} !== ${mockdata>/TrasladoScan/Destino} }"
+                                        />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->

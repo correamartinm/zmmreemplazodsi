@@ -55,6 +55,7 @@ sap.ui.define(
             if (rta.Respuesta === "OK") {
               rta.Datos.Accion = "S";
               oMockModel.setProperty("/Traslado", rta.Datos);
+              this._onValidaComportamiento(oMockModel, rta.Datos, []);
             } else {
               this._onErrorHandle(rta.Datos);
             }
@@ -93,13 +94,7 @@ sap.ui.define(
                 rta.Datos.Accion = "P";
                 oMockModel.setProperty("/Traslado", rta.Datos);
                 oDataScan.Origen = rta.Datos.Origen;
-
-                if (rta.Datos.Caso === "01" || rta.Datos.Caso === "03") {
-                  oMockModel.setProperty("/TrasladoScan", oDataScan);
-                  this._onFocusControl(this.byId("idTraDestino"));
-                } else {
-                  this._onFocusControl(this.byId("idTraOrigen"));
-                }
+                this._onValidaComportamiento(oMockModel, rta.Datos, oDataScan);
               } else {
                 this.onShowMessagesTraslado(rta.Datos, oEvent);
               }
@@ -133,7 +128,7 @@ sap.ui.define(
           if (rta.Respuesta === "OK") {
             rta.Datos.Accion = "B";
             oMockModel.setProperty("/Traslado", rta.Datos);
-            this._onFocusControl(this.byId("idMovPalletInput"));
+            this._onValidaComportamiento(oMockModel, rta.Datos, []);
           } else {
             this._onErrorHandle(rta.Datos);
           }
@@ -271,6 +266,38 @@ sap.ui.define(
         },
 
         // Validaciones *****************************
+
+        _onValidaComportamiento: function (oMockModel, oData, oDataScan) {
+          switch (oData.Accion) {
+            case "P":
+              if (oData.Caso === "01" || oData.Caso === "03") {
+                oMockModel.setProperty("/TrasladoScan", oDataScan);
+
+                this._onFocusControl(this.byId("idTraDestino"));
+              } else {
+                this._onFocusControl(this.byId("idTraOrigen"));
+              }
+              break;
+            case "S":
+              this._onFocusControl(this.byId("idTraPalletMaterial"));
+
+              break;
+            case "B":
+              this._onFocusControl(this.byId("idMovPalletInput"));
+
+              break;
+            default:
+
+
+              break;
+          }
+          if (oData.Caso === "01" && oData.Confirmado.toUpperCase() !=="X"){
+            oDataScan.Destino = oData.DestinoEntrada;
+            oMockModel.setProperty("/TrasladoScan", oDataScan);
+            this.onValidTraslado();
+          }
+
+        },
 
         onValidTraslado: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
@@ -547,7 +574,6 @@ sap.ui.define(
 
           this._onShowMsgBox(objectMsg).then((rta) => {
             if (rta === this._i18n().getText("btnrepetir")) {
-
             } else {
               this.onClearScreen();
             }
