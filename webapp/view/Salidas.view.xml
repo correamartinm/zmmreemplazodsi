@@ -126,7 +126,7 @@
                             <form:FormElement >
                                 <form:fields>
 
-                                    <Input submit="idSalDestinoScanSubmit" id="idSalDestinoScan" value="{mockdata>/SalidaScan/Destino}"/>
+                                    <Input submit="idSalDestinoScanSubmit" id="idSalDestinoScan" enabled="{= ${mockdata>/Salida/Caso} !== '31' &amp;&amp; ${mockdata>/Salida/Caso} !== '11' }" value="{mockdata>/SalidaScan/Destino}"/>
 
                                 </form:fields>
                             </form:FormElement>

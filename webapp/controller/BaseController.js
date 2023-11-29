@@ -39,6 +39,8 @@ sap.ui.define(
         },
 
         _onFocusControl: function (oControl) {
+          if (!oControl) return;
+
           jQuery.sap.delayedCall(600, this, function () {
             oControl.focus();
           });
@@ -75,17 +77,11 @@ sap.ui.define(
             oModel.read(oPath, {
               success: jQuery.proxy(function (oData) {
                 oView.setBusy(false);
-                resolve(oData);
+                 resolve({ Respuesta: "OK", Datos: oData });
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-                if (oEvent !== undefined) {
-                  oEvent.getSource().setValue(null);
-                  that._onFocusControl(oEvent.getSource());
-                  that._onErrorHandle(oError);
-                } else {
-                  that._onFocusControl(that.getView().byId("idAlmPalletScan"));
-                }
+                resolve({ Respuesta: "ERROR", Datos: oError });
               },
             });
           });

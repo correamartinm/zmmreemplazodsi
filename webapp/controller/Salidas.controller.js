@@ -115,7 +115,7 @@ sap.ui.define(
 
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
-            oMockModel.setProperty("/Salida", rta);
+            oMockModel.setProperty("/Salida", rta.Datos);
             this._onFocusControl(this.byId("idTraPalletMaterial"));
           } else {
             this.onShowMessagesSalida(rta.Datos, oEvent);
@@ -132,7 +132,7 @@ sap.ui.define(
           oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida");
 
-        if (this.onFormatCodigo(oValue) !== oData.OrigenValidacion) {
+        if (this.onQuitaZeros(oValue) !== oData.OrigenValidacion) {
           this._onShowMsg1(oEvent);
         } else {
           this._onFocusControl(this.byId("idSalPalletScan"));
@@ -162,9 +162,16 @@ sap.ui.define(
 
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
-            // oMockModel.setProperty("/Salida", rta);
+            
 
-            this._onFocusControl(this.byId("idSalDestinoScan"));
+            if (oData.Caso !== "11" && oData.Caso !== "31") {
+              this._onFocusControl(this.byId("idSalDestinoScan"));
+            } else {
+              oData.Pallet = rta.Datos.Pallet;
+              oMockModel.setProperty("/SalidaValida", true);
+              oMockModel.setProperty("/Salida", oData);
+            }
+
           } else {
             this.onShowMessagesSalida(rta.Datos, oEvent);
           }
@@ -183,11 +190,11 @@ sap.ui.define(
         if (oValue !== oData.DestinoValidacion) {
           this._onShowMsg4(oEvent);
         } else {
-          this.onValidaSalida();
+          this._onValidaSalida();
         }
       },
 
-      onValidaSalida: function () {
+      _onValidaSalida: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida"),
           oScan = oMockModel.getProperty("/SalidaScan"),
@@ -195,25 +202,25 @@ sap.ui.define(
           oOrigen = oData.OrigenValidacion,
           oDestino = oData.DestinoValidacion,
           oPalletScan = oScan.Pallet,
-          oOrigenScan = this.onFormatCodigo(oScan.Origen),
+          oOrigenScan =oScan.Origen,
           oDestinoScan = oScan.Destino;
 
-        if (
-          oPallet.trim() === oPalletScan.trim() &&
-          oOrigen.trim() === oOrigenScan.trim() &&
-          oDestino.trim() === oDestinoScan.trim()
-        ) {
-          oMockModel.setProperty("/SalidaValida", true);
-        } else {
           oMockModel.setProperty("/SalidaValida", false);
+
+        if ( this.onQuitaZeros(oPallet) !==  this.onQuitaZeros(oPalletScan))  return;
+        if ( this.onQuitaZeros(oOrigen) !==  this.onQuitaZeros(oOrigenScan )) return;       
+        if (oData.Caso !== "11" && oData.Caso !== "31") {
+          if ( this.onQuitaZeros(oDestino) !==  this.onQuitaZeros(oDestinoScan )) return;       
         }
+
+        oMockModel.setProperty("/SalidaValida", true);
       },
 
       onSalidaContinuar: async function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oModel = this.getOwnerComponent().getModel(),
           oView = this.getView(),
-          oEntity = "/AlmacenamientoSet",
+          oEntity = "/SalidaSet",
           oPayload = oMockModel.getProperty("/Salida");
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
@@ -221,7 +228,7 @@ sap.ui.define(
           if (rta.Datos.TipoMensaje !== "E") {
             // oMockModel.setProperty("/Salida", rta);
 
-            this.onShowMessagesSalida(rta.Datos, oEvent);
+            this.onShowMessagesSalida(rta.Datos, []);
           } else {
             this._onErrorHandle(rta.Datos);
           }
@@ -353,7 +360,7 @@ sap.ui.define(
           }
         });
       },
-      _onShowMsg6: function (oEvent) {
+      _onShowMsg6: function () {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgmono"),
