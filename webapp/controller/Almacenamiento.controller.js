@@ -88,16 +88,16 @@ sap.ui.define(
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
               oMockModel.setProperty("/Almacenamiento", rta.Datos);
-              this.onShowMensajes(rta.Datos, oEvent)
+              this.onShowMensajes(rta.Datos, oEvent);
             } else {
-              this.onShowMensajes(rta.Datos, oEvent)
+              this.onShowMensajes(rta.Datos, oEvent);
             }
           } else {
             this._onErrorHandle(rta.Datos);
           }
         },
 
-        onShowMensajes: function (rta,oEvent) {
+        onShowMensajes: function (rta, oEvent) {
           switch (rta.Tipo) {
             case "01":
               this._onShowMsg1(oEvent);
@@ -107,6 +107,20 @@ sap.ui.define(
               break;
             case "03":
               this._onShowMsg3(oEvent);
+              break;
+
+            case "04":
+              this._onShowMsg4(oEvent);
+              break;
+
+            case "05":
+              this._onShowMsg5(oEvent);
+              break;
+            case "06":
+              this._onShowMsg6(oEvent);
+              break;
+            case "07":
+              this._onShowMsg7(oEvent);
               break;
 
             case "":
