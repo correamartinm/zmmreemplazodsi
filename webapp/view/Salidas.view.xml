@@ -62,7 +62,14 @@
                     <form:FormContainer>
                         <form:formElements>
 
-                            <form:FormElement label="{i18n>lblingreseot}">
+                        <form:FormElement >
+                            <form:fields>
+                                <ObjectStatus title="{i18n>lblingreseot}" text="{mockdata>/Salida/Ot}" class="uptitle" />
+
+                            </form:fields>
+                        </form:FormElement>
+
+                            <form:FormElement >
                                 <form:fields>
                                     <Input id="idOtOutInput" submit="onInputOtScanSubmit" value="{mockdata>/SalidaScan/Ot}"  enabled="{= ${mockdata>/SalidaxPallet} === false }" />
                                     <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Salida/Etapa}" />
@@ -87,7 +94,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputScanOrigenSubmit" value="{mockdata>/SalidaScan/Origen}" enabled="{= ${mockdata>/SalidaxPallet} === false }"/>
+                                    <Input id="idSdaOrigen" submit="onInputScanOrigenSubmit" value="{mockdata>/SalidaScan/Origen}" enabled="{= ${mockdata>/SalidaxPallet} === false }"/>
 
                                 </form:fields>
                             </form:FormElement>
