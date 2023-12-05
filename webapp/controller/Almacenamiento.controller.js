@@ -235,7 +235,7 @@ sap.ui.define(
 
           if (
             oMaterial.trim() === oMaterialScan.trim() &&
-            oDestin.trim().trim() === oDestinoScan.trim() &&
+            oDestin.trim() === oDestinoScan.trim() &&
             oCantidad.trim() === oCantidadScan.trim()
           ) {
             oMockModel.setProperty("/AlmValidDevolucion", true);
@@ -249,7 +249,17 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oEntity = "/AlmacenamientoSet",
-            oPayload = oMockModel.getProperty("/Almacenamiento");
+            oAlmacenamientoRta = oMockModel.getProperty("/Almacenamiento");
+          let oPayload = {
+            Pallet: oAlmacenamientoRta.Pallet.trim(),
+            Caso: oAlmacenamientoRta.Caso,
+            Almacen: oAlmacenamientoRta.Almacen,
+            Ot: oAlmacenamientoRta.Ot,
+            Posicion: oAlmacenamientoRta.Posicion,
+            Etapa: oAlmacenamientoRta.Etapa,
+            Tipo: oAlmacenamientoRta.Tipo,
+          };
+
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
           if (rta.Respuesta === "OK") {
@@ -284,8 +294,34 @@ sap.ui.define(
         },
 
         onLlevarRemanejo: async function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oEntity = "/RemanejoSet",
+            oPayload = oMockModel.getProperty("/Almacenamiento"),
+            oPayloadScan = oMockModel.getProperty("/AlmacenamientoScan");
+
+          let oPath = oModel.createKey("/RemanejoSet", {
+            Pallet: oPayload.Pallet,
+          });
+
+          let rta = await this._onreadModel(oModel, oView, oPath, oEvent);
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje !== "E") {
+              oMockModel.setProperty("/Almacenamiento", rta.Datos);
+              oPayloadScan.Destino = oPayload.Destino;
+              oMockModel.setProperty("/AlmacenamientoScan", oPayloadScan);
+              this.onValidAlmacenamiento();
+            } else {
+              this._onErrorHandle(rta.Datos);
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
+
           // this._onErrorHandle({Mensaje: "Remanejo Pendiente de Implementación"});
-          this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
+          // this._onFocusControl(this.getView().byId("idAlmDestinoScan"));
         },
 
         onLlevarDestino: async function (oEvent) {

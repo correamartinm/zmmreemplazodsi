@@ -28,8 +28,8 @@
             <Toolbar >
                 <content>
                     <ToolbarSpacer/>
-                  
-                    
+
+
                     <!-- <Text text="{mockdata>/Traslado/Accion} - {mockdata>/Traslado/Caso}"/> -->
                     <ToolbarSpacer/>
                 </content>
@@ -41,11 +41,16 @@
                     <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="1"/>
                 </form:layout>
                 <form:formContainers>
-
+|
                     <form:FormContainer>
                         <form:formElements>
 
-                            <form:FormElement label="{i18n>labelpallet} " visible="{= ${mockdata>/Etiquetado} === true }">
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === true }">
+                                <form:fields>
+                                    <ObjectStatus title="{i18n>labelpallet}" class="uptitle" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement visible="{= ${mockdata>/Etiquetado} === true }">
                                 <form:fields>
                                     <!-- <Text text="{mockdata>/Traslado/Pallet}" visible="{= ${mockdata>/Traslado/Pallet} !== '' &amp;&amp; ${mockdata>/Traslado/Pallet} !== undefined  }" class="cursiva" /> -->
                                     <Input id="idMovPalletInput" submit="onInputPalleScanSubmit" value="{mockdata>/TrasladoScan/Pallet}" description="{mockdata>/Traslado/Pallet}" />
@@ -105,9 +110,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input  submit="onInputOrigenSubmit" id="idTraOrigen" value="{mockdata>/TrasladoScan/Origen}"
-                                        enabled="{= ${mockdata>/Traslado/Accion} !== 'P'  &amp;&amp; ${mockdata>/Traslado/Caso} !== '01' &amp;&amp; ${mockdata>/Traslado/Caso} !== '03' }"
-                                        />
+                                    <Input submit="onInputOrigenSubmit" id="idTraOrigen" value="{mockdata>/TrasladoScan/Origen}" enabled="{= ${mockdata>/Traslado/Accion} !== 'P'  &amp;&amp; ${mockdata>/Traslado/Caso} !== '01' &amp;&amp; ${mockdata>/Traslado/Caso} !== '03' }" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -121,9 +124,7 @@
 
                             <form:FormElement >
                                 <form:fields>
-                                    <Input submit="onInputDestinoSubmit"  id="idTraDestino" value="{mockdata>/TrasladoScan/Destino}"
-                                        enabled="{= ${mockdata>/Traslado/DestinoEntrada} !== ${mockdata>/TrasladoScan/Destino} }"
-                                        />
+                                    <Input submit="onInputDestinoSubmit" id="idTraDestino" value="{mockdata>/TrasladoScan/Destino}" enabled="{= ${mockdata>/Traslado/DestinoEntrada} !== ${mockdata>/TrasladoScan/Destino} }" />
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
