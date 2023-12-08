@@ -142,6 +142,7 @@ sap.ui.define(
             oDestino = oData.DestinoEntrada;
 
           if (this.onFormatCodigo(oValue) !== oDestino) {
+            // if (oValue !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
             this.onValidAlmacenamiento();
@@ -204,10 +205,13 @@ sap.ui.define(
             oPalletScan = oScan.Pallet,
             oDestino,
             oDestinoScan;
+            
           if (oData.Destino !== "Zona intermedia") {
             oDestino = oData.DestinoEntrada;
-            oDestinoScan = this.onFormatCodigo(oScan.Destino);
+            oDestinoScan =this.onFormatCodigo(oScan.Destino);
+
           } else {
+
             oDestino = oData.Destino;
             oDestinoScan = oScan.Destino;
           }
@@ -309,10 +313,20 @@ sap.ui.define(
 
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
+              
+              if (rta.Datos.Caso === "62") {
+                oPayloadScan.Destino = oPayload.Destino;
+                oMockModel.setProperty("/AlmacenamientoScan", oPayloadScan);
+                this.onValidAlmacenamiento();
+              }
+
+              if (rta.Datos.Caso  === "61") {
+                rta.Datos.DestinoEntrada = "RMNJ1";
+                rta.Datos.Destino = "005RMNJ1";
+              }
+
+              // Zona intermedia :
               oMockModel.setProperty("/Almacenamiento", rta.Datos);
-              oPayloadScan.Destino = oPayload.Destino;
-              oMockModel.setProperty("/AlmacenamientoScan", oPayloadScan);
-              this.onValidAlmacenamiento();
             } else {
               this._onErrorHandle(rta.Datos);
             }

@@ -41,7 +41,7 @@
                     <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="1"/>
                 </form:layout>
                 <form:formContainers>
-|
+
                     <form:FormContainer>
                         <form:formElements>
 

@@ -342,7 +342,7 @@ sap.ui.define(
           }
         },
 
-        onTrasladoContinuar: async function () {
+        onTrasladoContinuar: async function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
@@ -482,20 +482,25 @@ sap.ui.define(
             mensaje: this._i18n().getText("msgmovok"),
             icono: sap.m.MessageBox.Icon.SUCCESS,
             acciones: [
-              this._i18n().getText("btnvolver"),
-              this._i18n().getText("btnsiguientepos"),
+              this._i18n().getText("btnvolver")
+              // ,      this._i18n().getText("btnsiguientepos"),
             ],
             resaltar: this._i18n().getText("btnvolver"),
           };
 
+
           this._onShowMsgBox(objectMsg).then((rta) => {
-            if (rta === this._i18n().getText("btnvolver")) {
-              this.onClearScreen();
-            } else {
-              this.onClearScreen();
-              this.onBuscarOt();
-            }
+            this.onClearScreen();
           });
+
+          // this._onShowMsgBox(objectMsg).then((rta) => {
+          //   if (rta === this._i18n().getText("btnvolver")) {
+          //     this.onClearScreen();
+          //   } else {
+          //     this.onClearScreen();
+          //     // this.onBuscarOt();
+          //   }
+          // });
         },
 
         _onShowMsg7: function () {
