@@ -205,20 +205,20 @@ sap.ui.define(
             oPalletScan = oScan.Pallet,
             oDestino,
             oDestinoScan;
-            
-          if (oData.Destino !== "Zona intermedia") {
+
+          if ( oScan.Destino !== undefined &&  oData.Destino !== "Zona intermedia") {
             oDestino = oData.DestinoEntrada;
-            oDestinoScan =this.onFormatCodigo(oScan.Destino);
-
+            oDestinoScan = this.onFormatCodigo(oScan.Destino);
+            oDestinoScan = oDestinoScan.trim();
           } else {
-
             oDestino = oData.Destino;
             oDestinoScan = oScan.Destino;
+          
           }
 
           if (
             oPallet.trim() === oPalletScan.trim() &&
-            oDestino.trim() === oDestinoScan.trim()
+            oDestino.trim() === oDestinoScan
           ) {
             oMockModel.setProperty("/AlmValidAlmacenamiento", true);
           } else {
@@ -313,20 +313,32 @@ sap.ui.define(
 
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
-              
-              if (rta.Datos.Caso === "62") {
-                oPayloadScan.Destino = oPayload.Destino;
-                oMockModel.setProperty("/AlmacenamientoScan", oPayloadScan);
-                this.onValidAlmacenamiento();
-              }
 
-              if (rta.Datos.Caso  === "61") {
+
+              if (rta.Datos.Caso === "62") {
+
+                if (rta.Datos.Destino !== "Zona intermedia") {
+               
+                  // rta.Datos.DestinoEntrada = "RMNJ1";
+                  rta.Datos.Destino = "005RMNJ1";  
+                } else {
+
+                  oPayloadScan.Destino = rta.Datos.Destino;
+                }
+
+                oMockModel.setProperty("/AlmacenamientoScan", oPayloadScan);
+              }
+              
+              if (rta.Datos.Caso === "61") {
                 rta.Datos.DestinoEntrada = "RMNJ1";
                 rta.Datos.Destino = "005RMNJ1";
               }
-
+              
               // Zona intermedia :
               oMockModel.setProperty("/Almacenamiento", rta.Datos);
+              this.onValidAlmacenamiento();
+
+
             } else {
               this._onErrorHandle(rta.Datos);
             }
