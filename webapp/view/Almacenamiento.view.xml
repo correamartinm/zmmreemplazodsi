@@ -207,7 +207,7 @@
                 <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" press="_onGotoMainMenu"/>
                 <!-- text="{i18n>btncancelar}" -->
                 <ToolbarSpacer/>
-                <Button text="{i18n>btningpallet}" type="Emphasized" press="onIngresaxPallet" width="27%" visible="{= ${mockdata>/EtiquIngxPallets} === true }"/>
+                <Button text="{i18n>btningpallet}" type="Emphasized" press="onIngresaxPallet" width="27%" enabled="{= ${mockdata>/EtiquIngxPallets} === true }"/>
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" width="27%" />
                 <ToolbarSpacer/>
                 <Button text="{i18n>btncontinuar}" tooltip="={mockdata>/AlmValidAlmacenamiento}" type="Emphasized" width="27%" enabled="{mockdata>/AlmValidAlmacenamiento}" press="onConfirmaAlmacenamiento" visible="{= ${mockdata>/EtiquIngxPallets} === false }"/>

@@ -202,7 +202,7 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Almacenamiento"),
             oScan = oMockModel.getProperty("/AlmacenamientoScan"),
             oPallet = oData.Pallet,
-            oPalletScan = oScan.Pallet,
+            oPalletScan = this.onQuitaZeros(oScan.Pallet),
             oDestino,
             oDestinoScan;
 
