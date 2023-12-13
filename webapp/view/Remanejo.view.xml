@@ -35,7 +35,7 @@
                         <OverflowToolbar >
 
 
-                            <SearchField width="65%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/>
+                            <!-- <SearchField width="65%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/> -->
                             <ToolbarSpacer/>
 
                             <Button icon="sap-icon://add" press="onAgregarButtonPress" text="{i18n>btnagregarmaterial}" type="Emphasized"/>
@@ -76,7 +76,7 @@
 
                             <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
                                 <form:fields>
-                                    <Input id="idRemanejoMaterial" submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input id="idRemanejoMaterial" value="{mockdata>/RemanejoScanMaterial}"  submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -108,7 +108,7 @@
                     <headerToolbar>
                         <OverflowToolbar >
 
-                            <SearchField width="80%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/>
+                            <!-- <SearchField width="80%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/> -->
 
                         </OverflowToolbar>
                     </headerToolbar>
@@ -129,7 +129,7 @@
                                 <Label text="{mockdata>Lote}" wrapping="true" />
                             </cells>
                             <cells>
-                                <Label text="{mockdata>Cantidad}" wrapping="true" />
+                                <Label text="{mockdata>Disponible}" wrapping="true" />
                             </cells>
                             <cells>
                                 <Input valueStateText="{i18n>msgtrascantidad}" liveChange="oncheckcantidad" />
@@ -150,7 +150,7 @@
                 <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" press="onAgregarSeleccionButtonPress" />
+                <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" press="onAgregarSeleccionButtonPress" />
                 <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" visible="{= ${mockdata>/Remanejo} === 1 }"/>
 
             </OverflowToolbar>

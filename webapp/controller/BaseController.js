@@ -158,24 +158,19 @@ sap.ui.define(
           });
         },
 
-        onupdateModel: function (oModel, oView, oPath, oPayload) {
+        _onupdateModel: function (oModel, oView, oPath, oPayload) {
           return new Promise((resolve, reject) => {
             oView.setBusy(true);
             oModel.update(oPath, oPayload, {
               success: function (oData) {
                 oView.setBusy(false);
 
-                if (oData.Tipo === "E") {
-                  // Error
-                } else {
-                  oModel.refresh;
-                  // Correcto
-                }
+                resolve({ Respuesta: "OK", Datos: oData });
               }.bind(this),
 
               error: function (oError) {
                 oView.setBusy(false);
-
+                resolve({ Respuesta: "ERROR", Datos: oError });
                 // Reiniciar
               }.bind(this),
             });

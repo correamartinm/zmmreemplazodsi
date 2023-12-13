@@ -36,6 +36,8 @@ sap.ui.define(
         oMockModel.setProperty("/MaterialesAddedCount", "");
       },
 
+
+
       onMaterialRemanejoScan: async function (oEvent) {
         // va read MaterialesSet con lo que vino en el servicio + el scaneo
 
@@ -51,7 +53,7 @@ sap.ui.define(
 
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
-            oMockModel.setProperty("/Materiales", rta.Datos);
+            oMockModel.setProperty("/Materiales", rta.Datos.results);
           } else {
             this.onShowMessagesRemanejo(rta.Datos, oEvent);
           }
@@ -66,35 +68,53 @@ sap.ui.define(
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
         oMockModel.setProperty("/Remanejo", 3);
       },
-      onAgregarSeleccionButtonPress: function () {
+      onAgregarSeleccionButtonPress: async function () {
         let oTable = this.getView().byId("idMaterialStock"),
-          oModel = this.getView().getModel("mockdata"),
+          oMockModel = this.getView().getModel("mockdata"),
+          oModel = this.getView().getModel(),
+          oView = this.getView(),
           oItems = oTable.getSelectedItems(),
           oPath,
           oSelectedData = [],
           vObject;
         for (var index = 0; index < oItems.length; index++) {
           oPath = oItems[index].getBindingContextPath();
-          vObject = oModel.getObject(oPath);
+          vObject = oMockModel.getObject(oPath);
+          vObject.Ingreso = oItems[index].getCells()[2].getValue();
           oSelectedData.push(vObject);
-        }
 
-        oMockModel.setProperty("/MaterialesAdded", oSelectedData);
-        oMockModel.setProperty("/MaterialesAddedCount", oSelectedData.length);
+          let rta = await this._onupdateModel(oModel, oView, oPath, vObject);
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje !== "E") {
+              oMockModel.setProperty("/MaterialesAdded", oSelectedData);
+              oMockModel.setProperty(
+                "/MaterialesAddedCount",
+                oSelectedData.length
+              );
+            } else {
+              console.log("Error:"+rta.Datos);
+            }
+          }
+        }
         // cambio pantalla
         oMockModel.setProperty("/Remanejo", 1);
       },
       onTableMaterialesSelectionChange: function (oEvent) {
         let oTable = this.getView().byId("idMaterialStock"),
-          oModel = this.getView().getModel("mockdata"),
+          oMockModel = this.getView().getModel("mockdata"),
           oItems = oTable.getItems(),
           oPath,
           vObject;
+        oMockModel.setProperty(
+          "/MaterialesAddedCount",
+          oTable.getSelectedItems.length
+        );
 
         for (var index = 0; index < oItems.length; index++) {
           oItems[index].getCells()[2].setEnabled(oItems[index].getSelected());
           oPath = oItems[index].getBindingContextPath();
-          vObject = oModel.getObject(oPath);
+          vObject = oMockModel.getObject(oPath);
 
           if (oItems[index].getSelected() === false) {
             oItems[index].getCells()[2].setValue();
@@ -108,12 +128,12 @@ sap.ui.define(
               oItems[index].getCells()[2].getValue() === "0.00" ||
               oItems[index].getCells()[2].getValue() === ""
             ) {
-              if (parseFloat(vObject.Saldo) > 0) {
-                oItems[index].getCells()[2].setValue(vObject.Saldo);
+              if (parseFloat(vObject.Disponible) > 0) {
+                oItems[index].getCells()[2].setValue(vObject.Disponible);
               } else {
                 oItems[index]
                   .getCells()[2]
-                  .setValue(parseFloat(vObject.Saldo) * -1);
+                  .setValue(parseFloat(vObject.Disponible) * -1);
               }
               vObject.Aplicado = oItems[index].getCells()[2].getValue();
             }
@@ -127,8 +147,35 @@ sap.ui.define(
         }
       },
 
+
+
+      oncheckcantidad: function (oEvent) {
+        let oTarget = oEvent.getSource(),
+          oStockTable = this.getView().byId("idMaterialStock"),
+          oMax = oEvent.getSource().getParent().getCells()[2].getText(),
+          oValue = oTarget.getValue();
+        let oItem = oStockTable.getSelectedItem();
+
+        oValue = parseFloat(oValue);
+        oMax = parseFloat(oMax);
+
+        if (oValue > 0 && oValue <= oMax) {
+          oTarget.setValueState(ValueState.None);
+        } else {
+          oTarget.setValueState(ValueState.Warning);
+        }
+
+        this._onCheckPago();
+      },
+
+
+
       onCancelarSeleccionButtonPress: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        oMockModel.setProperty("/MaterialesAdded", []);
+        oMockModel.setProperty("/Materiales", []);
+        oMockModel.setProperty("/MaterialesAddedCount", "");
+        oMockModel.setProperty("/RemanejoScanMaterial", "");
         oMockModel.setProperty("/Remanejo", 1);
       },
 
