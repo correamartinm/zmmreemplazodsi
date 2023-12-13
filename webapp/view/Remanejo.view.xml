@@ -132,7 +132,7 @@
                                 <Label text="{mockdata>Disponible}" wrapping="true" />
                             </cells>
                             <cells>
-                                <Input valueStateText="{i18n>msgtrascantidad}" liveChange="oncheckcantidad" />
+                                <Input valueStateText="{i18n>msgtrascantidad}" liveChange="oncheckcantidad" enabled="false" />
 
                             </cells>
 
