@@ -80,7 +80,7 @@
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/Traslado/Cantidad}" class="uptitle" />
+                                    <ObjectStatus title="{i18n>lblcantidad}" text="{mockdata>/Traslado/Cantidad} {mockdata>/Traslado/Unidad}" class="uptitle" />
                                 </form:fields>
                             </form:FormElement>
 
@@ -94,11 +94,20 @@
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lblnumot}" text="{mockdata>/Traslado/Ot}" />
+                                    <ObjectStatus title="{i18n>lblposicion}" text="{mockdata>/Traslado/Posicion}" />
 
-                                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Traslado/Etapa}" />
+
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
+                            <form:FormElement >
+                                <form:fields>
+
+
+                                    <ObjectStatus title="{i18n>lbletapa}" text="{mockdata>/Traslado/Etapa}" />
+                                    <ObjectStatus title="{i18n>lbllote}" text="{mockdata>/Traslado/Lote}" />
+                                </form:fields>
+                            </form:FormElement>
 
                             <form:FormElement >
                                 <form:fields>

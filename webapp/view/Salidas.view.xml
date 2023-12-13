@@ -196,12 +196,12 @@
                 <Button text="{i18n>btnlimpiar}" type="Emphasized" press="onClearScreen" width="20%" />
 
                 <Button  type="Emphasized" text="{i18n>btnleerpallet}" width="20%" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === false }"/>
-                <Button type="Emphasized" text="{i18n>btnleerot}" width="20%" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
+                <Button type="Emphasized" text="{i18n>btnleerot}" width="18%" press="onPalletRead" visible="{= ${mockdata>/SalidaxPallet} === true }"/>
 
 
-                <Button text="{i18n>btnbuscar}" type="Emphasized" width="20%" press="onBuscar" />
+                <Button text="{i18n>btnbuscar}" type="Emphasized" width="18%" press="onBuscar" />
 
-                <Button text="{i18n>btncontinuar}" type="Emphasized" width="20%" enabled="{mockdata>/SalidaValida}" press="onSalidaContinuar"/>
+                <Button text="{i18n>btncontinuar}" type="Emphasized" width="18%" enabled="{mockdata>/SalidaValida}" press="onSalidaContinuar"/>
             </OverflowToolbar>
 
         </footer>

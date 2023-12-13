@@ -152,7 +152,7 @@ sap.ui.define(
           oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida");
 
-        if (this.onQuitaZeros(oValue) !== oData.OrigenValidacion) {
+        if (this.onFormatCodigo(oValue) !== oData.OrigenValidacion) {
           this._onShowMsg1(oEvent);
         } else {
           this._onFocusControl(this.byId("idSalPalletScan"));
@@ -260,7 +260,7 @@ sap.ui.define(
       onShowMessagesSalida: function (rta, oEvent) {
         switch (rta.Tipo) {
           case "01":
-            this._onShowMsg1();
+            this._onShowMsg1(oEvent);
             break;
           case "02":
             this._onShowMsg2(oEvent);
@@ -296,7 +296,7 @@ sap.ui.define(
         }
       },
 
-      _onShowMsg1: function () {
+      _onShowMsg1: function (oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msguborigen"),
@@ -306,8 +306,11 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          // if (rta === this._i18n().getText("btnvolver")) {
-          // }
+
+          if (rta === this._i18n().getText("btnvolver")) {
+            oEvent.getSource().setValue();
+            this._onFocusControl(oEvent.getSource());
+          }
         });
       },
 
@@ -407,8 +410,7 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          // if (rta === this._i18n().getText("btnvolver")) {
-          // }
+          this.onClearScreen();
         });
       },
 
@@ -422,8 +424,7 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          // if (rta === this._i18n().getText("btnvolver")) {
-          // }
+          this.onClearScreen();
         });
       },
       _onShowMsg9: function () {
