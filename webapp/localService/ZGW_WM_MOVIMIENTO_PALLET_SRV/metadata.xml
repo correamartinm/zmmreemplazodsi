@@ -160,6 +160,22 @@
                 <Property Name="Mensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="TipoMensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
+            <EntityType Name="RemanejoPallet" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ean11"/>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="Lote"/>
+                </Key>
+                <Property Name="Ean11" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Descripcion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lote" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
+                <Property Name="Disponible" Type="Edm.Double" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ingreso" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Mensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TipoMensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tipo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
             <EntityContainer Name="ZGW_WM_MOVIMIENTO_PALLET_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="AlmacenamientoSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Almacenamiento" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="DevolucionSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Devolucion" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
@@ -169,9 +185,10 @@
                 <EntitySet Name="SalidaSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Salida" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="PalletValidacionSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.PalletValidacion" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="RemanejoSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Remanejo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="RemanejoPalletSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.RemanejoPallet" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
             </EntityContainer>
-            <atom:link rel="self" href="https://mxecid.morixe.com.ar:44300/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
-            <atom:link rel="latest-version" href="https://mxecid.morixe.com.ar:44300/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="self" href="http://mxecid.morixe.com.ar:8000/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://mxecid.morixe.com.ar:8000/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

@@ -44,62 +44,8 @@ sap.ui.define(
               displayName: "Usuario Test (dummy.user@com)",
             },
           ],
-          TestItems: [
-            {
-              OT: 123456,
-              ETAPA: 25,
-              ORIGEN: 87898989,
-              PALLET: 987654,
-              DESTINO: 7777,
-            },
-            {
-              OT: 423456,
-              ETAPA: 15,
-              ORIGEN: 87898449,
-              PALLET: 987654,
-              DESTINO: 7777,
-            },
-            {
-              OT: 323456,
-              ETAPA: 12,
-              ORIGEN: 87338989,
-              PALLET: 987654,
-              DESTINO: 7777,
-            },
-            {
-              OT: 223456,
-              ETAPA: 26,
-              ORIGEN: 12898989,
-              PALLET: 447654,
-              DESTINO: 7777,
-            },
-          ],
-          Materiales: [
-            {
-              Codigo: "0001",
-              Descripcion: "Material Test 1",
-              Lote: "123",
-              Cantidad: "10",
-            },
-            {
-              Codigo: "0002",
-              Descripcion: "Material Test 2",
-              Lote: "654",
-              Cantidad: "12",
-            },
-            {
-              Codigo: "0003",
-              Descripcion: "Material Test 3",
-              Lote: "987",
-              Cantidad: "14",
-            },
-            {
-              Codigo: "0004",
-              Descripcion: "Material Test 4",
-              Lote: "13",
-              Cantidad: "20",
-            },
-          ],
+          TestItems: [],
+          Materiales: [],
           Almacenamiento: {
             Pallet: "",
             Destino: ""
@@ -110,6 +56,7 @@ sap.ui.define(
           },
 
           Devolucion: {},
+          RemanejoScan: [],
           DevolucionScan: {
             Material: "",
             Cantidad: "",

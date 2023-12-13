@@ -1,8 +1,6 @@
 <mvc:View controllerName="morixe.zmmreemplazodsi.controller.Remanejo"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns:form="sap.ui.layout.form"
-    xmlns:card="sap.f.cards"
-    xmlns:f="sap.f"
     xmlns="sap.m">
 
 
@@ -28,18 +26,7 @@
                 <Label text="{i18n>btnremanejopallets}"/>
                 <ToolbarSpacer/>
             </OverflowToolbar>
-            <Toolbar visible="false">
-                <content>
-                    <Text text="Mensajes"/>
-                    <ToolbarSpacer/>
-                    <Button text="1" type="Emphasized" press="_onShowMsg1" class="sapUiTinyMarginBegin"/>
-                    <Button text="2" type="Emphasized" press="_onShowMsg2" class="sapUiTinyMarginBegin"/>
-                    <Button text="3" type="Emphasized" press="_onShowMsg3" class="sapUiTinyMarginBegin"/>
-                    <Button text="4" type="Emphasized" press="_onShowMsg4" class="sapUiTinyMarginBegin"/>
 
-
-                </content>
-            </Toolbar>
 
             <VBox visible="{= ${mockdata>/Remanejo} === 1 }">
 
@@ -69,11 +56,7 @@
                         <ColumnListItem vAlign="Middle">
                             <cells>
                                 <Label text="{mockdata>Codigo}" wrapping="true" />
-                            </cells>
-                            <cells>
                                 <Label text="{mockdata>Descripcion}" wrapping="true" />
-                            </cells>
-                            <cells>
                                 <Label text="{mockdata>Cantidad}" wrapping="true" />
                             </cells>
                         </ColumnListItem>
@@ -93,7 +76,7 @@
 
                             <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
                                 <form:fields>
-                                    <Input id="idRemanejoMaterial" submit="onPalletScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input id="idRemanejoMaterial" submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -121,7 +104,7 @@
 
             <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="SpaceBetween">
 
-                <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onSelectItem" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
+                <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onTableMaterialesSelectionChange" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
                     <headerToolbar>
                         <OverflowToolbar >
 
@@ -166,20 +149,11 @@
                 <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }" press="_onGotoMainMenu"/>
                 <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
-
-
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" press="onAgregarSeleccionButtonPress" />
                 <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
 
             </OverflowToolbar>
-
-
-
-
-
-
-
 
         </footer>
     </Page>
