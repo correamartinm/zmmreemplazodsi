@@ -46,6 +46,8 @@ sap.ui.define(
           ],
           TestItems: [],
           Materiales: [],
+          MaterialesAdded: [],
+          MaterialesAddedCount: "",
           Almacenamiento: {
             Pallet: "",
             Destino: ""

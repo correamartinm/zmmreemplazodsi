@@ -1,11 +1,16 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/core/ValueState"],
+  [
+    "./BaseController",
+    "sap/ui/core/ValueState",
+    "sap/ui/model/FilterOperator",
+    "sap/ui/model/Filter",
+  ],
 
   /**
    * @param {typeof sap.ui.core.mvc.BaseController} BaseController
    * @param {typeof sap.ui.core.ValueState} ValueState
    */
-  function (BaseController, ValueState) {
+  function (BaseController, ValueState, FilterOperator, Filter) {
     "use strict";
 
     return BaseController.extend("morixe.zmmreemplazodsi.controller.Remanejo", {
@@ -27,6 +32,8 @@ sap.ui.define(
           Totnumero: "",
           Tnuevonumero: "",
         });
+        oMockModel.setProperty("/MaterialesAdded", []);
+        oMockModel.setProperty("/MaterialesAddedCount", "");
       },
 
       onMaterialRemanejoScan: async function (oEvent) {
@@ -60,7 +67,21 @@ sap.ui.define(
         oMockModel.setProperty("/Remanejo", 3);
       },
       onAgregarSeleccionButtonPress: function () {
-        let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        let oTable = this.getView().byId("idMaterialStock"),
+          oModel = this.getView().getModel("mockdata"),
+          oItems = oTable.getSelectedItems(),
+          oPath,
+          oSelectedData = [],
+          vObject;
+        for (var index = 0; index < oItems.length; index++) {
+          oPath = oItems[index].getBindingContextPath();
+          vObject = oModel.getObject(oPath);
+          oSelectedData.push(vObject);
+        }
+
+        oMockModel.setProperty("/MaterialesAdded", oSelectedData);
+        oMockModel.setProperty("/MaterialesAddedCount", oSelectedData.length);
+        // cambio pantalla
         oMockModel.setProperty("/Remanejo", 1);
       },
       onTableMaterialesSelectionChange: function (oEvent) {

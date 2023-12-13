@@ -30,7 +30,7 @@
 
             <VBox visible="{= ${mockdata>/Remanejo} === 1 }">
 
-                <Table id="idMaterialsAdded" items="{mockdata>/Materiales}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6">
+                <Table id="idMaterialsAdded" items="{mockdata>/MaterialesAdded}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6"  >
                     <headerToolbar>
                         <OverflowToolbar >
 
@@ -151,7 +151,7 @@
 
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" press="onAgregarSeleccionButtonPress" />
-                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }"/>
+                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" visible="{= ${mockdata>/Remanejo} === 1 }"/>
 
             </OverflowToolbar>
 

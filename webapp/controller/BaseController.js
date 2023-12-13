@@ -128,11 +128,11 @@ sap.ui.define(
               filters: [oFilters],
               success: jQuery.proxy(function (oData) {
                 oView.setBusy(false);
-                resolve(oData);
+                resolve({ Respuesta: "OK", Datos: oData });
               }, this),
               error: function (oError) {
                 oView.setBusy(false);
-                resolve(oError);
+                resolve({ Respuesta: "ERROR", Datos: oError });
               },
             });
           });
