@@ -58,7 +58,7 @@ sap.ui.define(
           },
 
           Devolucion: {},
-          RemanejoScanMaterial: "7790199604518",
+          RemanejoScanMaterial: "",
           DevolucionScan: {
             Material: "",
             Cantidad: "",

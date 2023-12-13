@@ -23,6 +23,7 @@ sap.ui.define(
 
       _onObjectMatched: function (evt) {
         this._onFocusControl(this.byId("idMovPalletInput"));
+        this._onResetData();
       },
 
       _onResetData: function () {
