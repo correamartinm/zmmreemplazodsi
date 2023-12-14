@@ -42,7 +42,7 @@
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>
-                        <Column hAlign="Center">
+                        <Column hAlign="Center" >
                             <Text text="{i18n>lblmaterial}" />
                         </Column>
                         <Column hAlign="Center">
@@ -53,12 +53,17 @@
                         </Column>
                     </columns>
                     <items>
-                        <ColumnListItem vAlign="Middle">
+                        <ColumnListItem >
                             <cells>
-                                <Label text="{mockdata>Codigo}" wrapping="true" />
-                                <Label text="{mockdata>Descripcion}" wrapping="true" />
-                                <Label text="{mockdata>Cantidad}" wrapping="true" />
+                                <Label text="{mockdata>Material}" wrapping="true" />
                             </cells>
+                            <cells>
+                                <Label text="{mockdata>Lote}" wrapping="true" />
+                            </cells>
+                            <cells>
+                                <Label text="{mockdata>Ingreso}" wrapping="true" />
+                            </cells>
+                            
                         </ColumnListItem>
                     </items>
                 </Table>
@@ -76,7 +81,7 @@
 
                             <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
                                 <form:fields>
-                                    <Input id="idRemanejoMaterial" value="{mockdata>/RemanejoScanMaterial}"  submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input id="idRemanejoMaterial" value="{mockdata>/RemanejoScan/Ean11}"  submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
@@ -113,13 +118,13 @@
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>
-                        <Column hAlign="Center">
+                        <Column >
                             <Text text="{i18n>lbllote}" />
                         </Column>
-                        <Column hAlign="Center">
+                        <Column >
                             <Text text="{i18n>lbldisponible}" />
                         </Column>
-                        <Column hAlign="Center">
+                        <Column >
                             <Text text="{i18n>lbltomar}" />
                         </Column>
                     </columns>
@@ -151,7 +156,7 @@
 
                 <ToolbarSpacer/>
                 <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" press="onAgregarSeleccionButtonPress" />
-                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" visible="{= ${mockdata>/Remanejo} === 1 }"/>
+                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" visible="{= ${mockdata>/Remanejo} === 1 }" press="onPostRemanejo"/>
 
             </OverflowToolbar>
 

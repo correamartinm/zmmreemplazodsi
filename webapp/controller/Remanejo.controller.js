@@ -17,7 +17,7 @@ sap.ui.define(
       onInit: function () {
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
-        let oTarget = oRouter.getTarget("TargetMovimiento");
+        let oTarget = oRouter.getTarget("TargetRemanejo");
         oTarget.attachDisplay(this._onObjectMatched, this);
       },
 
@@ -27,18 +27,18 @@ sap.ui.define(
       },
 
       _onResetData: function () {
+        this._onClearTable();
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
         oMockModel.setProperty("/MaterialesAdded", []);
         oMockModel.setProperty("/Materiales", []);
         oMockModel.setProperty("/MaterialesAddedCount", "");
-        oMockModel.setProperty("/RemanejoScanMaterial", "");
+        oMockModel.setProperty("/RemanejoScan", { Ean11: "", Material: "" });
         oMockModel.setProperty("/Remanejo", 1);
-        this._onClearTable();
       },
 
       _onClearTable: function () {
         let oTable = this.getView().byId("idMaterialStock"),
-          oItems = oTable.getSelectedItems();
+          oItems = oTable.getItems();
 
         if (oItems.length > 0) {
           for (var index = 0; index < oItems.length; index++) {
@@ -65,6 +65,11 @@ sap.ui.define(
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
             oMockModel.setProperty("/Materiales", rta.Datos.results);
+            let DataScan = {
+              Ean11: oValue,
+              Material: rta.Datos.results[0].Material,
+            };
+            oMockModel.setProperty("/RemanejoScan", DataScan);
           } else {
             this.onShowMessagesRemanejo(rta.Datos, oEvent);
           }
@@ -77,6 +82,7 @@ sap.ui.define(
 
       onAgregarButtonPress: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        this._onResetData();
         oMockModel.setProperty("/Remanejo", 3);
       },
       onAgregarSeleccionButtonPress: async function () {
@@ -86,19 +92,20 @@ sap.ui.define(
           oView = this.getView(),
           oItems = oTable.getSelectedItems(),
           oPath,
-          oPayload = {},
           oSelectedData = [],
           vObject;
         for (var index = 0; index < oItems.length; index++) {
+          let oPayload = {};
           oPath = oItems[index].getBindingContextPath();
           vObject = oMockModel.getObject(oPath);
+          vObject.Ingreso = oItems[index].getCells()[2].getValue();
 
           oPayload.Descripcion = vObject.Descripcion;
           oPayload.Disponible = vObject.Disponible;
           oPayload.Ean11 = vObject.Ean11;
           oPayload.Ingreso = oItems[index].getCells()[2].getValue();
-          oPayload.Lote = vObject.Lote;
-          oPayload.Material = vObject.Material;
+          oPayload.Lote = this.onQuitaZeros(vObject.Lote);
+          oPayload.Material = this.onQuitaZeros(vObject.Material);
           oPayload.Mensaje = vObject.Mensaje;
           oPayload.Tipo = vObject.Tipo;
           oPayload.TipoMensaje = vObject.TipoMensaje;
@@ -111,26 +118,28 @@ sap.ui.define(
 
           oSelectedData.push(oPayload);
 
-          let rta = await this._onupdateModel(
-            oModel,
-            oView,
-            oPathUPD,
-            oPayload
-          );
+          // let rta = await this._onupdateModel(
+          //   oModel,
+          //   oView,
+          //   oPathUPD,
+          //   oPayload
+          // );
 
-          if (rta.Respuesta === "OK") {
-            if (rta.Datos.TipoMensaje !== "E") {
-              oMockModel.setProperty("/MaterialesAdded", oSelectedData);
-              oMockModel.setProperty(
-                "/MaterialesAddedCount",
-                oSelectedData.length
-              );
-            } else {
-              console.log("Error:" + rta.Datos);
-            }
-          }
+          // if (rta.Respuesta === "OK") {
+          //   if (rta.Datos.TipoMensaje !== "E") {
+          //     oMockModel.setProperty("/MaterialesAdded", oSelectedData);
+          //     oMockModel.setProperty(
+          //       "/MaterialesAddedCount",
+          //       oSelectedData.length
+          //     );
+          //   } else {
+          //     console.log("Error:" + rta.Datos);
+          //   }
+          // }
         }
         // cambio pantalla
+
+        oMockModel.setProperty("/MaterialesAdded", oSelectedData);
         oMockModel.setProperty("/Remanejo", 1);
       },
       onTableMaterialesSelectionChange: function (oEvent) {
@@ -182,7 +191,7 @@ sap.ui.define(
         if (oItems.length > 0) {
           for (var index = 0; index < oItems.length; index++) {
             oValue = parseFloat(oItems[index].getCells()[2].getValue());
-            oMax = parseFloat(oItems[index].getCells()[1].getNumber());
+            oMax = parseFloat(oItems[index].getCells()[1].getText());
 
             if (oValue > 0 && oValue <= oMax) {
               oMockModel.setProperty("/MaterialesAddedCount", "1");
@@ -206,7 +215,9 @@ sap.ui.define(
         oValue = parseFloat(oValue);
         oMax = parseFloat(oMax);
 
-        if (oValue > 0 && oValue <= oMax) {
+        if (oValue === 0 || isNaN(oValue)) return;
+
+        if (oValue <= oMax) {
           oTarget.setValueState(ValueState.None);
           //
         } else {
@@ -215,11 +226,28 @@ sap.ui.define(
         }
 
         this._onCheckTable();
-        
       },
 
       onCancelarSeleccionButtonPress: function () {
         this._onResetData();
+      },
+
+      onPostRemanejo: async function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView(),
+          oEntity = "/RemanejoPalletSet",
+          oPayload = oMockModel.getProperty("/RemanejoScan");
+
+        let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            this.onShowMessagesRemanejo(rta.Datos, []);
+          }
+        } else {
+          this._onErrorHandle(rta.Datos);
+        }
       },
 
       // Mensajes ***************************
