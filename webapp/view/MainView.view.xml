@@ -1,6 +1,7 @@
 <mvc:View controllerName="morixe.zmmreemplazodsi.controller.MainView"
-	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:card="sap.f.cards"
-    xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+	xmlns:card="sap.f.cards"
+	xmlns:f="sap.f"
 	xmlns="sap.m">
 
 	<Page title="{i18n>title}" class="Title PanelSnow">
@@ -8,48 +9,50 @@
 			<Bar class="custHeader" design="Header">
 				<contentLeft>
 					<Button type="Emphasized" icon="sap-icon://home-share" visible="{mockdata>/MainButtons}" press="onReiniciar"/>
-				
+
 				</contentLeft>
 				<contentMiddle>
 
 				</contentMiddle>
 				<contentRight>
-					<Image src="./images/logo.png" height="36px"></Image>
+					<Image src="./images/logo.png" height="30px"></Image>
 				</contentRight>
 			</Bar>
 		</customHeader>
 		<content>
 
 
-			<FlexBox height="80%" alignItems="Center" justifyContent="Center" >
+			<FlexBox height="70%" alignItems="Center" justifyContent="Center">
 				<VBox >
-				
-						<f:Card class="sapUiTinyMarginBottom" >
-							<f:header>
-								<card:Header title="{i18n>lblalmacenamiento} " iconSrc="./images/Almacenamiento.jpg" press="onGoOtEntrante"    />
-							</f:header>
-						</f:Card>
+
+					<f:Card class="sapUiTinyMarginBottom" >
+						<f:header>
+
+							<card:Header title="{i18n>lblalmacenamiento} " iconSrc="./images/Almacenamiento.jpg" press="onGoOtEntrante" />
+
+						</f:header>
+					</f:Card>
 
 
-						<f:Card class="sapUiTinyMarginBottom" >
-							<f:header>
-								<card:Header title="{i18n>btnsalidaventas} " iconSrc="./images/Salida.jpg" press="onGoOtSaliente"  />
-							</f:header>
-						</f:Card>
+					<f:Card class="sapUiTinyMarginBottom">
+						<f:header>
+							<card:Header title="{i18n>btnsalidaventas} " iconSrc="./images/Salida.jpg" press="onGoOtSaliente" />
+						</f:header>
+					</f:Card>
 
 
-						<f:Card class="sapUiTinyMarginBottom">
-							<f:header>
-								<card:Header title="{i18n>btntraslados} " iconSrc="./images/Traslado.jpg" press="onGoMovimiento" />
-							</f:header>
-						</f:Card>
+					<f:Card class="sapUiTinyMarginBottom" height="auto">
+						<f:header>
+							<card:Header title="{i18n>btntraslados} " iconSrc="./images/Traslado.jpg" press="onGoMovimiento" />
+						</f:header>
+					</f:Card>
 
 
-						<f:Card >
-							<f:header>
-								<card:Header title="{i18n>btnremanejopallets} " iconSrc="./images/Remanejo.jpg" press="onGoRemanejo" />
-							</f:header>
-						</f:Card>
+					<f:Card >
+						<f:header>
+							<card:Header title="{i18n>btnremanejopallets} " iconSrc="./images/Remanejo.jpg" press="onGoRemanejo" />
+						</f:header>
+					</f:Card>
 
 
 				</VBox>
