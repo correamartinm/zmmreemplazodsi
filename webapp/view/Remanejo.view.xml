@@ -103,7 +103,7 @@
                                 </form:fields>
                             </form:FormElement>
 
-                            <form:FormElement visible="{= ${mockdata>/Remanejo} === 3 }" >
+                            <form:FormElement visible="{= ${mockdata>/RemanejoScan/Esperada} !== '' }" >
                                 <form:fields>
                                     <Text class="BigSize" text="{i18n>lblcantidadesperada}: {mockdata>/RemanejoScan/Esperada}" />
                                 </form:fields>
