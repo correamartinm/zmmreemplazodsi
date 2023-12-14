@@ -29,11 +29,11 @@ sap.ui.define(
       _onResetData: function () {
         this._onClearTable();
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        
         oMockModel.setProperty("/MaterialesAdded", []);
         oMockModel.setProperty("/Materiales", []);
-        oMockModel.setProperty("/MaterialesAddedCount", "");
-        oMockModel.setProperty("/RemanejoScan", { Ean11: "", Material: "" });
-        oMockModel.setProperty("/Remanejo", 1);
+        oMockModel.setProperty("/MaterialesAddedCount", 0);
+        oMockModel.setProperty("/RemanejoScan", { Ean11: "", Material: "", Esperada: "", Descripcion:"" });
       },
 
       _onClearTable: function () {
@@ -68,6 +68,8 @@ sap.ui.define(
             let DataScan = {
               Ean11: oValue,
               Material: rta.Datos.results[0].Material,
+              Esperada: rta.Datos.results[0].Esperada,
+              Descripcion: rta.Datos.results[0].Descripcion
             };
             oMockModel.setProperty("/RemanejoScan", DataScan);
           } else {
@@ -90,8 +92,10 @@ sap.ui.define(
           oMockModel = this.getView().getModel("mockdata"),
           oModel = this.getView().getModel(),
           oView = this.getView(),
+          oSumaMateriales = 0,
           oItems = oTable.getSelectedItems(),
           oPath,
+         
           oSelectedData = [],
           vObject;
         for (var index = 0; index < oItems.length; index++) {
@@ -106,6 +110,8 @@ sap.ui.define(
           oPayload.Ingreso = oItems[index].getCells()[2].getValue();
           oPayload.Lote = this.onQuitaZeros(vObject.Lote);
           oPayload.Material = this.onQuitaZeros(vObject.Material);
+          oPayload.Centro = vObject.Centro; 
+          oPayload.Unidad = vObject.Unidad;         
           oPayload.Mensaje = vObject.Mensaje;
           oPayload.Tipo = vObject.Tipo;
           oPayload.TipoMensaje = vObject.TipoMensaje;
@@ -117,29 +123,30 @@ sap.ui.define(
           });
 
           oSelectedData.push(oPayload);
+          oSumaMateriales = oSumaMateriales + parseFloat(oPayload.Ingreso);
 
-          // let rta = await this._onupdateModel(
-          //   oModel,
-          //   oView,
-          //   oPathUPD,
-          //   oPayload
-          // );
+          let rta = await this._onupdateModel(
+            oModel,
+            oView,
+            oPathUPD,
+            oPayload
+          );
 
-          // if (rta.Respuesta === "OK") {
-          //   if (rta.Datos.TipoMensaje !== "E") {
-          //     oMockModel.setProperty("/MaterialesAdded", oSelectedData);
-          //     oMockModel.setProperty(
-          //       "/MaterialesAddedCount",
-          //       oSelectedData.length
-          //     );
-          //   } else {
-          //     console.log("Error:" + rta.Datos);
-          //   }
-          // }
+          if (rta.Respuesta === "OK") {
+            
+            console.log(rta);
+              oMockModel.setProperty(
+                "/MaterialesAddedCount",
+                oSumaMateriales
+              );
+           
+            
+          } 
         }
         // cambio pantalla
 
         oMockModel.setProperty("/MaterialesAdded", oSelectedData);
+        
         oMockModel.setProperty("/Remanejo", 1);
       },
       onTableMaterialesSelectionChange: function (oEvent) {
@@ -179,30 +186,25 @@ sap.ui.define(
             this._onFocusControl(oItems[index].getCells()[2]);
           }
         }
+        this._onCheckTable();
       },
 
       _onCheckTable: function () {
         let oTable = this.getView().byId("idMaterialStock"),
-          oMockModel = this.getView().getModel("mockdata"),
-          oValue,
-          oMax,
+          oMockModel = this.getView().getModel("mockdata"),          
+          oSumaIngreso = 0,          
           oItems = oTable.getSelectedItems();
 
         if (oItems.length > 0) {
           for (var index = 0; index < oItems.length; index++) {
-            oValue = parseFloat(oItems[index].getCells()[2].getValue());
-            oMax = parseFloat(oItems[index].getCells()[1].getText());
-
-            if (oValue > 0 && oValue <= oMax) {
-              oMockModel.setProperty("/MaterialesAddedCount", "1");
-            } else {
-              oMockModel.setProperty("/MaterialesAddedCount", "");
-              break;
-            }
+            oSumaIngreso = oSumaIngreso + parseFloat(oItems[index].getCells()[2].getValue());
           }
-        } else {
-          oMockModel.setProperty("/MaterialesAddedCount", "");
+        } 
+
+        if (!isNaN(oSumaIngreso)){
+          oMockModel.setProperty("/MaterialesAddedCount", oSumaIngreso );
         }
+        
       },
 
       onCheckCantidad: function (oEvent) {
@@ -229,7 +231,9 @@ sap.ui.define(
       },
 
       onCancelarSeleccionButtonPress: function () {
-        this._onResetData();
+        let oMockModel = this.getOwnerComponent().getModel("mockdata");
+        oMockModel.setProperty("/RemanejoScan", { Ean11: "", Material: "", Esperada: "", Descripcion:"" });
+        oMockModel.setProperty("/Remanejo", 1);
       },
 
       onPostRemanejo: async function () {
@@ -242,13 +246,13 @@ sap.ui.define(
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
         if (rta.Respuesta === "OK") {
-          if (rta.Datos.TipoMensaje !== "E") {
+       
             this.onShowMessagesRemanejo(rta.Datos, []);
             oMockModel.setProperty("/ImpresionData", rta.Datos );
-          }
-        } else {
-          this._onErrorHandle(rta.Datos);
+         
+       
         }
+
       },
 
       onPostImpresion: async function () {
@@ -261,9 +265,7 @@ sap.ui.define(
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
         if (rta.Respuesta === "OK") {
-          if (rta.Datos.TipoMensaje !== "E") {
-            this.onShowMessagesRemanejo(rta.Datos, []);
-          }
+         this._onResetData();
         } else {
           this._onErrorHandle(rta.Datos);
         }
@@ -294,7 +296,7 @@ sap.ui.define(
             this._onShowMsg7();
             break;
           case "08":
-            this._onShowMsg8();
+            this._onShowMsg8(rta.Esperada);
             break;
 
           default:
@@ -401,7 +403,7 @@ sap.ui.define(
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === this._i18n().getText("btnimprimir")) {
-            // this.onPrintEtiqueta();
+            this.onPostImpresion();
           }
         });
       },
@@ -427,7 +429,7 @@ sap.ui.define(
         });
       },
 
-      _onShowMsg8: function (oEvent, oValue) {
+      _onShowMsg8: function (oValue) {
         let objectMsg = {
           titulo: this._i18n().getText("lblremanejo"),
           mensaje: this._i18n().getText("msgcantidad") + " " + oValue,
@@ -438,8 +440,8 @@ sap.ui.define(
 
         this._onShowMsgBox(objectMsg).then((rta) => {
           if (rta === this._i18n().getText("btnvolver")) {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
+            // oEvent.getSource().setValue("");
+            // this._onFocusControl(oEvent.getSource());
           }
         });
       },

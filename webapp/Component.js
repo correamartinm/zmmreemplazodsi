@@ -60,7 +60,9 @@ sap.ui.define(
           Devolucion: {},
           RemanejoScan: {
             Ean11: "",
-            Material: ""
+            Material: "",
+            Esperada: "",
+            Descripcion:""
           },
           DevolucionScan: {
             Material: "",

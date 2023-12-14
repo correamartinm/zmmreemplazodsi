@@ -29,8 +29,18 @@
 
 
             <VBox visible="{= ${mockdata>/Remanejo} === 1 }">
+                <Toolbar>
 
-                <Table id="idMaterialsAdded" items="{mockdata>/MaterialesAdded}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6"  >
+                    <ToolbarSpacer />
+                    <Text class="BigSize" text="{mockdata>/RemanejoScan/Descripcion}" />
+                    <ToolbarSpacer />
+
+
+                </Toolbar>
+
+            
+
+                <Table id="idMaterialsAdded" items="{mockdata>/MaterialesAdded}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6">
                     <headerToolbar>
                         <OverflowToolbar >
 
@@ -38,11 +48,11 @@
                             <!-- <SearchField width="65%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/> -->
                             <ToolbarSpacer/>
 
-                            <Button icon="sap-icon://add" press="onAgregarButtonPress" text="{i18n>btnagregarmaterial}" type="Emphasized"/>
+                            <Button icon="sap-icon://add" press="onAgregarButtonPress" text="{i18n>btnagregarmaterial}" type="Emphasized" visible="{= ${mockdata>/MaterialesAddedCount} === 0 }" />
                         </OverflowToolbar>
                     </headerToolbar>
                     <columns>
-                        <Column hAlign="Center" >
+                        <Column hAlign="Center">
                             <Text text="{i18n>lblmaterial}" />
                         </Column>
                         <Column hAlign="Center">
@@ -63,10 +73,11 @@
                             <cells>
                                 <Label text="{mockdata>Ingreso}" wrapping="true" />
                             </cells>
-                            
+
                         </ColumnListItem>
                     </items>
                 </Table>
+
 
             </VBox>
 
@@ -81,16 +92,23 @@
 
                             <form:FormElement label="{i18n>lblmaterial}" visible="{= ${mockdata>/Remanejo} === 3 }" class="sapUiTinyMarginTop">
                                 <form:fields>
-                                    <Input id="idRemanejoMaterial" value="{mockdata>/RemanejoScan/Ean11}"  submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
+                                    <Input id="idRemanejoMaterial" value="{mockdata>/RemanejoScan/Ean11}" submit="onMaterialRemanejoScan" showValueHelp="true" valueHelpIconSrc="sap-icon://bar-code"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
 
                             <form:FormElement visible="{= ${mockdata>/Remanejo} === 3 }">
                                 <form:fields>
-                                    <Text text="{i18n>ttdescmaterial}" class="cursiva" />
+                                    <Text class="BigSize" text="{mockdata>/RemanejoScan/Descripcion}" />
                                 </form:fields>
                             </form:FormElement>
+
+                            <form:FormElement visible="{= ${mockdata>/Remanejo} === 3 }" >
+                                <form:fields>
+                                    <Text class="BigSize" text="{i18n>lblcantidadesperada}: {mockdata>/RemanejoScan/Esperada}" />
+                                </form:fields>
+                            </form:FormElement>
+
                             <!-- Fin Elemento -->
 
 
@@ -107,16 +125,10 @@
             </form:Form>
 
 
-            <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="SpaceBetween">
+            <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="Start">
 
-                <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onTableMaterialesSelectionChange" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100">
-                    <headerToolbar>
-                        <OverflowToolbar >
+                <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onTableMaterialesSelectionChange" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100" showSeparators="All">
 
-                            <!-- <SearchField width="80%" placeholder="{i18n>lbllote}" search="onSearchMaterial" change="onSearchMaterial"/> -->
-
-                        </OverflowToolbar>
-                    </headerToolbar>
                     <columns>
                         <Column >
                             <Text text="{i18n>lbllote}" />
@@ -152,11 +164,11 @@
 
             <OverflowToolbar class="sapUiSmallMarginBottom">
                 <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 1 }" press="_onGotoMainMenu"/>
-                <Button type="Critical" width="12%" icon="sap-icon://sys-cancel" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
+                <Button type="Critical" width="12%" icon="sap-icon://arrow-left" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnagregarseleccion}" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" press="onAgregarSeleccionButtonPress" />
-                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} !== '' }" visible="{= ${mockdata>/Remanejo} === 1 }" press="onPostRemanejo"/>
+                <Button text="{i18n>btnagregarseleccion} ({mockdata>/MaterialesAddedCount})" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" enabled="{= ${mockdata>/RemanejoScan/Esperada} >= ${mockdata>/MaterialesAddedCount} &amp;&amp; ${mockdata>/MaterialesAddedCount} > 0 }" press="onAgregarSeleccionButtonPress" />
+                <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} > 0  }" visible="{= ${mockdata>/Remanejo} === 1 }" press="onPostRemanejo"/>
 
             </OverflowToolbar>
 
