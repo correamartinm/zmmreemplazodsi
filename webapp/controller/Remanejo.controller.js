@@ -205,7 +205,7 @@ sap.ui.define(
         }
       },
 
-      oncheckcantidad: function (oEvent) {
+      onCheckCantidad: function (oEvent) {
         let oTarget = oEvent.getSource(),
           oStockTable = this.getView().byId("idMaterialStock"),
           oMax = oEvent.getSource().getParent().getCells()[1].getText(),
@@ -238,6 +238,25 @@ sap.ui.define(
           oView = this.getView(),
           oEntity = "/RemanejoPalletSet",
           oPayload = oMockModel.getProperty("/RemanejoScan");
+
+        let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje !== "E") {
+            this.onShowMessagesRemanejo(rta.Datos, []);
+            oMockModel.setProperty("/ImpresionData", rta.Datos );
+          }
+        } else {
+          this._onErrorHandle(rta.Datos);
+        }
+      },
+
+      onPostImpresion: async function () {
+        let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+          oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView(),
+          oEntity = "/EtiquetaSet",
+          oPayload = oMockModel.getProperty("/ImpresionData");
 
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
