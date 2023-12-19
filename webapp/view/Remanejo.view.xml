@@ -163,7 +163,7 @@
                 <Button type="Critical" width="12%" icon="sap-icon://arrow-left" enabled="{mockdata>/inOTValidate}" visible="{= ${mockdata>/Remanejo} === 3 }" press="onCancelarSeleccionButtonPress"/>
 
                 <ToolbarSpacer/>
-                <Button text="{i18n>btnagregarseleccion} ({mockdata>/MaterialesAddedCount})" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" enabled="{= ${mockdata>/RemanejoScan/Esperada} >= ${mockdata>/MaterialesAddedCount} &amp;&amp; ${mockdata>/MaterialesAddedCount} > 0 }" press="onAgregarSeleccionButtonPress" />
+                <Button text="{i18n>btnagregarseleccion} ({mockdata>/MaterialesAddedCount})" type="Emphasized" visible="{= ${mockdata>/Remanejo} === 3 }" enabled="{= ${mockdata>/RemanejoScan/Esperada} = ${mockdata>/MaterialesAddedCount} &amp;&amp; ${mockdata>/MaterialesAddedCount} > 0 }" press="onAgregarSeleccionButtonPress" />
                 <Button text="{i18n>btncerrarpallet}" type="Emphasized" width="30%" enabled="{= ${mockdata>/MaterialesAddedCount} > 0  }" visible="{= ${mockdata>/Remanejo} === 1 }" press="onPostRemanejo"/>
 
             </OverflowToolbar>

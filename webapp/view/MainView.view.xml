@@ -41,7 +41,7 @@
 					</f:Card>
 
 
-					<f:Card class="sapUiTinyMarginBottom" height="auto">
+					<f:Card class="sapUiTinyMarginBottom">
 						<f:header>
 							<card:Header title="{i18n>btntraslados} " iconSrc="./images/Traslado.jpg" press="onGoMovimiento" />
 						</f:header>

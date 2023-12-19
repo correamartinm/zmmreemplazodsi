@@ -29,11 +29,16 @@ sap.ui.define(
       _onResetData: function () {
         this._onClearTable();
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
-        
+
         oMockModel.setProperty("/MaterialesAdded", []);
         oMockModel.setProperty("/Materiales", []);
         oMockModel.setProperty("/MaterialesAddedCount", 0);
-        oMockModel.setProperty("/RemanejoScan", { Ean11: "", Material: "", Esperada: "", Descripcion:"" });
+        oMockModel.setProperty("/RemanejoScan", {
+          Ean11: "",
+          Material: "",
+          Esperada: "",
+          Descripcion: "",
+        });
       },
 
       _onClearTable: function () {
@@ -69,7 +74,7 @@ sap.ui.define(
               Ean11: oValue,
               Material: rta.Datos.results[0].Material,
               Esperada: rta.Datos.results[0].Esperada,
-              Descripcion: rta.Datos.results[0].Descripcion
+              Descripcion: rta.Datos.results[0].Descripcion,
             };
             oMockModel.setProperty("/RemanejoScan", DataScan);
           } else {
@@ -95,7 +100,6 @@ sap.ui.define(
           oSumaMateriales = 0,
           oItems = oTable.getSelectedItems(),
           oPath,
-         
           oSelectedData = [],
           vObject;
         for (var index = 0; index < oItems.length; index++) {
@@ -110,8 +114,8 @@ sap.ui.define(
           oPayload.Ingreso = oItems[index].getCells()[2].getValue();
           oPayload.Lote = this.onQuitaZeros(vObject.Lote);
           oPayload.Material = this.onQuitaZeros(vObject.Material);
-          oPayload.Centro = vObject.Centro; 
-          oPayload.Unidad = vObject.Unidad;         
+          oPayload.Centro = vObject.Centro;
+          oPayload.Unidad = vObject.Unidad;
           oPayload.Mensaje = vObject.Mensaje;
           oPayload.Tipo = vObject.Tipo;
           oPayload.TipoMensaje = vObject.TipoMensaje;
@@ -133,20 +137,14 @@ sap.ui.define(
           );
 
           if (rta.Respuesta === "OK") {
-            
             console.log(rta);
-              oMockModel.setProperty(
-                "/MaterialesAddedCount",
-                oSumaMateriales
-              );
-           
-            
-          } 
+            oMockModel.setProperty("/MaterialesAddedCount", oSumaMateriales);
+          }
         }
         // cambio pantalla
 
         oMockModel.setProperty("/MaterialesAdded", oSelectedData);
-        
+
         oMockModel.setProperty("/Remanejo", 1);
       },
       onTableMaterialesSelectionChange: function (oEvent) {
@@ -191,20 +189,20 @@ sap.ui.define(
 
       _onCheckTable: function () {
         let oTable = this.getView().byId("idMaterialStock"),
-          oMockModel = this.getView().getModel("mockdata"),          
-          oSumaIngreso = 0,          
+          oMockModel = this.getView().getModel("mockdata"),
+          oSumaIngreso = 0,
           oItems = oTable.getSelectedItems();
 
         if (oItems.length > 0) {
           for (var index = 0; index < oItems.length; index++) {
-            oSumaIngreso = oSumaIngreso + parseFloat(oItems[index].getCells()[2].getValue());
+            oSumaIngreso =
+              oSumaIngreso + parseFloat(oItems[index].getCells()[2].getValue());
           }
-        } 
-
-        if (!isNaN(oSumaIngreso)){
-          oMockModel.setProperty("/MaterialesAddedCount", oSumaIngreso );
         }
-        
+
+        if (!isNaN(oSumaIngreso)) {
+          oMockModel.setProperty("/MaterialesAddedCount", oSumaIngreso);
+        }
       },
 
       onCheckCantidad: function (oEvent) {
@@ -232,7 +230,12 @@ sap.ui.define(
 
       onCancelarSeleccionButtonPress: function () {
         let oMockModel = this.getOwnerComponent().getModel("mockdata");
-        oMockModel.setProperty("/RemanejoScan", { Ean11: "", Material: "", Esperada: "", Descripcion:"" });
+        oMockModel.setProperty("/RemanejoScan", {
+          Ean11: "",
+          Material: "",
+          Esperada: "",
+          Descripcion: "",
+        });
         oMockModel.setProperty("/Remanejo", 1);
       },
 
@@ -246,13 +249,9 @@ sap.ui.define(
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
         if (rta.Respuesta === "OK") {
-       
-            this.onShowMessagesRemanejo(rta.Datos, []);
-            oMockModel.setProperty("/ImpresionData", rta.Datos );
-         
-       
+          this.onShowMessagesRemanejo(rta.Datos, []);
+          oMockModel.setProperty("/ImpresionData", rta.Datos);
         }
-
       },
 
       onPostImpresion: async function () {
@@ -265,7 +264,7 @@ sap.ui.define(
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
         if (rta.Respuesta === "OK") {
-         this._onResetData();
+          this._onResetData();
         } else {
           this._onErrorHandle(rta.Datos);
         }
