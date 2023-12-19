@@ -73,7 +73,7 @@ sap.ui.define(
             let DataScan = {
               Ean11: oValue,
               Material: rta.Datos.results[0].Material,
-              Esperada: rta.Datos.results[0].Esperada,
+              Esperada: parseFloat(rta.Datos.results[0].Esperada),
               Descripcion: rta.Datos.results[0].Descripcion,
             };
             oMockModel.setProperty("/RemanejoScan", DataScan);
@@ -154,6 +154,10 @@ sap.ui.define(
           oPath,
           vObject;
 
+          let oRemanejoScan = oMockModel.getProperty("/RemanejoScan");
+          let Acumulado = oMockModel.getProperty("/MaterialesAddedCount");
+          let Restante = parseFloat(oRemanejoScan.Esperada) - parseFloat(Acumulado);
+
         for (var index = 0; index < oItems.length; index++) {
           oItems[index].getCells()[2].setEnabled(oItems[index].getSelected());
           oPath = oItems[index].getBindingContextPath();
@@ -171,8 +175,10 @@ sap.ui.define(
               oItems[index].getCells()[2].getValue() === "0.00" ||
               oItems[index].getCells()[2].getValue() === ""
             ) {
-              if (parseFloat(vObject.Disponible) > 0) {
-                // oItems[index].getCells()[2].setValue(vObject.Disponible);
+              if (parseFloat(vObject.Disponible) >=  parseFloat(Restante) ) {
+                  oItems[index].getCells()[2].setValue(Restante);
+              } else {
+                oItems[index].getCells()[2].setValue(vObject.Disponible);
               }
               vObject.Ingreso = oItems[index].getCells()[2].getValue();
             }
@@ -245,6 +251,8 @@ sap.ui.define(
           oView = this.getView(),
           oEntity = "/RemanejoPalletSet",
           oPayload = oMockModel.getProperty("/RemanejoScan");
+
+        oPayload.Esperada = oPayload.Esperada.toString();
 
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
