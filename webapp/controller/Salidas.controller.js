@@ -175,6 +175,8 @@ sap.ui.define(
           Pallet: oValue,
           Entrega: oData.Entrega,
           Almacen: oData.Almacen,
+          Ot: oData.Ot,
+          Posicion: oData.Posicion
         });
 
         let rta = await this._onreadModel(oModel, oView, oPath);
