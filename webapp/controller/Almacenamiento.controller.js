@@ -34,7 +34,7 @@ sap.ui.define(
 
           rta = await this._onreadModel(oModel, oView, oPath);
 
-          if (rta.length > 0) {
+          if (rta.Datos.Material) {
             oMockModel.setProperty("/Devolucion", rta);
             oMockModel.setProperty("/EtiquIngxPallets", false);
             this.onIngresaxPallet();
@@ -42,6 +42,8 @@ sap.ui.define(
             this._onFocusControl(this.getView().byId("idAlmPalletScan"));
           }
         },
+
+
         onClearScreen: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
           oMockModel.setProperty("/Almacenamiento", {
