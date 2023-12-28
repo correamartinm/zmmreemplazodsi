@@ -47,10 +47,13 @@ sap.ui.define(
         },
 
         onFormatCodigo: function (oValue) {
-          let oValueS = oValue.substring(3, 14),
-            rta = oValueS.replace(/^(0+)/g, "");
-
-          return rta;
+          if (oValue.length > 3) {
+            let oValueS = oValue.substring(3, 14),
+              rta = oValueS.replace(/^(0+)/g, "");
+            return rta;
+          } else {
+            return oValue;
+          }
         },
 
         onQuitaZeros: function (oValue) {
@@ -77,7 +80,7 @@ sap.ui.define(
             oModel.read(oPath, {
               success: jQuery.proxy(function (oData) {
                 oView.setBusy(false);
-                 resolve({ Respuesta: "OK", Datos: oData });
+                resolve({ Respuesta: "OK", Datos: oData });
               }, this),
               error: function (oError) {
                 oView.setBusy(false);

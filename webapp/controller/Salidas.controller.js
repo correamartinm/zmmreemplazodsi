@@ -104,6 +104,7 @@ sap.ui.define(
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
             rta.Accion = "P";
+            rta.Datos.OrigenValidacion = rta.Datos.Origen;
             oDataScan.Ot = rta.Datos.Ot;
             oDataScan.Origen = rta.Datos.Origen;
             oMockModel.setProperty("/Salida", rta.Datos);
@@ -202,12 +203,12 @@ sap.ui.define(
       idSalDestinoScanSubmit: async function (oEvent) {
         if (oEvent.getSource().getValue().length < 1) return;
 
-        let oValue = oEvent.getSource().getValue(),
+        let oValue = this.onFormatCodigo(oEvent.getSource().getValue()),
           oMockModel = this.getOwnerComponent().getModel("mockdata"),
           oData = oMockModel.getProperty("/Salida");
 
         if (oValue !== oData.DestinoValidacion) {
-          this._onShowMsg4(oEvent);
+          this._onShowMsg10(oEvent);
         } else {
           this._onValidaSalida();
         }
@@ -231,7 +232,7 @@ sap.ui.define(
         if (this.onQuitaZeros(oOrigen) !== this.onQuitaZeros(oOrigenScan))
           return;
         if (oData.Caso !== "11" && oData.Caso !== "31") {
-          if (this.onQuitaZeros(oDestino) !== this.onQuitaZeros(oDestinoScan))
+          if (this.onQuitaZeros(oDestino) !== this.onFormatCodigo(oDestinoScan))
             return;
         }
 
@@ -292,6 +293,10 @@ sap.ui.define(
           case "09":
             this._onShowMsg9();
             break;
+
+            case "10":
+              this._onShowMsg10();
+              break;  
 
           default:
             break;
@@ -444,6 +449,23 @@ sap.ui.define(
         this._onShowMsgBox(objectMsg).then((rta) => {
           // if (rta === this._i18n().getText("btnvolver")) {
           // }
+        });
+      },
+
+      _onShowMsg10: function (oEvent) {
+        let objectMsg = {
+          titulo: this._i18n().getText("btnsalidaventas"),
+          mensaje: this._i18n().getText("msgcanal"),
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [this._i18n().getText("btnvolver")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          if (rta === this._i18n().getText("btnvolver")) {
+            oEvent.getSource().setValue();
+            this._onFocusControl(oEvent.getSource());
+          }
         });
       },
     });
