@@ -373,6 +373,7 @@ sap.ui.define(
 
       _onShowMsg5: function (oEvent) {
         let objectMsg = {
+          
           titulo: this._i18n().getText("btnsalidaventas"),
           mensaje: this._i18n().getText("msgmenomat"),
           icono: sap.m.MessageBox.Icon.QUESTION,
@@ -387,6 +388,8 @@ sap.ui.define(
           if (rta === this._i18n().getText("btnvolver")) {
             oEvent.getSource().setValue();
             this._onFocusControl(oEvent.getSource());
+          } else {
+          this.getOwnerComponent().getModel("mockdata").setProperty("/SalidaValida", true);
           }
         });
       },
