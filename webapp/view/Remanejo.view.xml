@@ -83,7 +83,7 @@
 
             <form:Form editable="true">
                 <form:layout>
-                    <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="1"/>
+                    <form:ColumnLayout columnsL="1" columnsXL="1" labelCellsLarge="2"/>
                 </form:layout>
                 <form:formContainers>
 

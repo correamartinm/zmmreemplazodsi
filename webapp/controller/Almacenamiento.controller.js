@@ -18,7 +18,6 @@ sap.ui.define(
         },
 
         _onObjectMatched: async function (evt) {
-          this.onClearScreen();
           let oModel = this.getOwnerComponent().getModel(),
             oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oView = this.getView(),
@@ -30,19 +29,16 @@ sap.ui.define(
             Pallet: "1234",
           });
 
-          // rta = await this._onfilterModel(oModel, oView, oEntity, oFilters);
-
           rta = await this._onreadModel(oModel, oView, oPath);
 
           if (rta.Datos.Material) {
-            oMockModel.setProperty("/Devolucion", rta);
-            oMockModel.setProperty("/EtiquIngxPallets", false);
-            this.onIngresaxPallet();
+            oMockModel.setProperty("/Devolucion", rta.Datos);
+            // oMockModel.setProperty("/DevolucionScan", rta);
+            oMockModel.setProperty("/EtiquIngxPalletsBTN", true);
           } else {
             this._onFocusControl(this.getView().byId("idAlmPalletScan"));
           }
         },
-
 
         onClearScreen: function () {
           let oMockModel = this.getOwnerComponent().getModel("mockdata");
@@ -52,13 +48,17 @@ sap.ui.define(
           });
           oMockModel.setProperty("/Devolucion", {});
           oMockModel.setProperty("/AlmacenamientoScan", {});
-          oMockModel.setProperty("/DevolucionScan", { Material: "" });
+          oMockModel.setProperty("/DevolucionScan", {
+            Material: "",
+            Cantidad: 0,
+            Destino: "",
+          });
           oMockModel.setProperty("/EtiquIngxPallets", false);
 
           oMockModel.setProperty("/AlmValidAlmacenamiento", false);
           oMockModel.setProperty("/AlmValidDevolucion", false);
 
-          // this._onObjectMatched();
+          this._onObjectMatched();
         },
 
         onIngresaxPallet: function () {
@@ -90,6 +90,23 @@ sap.ui.define(
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
               oMockModel.setProperty("/Almacenamiento", rta.Datos);
+              if (rta.Datos.Tipo === "03") {
+                if (rta.Datos.Pvqui === "X" && rta.Datos.Caso === "02") {
+                  this.onLlevarRemanejo();
+                  return;
+                }
+
+                if (rta.Datos.Pvqui !== "X" && rta.Datos.Caso === "03") {
+                  this.onLlevarDestino();
+                  return;
+                }
+
+                if (rta.Datos.Pvqui === "X" && rta.Datos.Caso === "01") {
+                  this.onLlevarDestino();
+                  return;
+                }
+              }
+
               this.onShowMensajes(rta.Datos, oEvent);
             } else {
               this.onShowMensajes(rta.Datos, oEvent);
@@ -158,11 +175,41 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oValue = oEvent.getSource().getValue(),
-            oData = oMockModel.getProperty("/Devolucion");
-          oMaterial = oData.Cantidad;
-          if (oValue !== oMaterial) {
+            oData = oMockModel.getProperty("/Devolucion"),
+            oDataScan = oMockModel.getProperty("/DevolucionScan");
+
+          if (oValue !== oData.Ean11) {
             this._onShowMsg6(oEvent);
           } else {
+            let objectMsg = {
+              titulo: this._i18n().getText("lblalmacenamiento"),
+              mensaje: this._i18n().getText("msgingreso"),
+              icono: sap.m.MessageBox.Icon.QUESTION,
+              acciones: [
+                this._i18n().getText("btnsumar"),
+                this._i18n().getText("btntotal"),
+              ],
+              resaltar: this._i18n().getText("btnsumar"),
+            };
+
+            this._onShowMsgBox(objectMsg).then((rta) => {
+              if (rta === this._i18n().getText("btntotal")) {
+                oDataScan.Cantidad = parseFloat(oData.Cantidad);
+              } else {
+                oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
+              }
+              oMockModel.setProperty("/DevolucionScan", oDataScan);
+              if (
+                parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
+              ) {
+                this._onFocusControl(
+                  this.getView().byId("idAlmDevDestinoScan")
+                );
+              } else {
+                this._onFocusControl(oEvent.getSource());
+                oEvent.getSource().setValue("");
+              }
+            });
           }
         },
 
@@ -172,27 +219,36 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oValue = oEvent.getSource().getValue(),
             oView = this.getView(),
-            oData = oMockModel.getProperty("/Devolucion");
-          oCantidad = oData.Cantidad;
-          if (oValue !== oCantidad) {
+            oData = oMockModel.getProperty("/Devolucion"),
+            oCantidad = oData.Cantidad;
+
+          if (parseFloat(oValue) > parseFloat(oCantidad)) {
             this._onShowMsg7(oEvent);
           } else {
-            this.onValidDevolucion();
+            if (parseFloat(oValue) === parseFloat(oCantidad)) {
+              this._onFocusControl(this.getView().byId("idAlmDevDestinoScan"));
+              oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
+              oMockModel.setProperty("/DevolucionScan", oDataScan);
+            } else {
+              this._onFocusControl(oEvent.getSource());
+              oEvent.getSource().setValue("");
+            }
           }
         },
 
-        onDestinoScan: function (oEvent) {
+        onDestinoScanDEV: function (oEvent) {
           if (oEvent.getSource().getValue().length < 1) return;
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oValue = oEvent.getSource().getValue(),
             oView = this.getView(),
-            oData = oMockModel.getProperty("/Almacenamiento");
-          oDestino = oData.DestinoEntrada;
+            oData = oMockModel.getProperty("/Devolucion"),
+            oDestino = oData.DestinoEntrada;
 
           if (this.onFormatCodigo(oValue) !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
+
             this.onValidDevolucion();
           }
         },
@@ -208,14 +264,16 @@ sap.ui.define(
             oDestino,
             oDestinoScan;
 
-          if ( oScan.Destino !== undefined &&  oData.Destino !== "Zona intermedia") {
+          if (
+            oScan.Destino !== undefined &&
+            oData.Destino !== "Zona intermedia"
+          ) {
             oDestino = oData.DestinoEntrada;
             oDestinoScan = this.onFormatCodigo(oScan.Destino);
             oDestinoScan = oDestinoScan.trim();
           } else {
             oDestino = oData.Destino;
             oDestinoScan = oScan.Destino;
-          
           }
 
           if (
@@ -240,9 +298,8 @@ sap.ui.define(
             oDestinoScan = oScan.Destino;
 
           if (
-            oMaterial.trim() === oMaterialScan.trim() &&
-            oDestin.trim() === oDestinoScan.trim() &&
-            oCantidad.trim() === oCantidadScan.trim()
+            oMaterial === oMaterialScan &&            
+            oCantidad === oCantidadScan
           ) {
             oMockModel.setProperty("/AlmValidDevolucion", true);
           } else {
@@ -283,8 +340,19 @@ sap.ui.define(
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
-            oEntity = "/DevolucionSet",
-            oPayload = oMockModel.getProperty("/Devolucion");
+            oEntity = "/AlmacenamientoSet",
+            oAlmacenamientoRta = oMockModel.getProperty("/Devolucion");
+            
+
+            let oPayload = {
+              Pallet: oAlmacenamientoRta.Pallet.trim(),
+              Caso: oAlmacenamientoRta.Caso,
+              Almacen: oAlmacenamientoRta.Almacen,
+              Ot: oAlmacenamientoRta.Ot,
+              Posicion: oAlmacenamientoRta.Posicion,
+              Etapa: oAlmacenamientoRta.Etapa,
+              Tipo: oAlmacenamientoRta.Tipo,
+            };
 
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
@@ -315,32 +383,25 @@ sap.ui.define(
 
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
-
-
               if (rta.Datos.Caso === "62") {
-
                 if (rta.Datos.Destino !== "Zona intermedia") {
-               
                   // rta.Datos.DestinoEntrada = "RMNJ1";
-                  rta.Datos.Destino = "005RMNJ1";  
+                  rta.Datos.Destino = "005RMNJ1";
                 } else {
-
                   oPayloadScan.Destino = rta.Datos.Destino;
                 }
 
                 oMockModel.setProperty("/AlmacenamientoScan", oPayloadScan);
               }
-              
+
               if (rta.Datos.Caso === "61") {
                 rta.Datos.DestinoEntrada = "RMNJ1";
                 rta.Datos.Destino = "005RMNJ1";
               }
-              
+
               // Zona intermedia :
               oMockModel.setProperty("/Almacenamiento", rta.Datos);
               this.onValidAlmacenamiento();
-
-
             } else {
               this._onErrorHandle(rta.Datos);
             }

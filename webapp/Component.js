@@ -66,7 +66,7 @@ sap.ui.define(
           },
           DevolucionScan: {
             Material: "",
-            Cantidad: "",
+            Cantidad: 0,
             Destino: "",
           },
 
@@ -86,6 +86,7 @@ sap.ui.define(
           Etiquetado: true,
           MainButtons: false,
           EtiquIngxPallets: false,
+          EtiquIngxPalletsBTN: false,
           AlmValidAlmacenamiento: false,
           AlmValidDevolucion: false,
           AlmValidTraslado: false,
