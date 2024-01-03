@@ -14,8 +14,10 @@ sap.ui.define(
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 
           let oTarget = oRouter.getTarget("TargetOtEntrante");
-          oTarget.attachDisplay(this._onObjectMatched, this);
+          oTarget.attachDisplay(this.onClearScreen, this);
         },
+
+        
 
         _onObjectMatched: async function (evt) {
           let oModel = this.getOwnerComponent().getModel(),
@@ -181,24 +183,10 @@ sap.ui.define(
           if (oValue !== oData.Ean11) {
             this._onShowMsg6(oEvent);
           } else {
-            let objectMsg = {
-              titulo: this._i18n().getText("lblalmacenamiento"),
-              mensaje: this._i18n().getText("msgingreso"),
-              icono: sap.m.MessageBox.Icon.QUESTION,
-              acciones: [
-                this._i18n().getText("btnsumar"),
-                this._i18n().getText("btntotal"),
-              ],
-              resaltar: this._i18n().getText("btnsumar"),
-            };
-
-            this._onShowMsgBox(objectMsg).then((rta) => {
-              if (rta === this._i18n().getText("btntotal")) {
-                oDataScan.Cantidad = parseFloat(oData.Cantidad);
-              } else {
-                oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
-              }
+            if (oDataScan.Cantidad > 0) {
+              oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
               oMockModel.setProperty("/DevolucionScan", oDataScan);
+
               if (
                 parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
               ) {
@@ -209,7 +197,38 @@ sap.ui.define(
                 this._onFocusControl(oEvent.getSource());
                 oEvent.getSource().setValue("");
               }
-            });
+
+            } else {
+              let objectMsg = {
+                titulo: this._i18n().getText("lblalmacenamiento"),
+                mensaje: this._i18n().getText("msgingreso"),
+                icono: sap.m.MessageBox.Icon.QUESTION,
+                acciones: [
+                  this._i18n().getText("btnsumar"),
+                  this._i18n().getText("btntotal"),
+                ],
+                resaltar: this._i18n().getText("btnsumar"),
+              };
+
+              this._onShowMsgBox(objectMsg).then((rta) => {
+                if (rta === this._i18n().getText("btntotal")) {
+                  oDataScan.Cantidad = parseFloat(oData.Cantidad);
+                } else {
+                  oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
+                }
+                oMockModel.setProperty("/DevolucionScan", oDataScan);
+                if (
+                  parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
+                ) {
+                  this._onFocusControl(
+                    this.getView().byId("idAlmDevDestinoScan")
+                  );
+                } else {
+                  this._onFocusControl(oEvent.getSource());
+                  oEvent.getSource().setValue("");
+                }
+              });
+            }
           }
         },
 
@@ -248,7 +267,6 @@ sap.ui.define(
           if (this.onFormatCodigo(oValue) !== oDestino) {
             this._onShowMsg4(oEvent);
           } else {
-
             this.onValidDevolucion();
           }
         },
@@ -297,10 +315,7 @@ sap.ui.define(
             oCantidadScan = oScan.Cantidad,
             oDestinoScan = oScan.Destino;
 
-          if (
-            oMaterial === oMaterialScan &&            
-            oCantidad === oCantidadScan
-          ) {
+          if (oMaterial === oMaterialScan && oCantidad === oCantidadScan) {
             oMockModel.setProperty("/AlmValidDevolucion", true);
           } else {
             oMockModel.setProperty("/AlmValidDevolucion", false);
@@ -342,17 +357,16 @@ sap.ui.define(
             oView = this.getView(),
             oEntity = "/AlmacenamientoSet",
             oAlmacenamientoRta = oMockModel.getProperty("/Devolucion");
-            
 
-            let oPayload = {
-              Pallet: oAlmacenamientoRta.Pallet.trim(),
-              Caso: oAlmacenamientoRta.Caso,
-              Almacen: oAlmacenamientoRta.Almacen,
-              Ot: oAlmacenamientoRta.Ot,
-              Posicion: oAlmacenamientoRta.Posicion,
-              Etapa: oAlmacenamientoRta.Etapa,
-              Tipo: oAlmacenamientoRta.Tipo,
-            };
+          let oPayload = {
+            Pallet: oAlmacenamientoRta.Pallet.trim(),
+            Caso: oAlmacenamientoRta.Caso,
+            Almacen: oAlmacenamientoRta.Almacen,
+            Ot: oAlmacenamientoRta.Ot,
+            Posicion: oAlmacenamientoRta.Posicion,
+            Etapa: oAlmacenamientoRta.Etapa,
+            Tipo: oAlmacenamientoRta.Tipo,
+          };
 
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 

@@ -26,7 +26,7 @@ sap.ui.define(
             Pallet: "",
             Destino: "",
           });
-          oMockModel.setProperty("/TrasladoScan", {});
+          oMockModel.setProperty("/TrasladoScan", { Cantidad: 0 });
           oMockModel.setProperty("/Etiquetado", true);
           oMockModel.setProperty("/AlmValidTraslado", false);
           oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", false);
@@ -157,10 +157,63 @@ sap.ui.define(
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje !== "E") {
               oData.Ean11 = rta.Datos.Ean11;
-              oDataScan.Cantidad = parseInt(oDataScan.Cantidad) + 1;
-              oDataScan.Cantidad = oDataScan.Cantidad.toString();
-              oMockModel.setProperty("/TrasladoScan", oDataScan);
-              oMockModel.setProperty("/Traslado", oData);
+
+              if (oDataScan.Cantidad > 0) {
+                oDataScan.Cantidad = parseInt(oDataScan.Cantidad) + 1;
+
+                oMockModel.setProperty("/TrasladoScan", oDataScan);
+                oMockModel.setProperty("/Traslado", oData);
+
+                if (oDataScan.Cantidad === parseFloat(oData.Cantidad)) {
+                  this._onFocusControl(this.byId("idTraDestino"));
+                  oMockModel.setProperty("/TrasladoMaterialValidado", false);
+                } else {
+                  oMockModel.setProperty("/TrasladoMaterialValidado", true);
+                  oEvent.getSource().setValue("");
+                  this._onFocusControl(oEvent.getSource());
+                }
+               
+              } else {
+
+                let objectMsg = {
+                  titulo: this._i18n().getText("btntraslados"),
+                  mensaje: this._i18n().getText("msgingreso"),
+                  icono: sap.m.MessageBox.Icon.QUESTION,
+                  acciones: [
+                    this._i18n().getText("btnsumar"),
+                    this._i18n().getText("btntotal"),
+                  ],
+                  resaltar: this._i18n().getText("btnsumar"),
+                };
+  
+                this._onShowMsgBox(objectMsg).then((rta) => {
+                  if (rta === this._i18n().getText("btntotal")) {
+                    oDataScan.Cantidad = parseFloat(oData.Cantidad);
+
+                  } else {
+                    oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
+                  }
+
+                  oMockModel.setProperty("/TrasladoScan", oDataScan);
+                  oMockModel.setProperty("/Traslado", oData);
+
+                  if (oDataScan.Cantidad === parseFloat(oData.Cantidad)) {
+                    this._onFocusControl(this.byId("idTraDestino"));
+                    oMockModel.setProperty("/TrasladoMaterialValidado", false);
+                  } else {
+                    oMockModel.setProperty("/TrasladoMaterialValidado", true);
+                    oEvent.getSource().setValue("");
+                    this._onFocusControl(oEvent.getSource());
+
+                  }
+                
+
+                });
+
+
+              }
+
+             
             } else {
               this.onShowMessagesTraslado(rta.Datos);
             }
@@ -168,12 +221,7 @@ sap.ui.define(
             this._onErrorHandle(rta.Datos);
           }
 
-          if (oDataScan.Cantidad === oData.Cantidad) {
-            this._onFocusControl(this.byId("idTraDestino"));
-          } else {
-            oEvent.getSource().setValue("");
-            this._onFocusControl(oEvent.getSource());
-          }
+
         },
 
         onCantidadScan: function (oEvent) {
@@ -287,16 +335,13 @@ sap.ui.define(
 
               break;
             default:
-
-
               break;
           }
-          if (oData.Caso === "01" && oData.Confirmado.toUpperCase() !=="X"){
+          if (oData.Caso === "01" && oData.Confirmado.toUpperCase() !== "X") {
             oDataScan.Destino = oData.DestinoEntrada;
             oMockModel.setProperty("/TrasladoScan", oDataScan);
             this.onValidTraslado();
           }
-
         },
 
         onValidTraslado: function () {
@@ -332,8 +377,7 @@ sap.ui.define(
 
           if (
             oMaterial.trim() === oMaterialScan.trim() &&
-            oCantidadScan.trim() === oCantidad.trim() &&
-            oOrigen.trim() === oOrigenScan.trim() &&
+            oCantidadScan.trim() === oCantidad.trim() &&            
             oDestino.trim() === oDestinoScan.trim()
           ) {
             oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", true);
@@ -348,6 +392,26 @@ sap.ui.define(
             oView = this.getView(),
             oEntity = "/TrasladoSet",
             oPayload = oMockModel.getProperty("/Traslado");
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje === "S") {
+              this.onShowMessagesTraslado(rta.Datos, oEvent);
+            } else {
+              this._onErrorHandle(rta.Datos);
+            }
+          } else {
+            this._onErrorHandle(rta.Datos);
+          }
+        },
+
+        onTrasladoSinEtiquetaContinuar: async function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oEntity = "/TrasladoSet",
+            oPayload = oMockModel.getProperty("/TrasladoScan");
+
           let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 
           if (rta.Respuesta === "OK") {
@@ -482,12 +546,11 @@ sap.ui.define(
             mensaje: this._i18n().getText("msgmovok"),
             icono: sap.m.MessageBox.Icon.SUCCESS,
             acciones: [
-              this._i18n().getText("btnvolver")
+              this._i18n().getText("btnvolver"),
               // ,      this._i18n().getText("btnsiguientepos"),
             ],
             resaltar: this._i18n().getText("btnvolver"),
           };
-
 
           this._onShowMsgBox(objectMsg).then((rta) => {
             this.onClearScreen();

@@ -74,7 +74,7 @@ sap.ui.define(
           Traslado: {},
           TrasladoMaterialValidado: true,
           TrasladoScan: {
-            Cantidad: "0"
+            Cantidad: 0
           },
           Salida: {},
           SalidaxPallet: false,

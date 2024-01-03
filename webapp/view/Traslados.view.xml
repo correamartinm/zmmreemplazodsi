@@ -86,7 +86,7 @@
 
                             <form:FormElement visible="{= ${mockdata>/Etiquetado} === false }">
                                 <form:fields>
-                                    <Input enabled="{mockdata>/TrasladoMaterialValidado}" id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}"/>
+                                    <Input enabled="{mockdata>/TrasladoMaterialValidado}" id="idTraPalletCantidad" submit="onCantidadScan" value="{mockdata>/TrasladoScan/Cantidad}" editable="false"/>
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
