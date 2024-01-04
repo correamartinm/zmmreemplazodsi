@@ -262,8 +262,8 @@ sap.ui.define(
             this.onShowMessagesRemanejo(rta.Datos, []);
             oMockModel.setProperty("/ImpresionData", rta.Datos);
           } else {
-            this._onShowMsg0(rta.Datos);
-            // this.onShowMessagesRemanejo(rta.Datos, []);
+            // this._onShowMsg0(rta.Datos);
+            this.onShowMessagesRemanejo(rta.Datos, []);
           }
         } else {
           this._onErrorHandle(rta.Datos);
@@ -275,9 +275,18 @@ sap.ui.define(
           oModel = this.getOwnerComponent().getModel(),
           oView = this.getView(),
           oEntity = "/EtiquetaSet",
+        
           oPayload = oMockModel.getProperty("/ImpresionData");
 
-        let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+          let oPayFinal = {
+            Almacen : oPayload.Almacen,
+            Posicion : oPayload.Posicion,
+            Ot : oPayload.Ot
+          };
+
+          // ALMACEN , oT, pOSICION
+
+        let rta = await this._oncreateModel(oModel, oView, oEntity, oPayFinal);
 
         if (rta.Respuesta === "OK") {
           this._onResetData();
@@ -305,7 +314,7 @@ sap.ui.define(
             this._onShowMsg5(oValue);
             break;
           case "06":
-            this._onShowMsg6();
+            this._onShowMsg6(rta, oEvent);
             break;
           case "07":
             this._onShowMsg7();
@@ -422,10 +431,10 @@ sap.ui.define(
           }
         });
       },
-      _onShowMsg6: function (oEvent, oValue) {
+      _onShowMsg6: function (oValue, oEvent) {
         let objectMsg = {
           titulo: this._i18n().getText("lblremanejo"),
-          mensaje: this._i18n().getText("msgnuevonum") + " " + oValue,
+          mensaje: this._i18n().getText("msgnuevonum") + " " + oValue.Pallet,
           icono: sap.m.MessageBox.Icon.SUCCESS,
           acciones: [this._i18n().getText("btnimprimir")],
           resaltar: this._i18n().getText("btnimprimir"),

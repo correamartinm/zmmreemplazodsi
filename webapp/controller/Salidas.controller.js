@@ -182,6 +182,7 @@ sap.ui.define(
 
         if (rta.Respuesta === "OK") {
           if (rta.Datos.TipoMensaje !== "E") {
+
             if (oData.Caso !== "11" && oData.Caso !== "31") {
               this._onFocusControl(this.byId("idSalDestinoScan"));
             } else {
@@ -189,6 +190,7 @@ sap.ui.define(
               oMockModel.setProperty("/SalidaValida", true);
               oMockModel.setProperty("/Salida", oData);
             }
+
           } else {
             this.onShowMessagesSalida(rta.Datos, oEvent);
           }
@@ -224,10 +226,10 @@ sap.ui.define(
 
         oMockModel.setProperty("/SalidaValida", false);
 
-        if (this.onQuitaZeros(oPallet) !== this.onQuitaZeros(oPalletScan))
-          return;
-        if (this.onQuitaZeros(oOrigen) !== this.onQuitaZeros(oOrigenScan))
-          return;
+        // if (this.onQuitaZeros(oPallet) !== this.onQuitaZeros(oPalletScan))
+        //   return;
+        // if (this.onQuitaZeros(oOrigen) !== this.onFormatCodigo(oOrigenScan))
+        //   return;
         if (oData.Caso !== "11" && oData.Caso !== "31") {
           if (this.onQuitaZeros(oDestino) !== this.onFormatCodigo(oDestinoScan))
             return;

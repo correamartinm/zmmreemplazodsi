@@ -339,15 +339,15 @@ sap.ui.define(
           if (oEvent.getSource().getValue().length < 1) return;
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
-            oValue = oEvent.getSource().getValue(),
+            oValue = this.onFormatCodigo(oEvent.getSource().getValue()),
             oView = this.getView(),
             oData = oMockModel.getProperty("/Devolucion"),
             oDestino = oData.DestinoEntrada;
 
-          if (this.onFormatCodigo(oValue) !== oDestino) {
-            this._onShowMsg4(oEvent);
-          } else {
+          if (oValue === oDestino) {
             this.onValidDevolucion();
+          } else {
+            this._onShowMsg4(oEvent);
           }
         },
 
@@ -395,7 +395,7 @@ sap.ui.define(
             oCantidadScan = oScan.Cantidad,
             oDestinoScan = oScan.Destino;
 
-          if (oMaterial === oMaterialScan && oCantidad === oCantidadScan) {
+          if (oCantidad === oCantidadScan) {
             oMockModel.setProperty("/AlmValidDevolucion", true);
           } else {
             oMockModel.setProperty("/AlmValidDevolucion", false);
