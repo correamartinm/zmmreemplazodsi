@@ -171,8 +171,88 @@ sap.ui.define(
         },
 
         // Ingreso por Devolucion  *************************************
+        onMaterialScan: async function (oEvent) {
+          // va read MaterialesSet con lo que vino en el servicio + el scaneo
 
-        onMaterialScan: function (oEvent) {
+          let oMockModel = this.getOwnerComponent().getModel("mockdata"),
+            oModel = this.getOwnerComponent().getModel(),
+            oView = this.getView(),
+            oValue = oEvent.getSource().getValue(),
+            oData = oMockModel.getProperty("/Devolucion"),
+            oDataScan = oMockModel.getProperty("/DevolucionScan"),
+
+            // oData = oMockModel.getProperty("/Traslado"),
+            // oDataScan = oMockModel.getProperty("/TrasladoScan"),
+            oMaterial = oData.Material;
+
+          let oPath = oModel.createKey("/EanSet", {
+            Material: oMaterial,
+            Codigo: oValue,
+          });
+
+          let rta = await this._onreadModelTraslado(oModel, oView, oPath);
+
+          if (rta.Respuesta === "OK") {
+            if (rta.Datos.TipoMensaje === "E") {
+              this._onShowMsg6(oEvent);
+            } else {
+              if (oDataScan.Cantidad > 0) {
+                oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
+                oMockModel.setProperty("/DevolucionScan", oDataScan);
+  
+                if (
+                  parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
+                ) {
+                  this._onFocusControl(
+                    this.getView().byId("idAlmDevDestinoScan")
+                  );
+                } else {
+                  this._onFocusControl(oEvent.getSource());
+                  oEvent.getSource().setValue("");
+                }
+  
+              } else {
+                let objectMsg = {
+                  titulo: this._i18n().getText("lblalmacenamiento"),
+                  mensaje: this._i18n().getText("msgingreso"),
+                  icono: sap.m.MessageBox.Icon.QUESTION,
+                  acciones: [
+                    this._i18n().getText("btnsumar"),
+                    this._i18n().getText("btntotal"),
+                  ],
+                  resaltar: this._i18n().getText("btnsumar"),
+                };
+  
+                this._onShowMsgBox(objectMsg).then((rta) => {
+                  if (rta === this._i18n().getText("btntotal")) {
+                    oDataScan.Cantidad = parseFloat(oData.Cantidad);
+                  } else {
+                    oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
+                  }
+                  oMockModel.setProperty("/DevolucionScan", oDataScan);
+                  if (
+                    parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
+                  ) {
+                    this._onFocusControl(
+                      this.getView().byId("idAlmDevDestinoScan")
+                    );
+                  } else {
+                    this._onFocusControl(oEvent.getSource());
+                    oEvent.getSource().setValue("");
+                  }
+                });
+              }
+            }
+
+             
+            } else {
+              this.onShowMessagesTraslado(rta.Datos);
+            }
+         
+
+
+        },
+        onMaterialScan2: function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),

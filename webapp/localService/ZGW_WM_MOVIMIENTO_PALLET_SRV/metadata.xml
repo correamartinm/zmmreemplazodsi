@@ -122,7 +122,7 @@
                 <Property Name="Destino" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/>
                 <Property Name="DestinoValidacion" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Entrega" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
-                <Property Name="Cantidad" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Signed INT2 / int16" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cantidad" Type="Edm.Decimal" Nullable="false" Precision="31" Scale="0" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Material" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Tipo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Caso" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
@@ -202,6 +202,17 @@
                 <Property Name="TipoMensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
                 <Property Name="Mensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
             </EntityType>
+            <EntityType Name="Ean" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Material"/>
+                    <PropertyRef Name="Codigo"/>
+                </Key>
+                <Property Name="Material" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Codigo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Tipo" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TipoMensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Mensaje" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
             <EntityContainer Name="ZGW_WM_MOVIMIENTO_PALLET_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
                 <EntitySet Name="AlmacenamientoSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Almacenamiento" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="DevolucionSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Devolucion" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
@@ -213,6 +224,7 @@
                 <EntitySet Name="RemanejoSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Remanejo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="RemanejoPalletSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.RemanejoPallet" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
                 <EntitySet Name="EtiquetaSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Etiqueta" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="EanSet" EntityType="ZGW_WM_MOVIMIENTO_PALLET_SRV.Ean" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
             </EntityContainer>
             <atom:link rel="self" href="http://mxecid.morixe.com.ar:8000/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
             <atom:link rel="latest-version" href="http://mxecid.morixe.com.ar:8000/sap/opu/odata/sap/ZGW_WM_MOVIMIENTO_PALLET_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>

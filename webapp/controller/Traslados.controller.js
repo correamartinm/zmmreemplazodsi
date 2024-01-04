@@ -367,18 +367,18 @@ sap.ui.define(
             oData = oMockModel.getProperty("/Traslado"),
             oScan = oMockModel.getProperty("/TrasladoScan"),
             oMaterial = oData.Ean11,
-            oCantidad = oData.Cantidad,
+            oCantidad = parseFloat(oData.Cantidad),
             oOrigen = oData.Origen,
-            oDestino = oData.Destino,
+            oDestino = oData.DestinoEntrada,
             oMaterialScan = oScan.Material,
             oCantidadScan = oScan.Cantidad,
             oDestinoScan = oScan.Destino,
             oOrigenScan = oScan.Origen;
 
           if (
-            oMaterial.trim() === oMaterialScan.trim() &&
-            oCantidadScan.trim() === oCantidad.trim() &&            
-            oDestino.trim() === oDestinoScan.trim()
+            oMaterial === oMaterialScan &&
+            oCantidadScan === oCantidad &&            
+            oDestino === this.onFormatCodigo(oDestinoScan)
           ) {
             oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", true);
           } else {
@@ -388,21 +388,32 @@ sap.ui.define(
 
         onTrasladoContinuar: async function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
-            oModel = this.getOwnerComponent().getModel(),
-            oView = this.getView(),
-            oEntity = "/TrasladoSet",
-            oPayload = oMockModel.getProperty("/Traslado");
-          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+          oModel = this.getOwnerComponent().getModel(),
+          oView = this.getView(),
+          oEntity = "/TrasladoSet",
+          oPayload = oMockModel.getProperty("/Traslado"),
+          oPayloadScan = oMockModel.getProperty("/TrasladoScan");
 
-          if (rta.Respuesta === "OK") {
-            if (rta.Datos.TipoMensaje === "S") {
-              this.onShowMessagesTraslado(rta.Datos, oEvent);
-            } else {
-              this._onErrorHandle(rta.Datos);
-            }
+          // oPayload.Ean11 = oPayloadScan.Material;
+
+          let oPayloadFinal = {
+            Almacen: oPayload.Almacen,
+            Posicion: oPayload.Posicion ,
+            Ot: oPayload.Ot,
+            Caso: oPayload.Caso
+          };
+
+        let rta = await this._oncreateModel(oModel, oView, oEntity, oPayloadFinal);
+
+        if (rta.Respuesta === "OK") {
+          if (rta.Datos.TipoMensaje === "S") {
+            this.onShowMessagesTraslado(rta.Datos, oEvent);
           } else {
             this._onErrorHandle(rta.Datos);
           }
+        } else {
+          this._onErrorHandle(rta.Datos);
+        }
         },
 
         onTrasladoSinEtiquetaContinuar: async function (oEvent) {
@@ -410,9 +421,19 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel(),
             oView = this.getView(),
             oEntity = "/TrasladoSet",
-            oPayload = oMockModel.getProperty("/TrasladoScan");
+            oPayload = oMockModel.getProperty("/Traslado"),
+            oPayloadScan = oMockModel.getProperty("/TrasladoScan");
 
-          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
+            // oPayload.Ean11 = oPayloadScan.Material;
+
+            let oPayloadFinal = {
+              Almacen: oPayload.Almacen,
+              Posicion: oPayload.Posicion ,
+              Ot: oPayload.Ot,
+              Caso: oPayload.Caso
+            };
+
+          let rta = await this._oncreateModel(oModel, oView, oEntity, oPayloadFinal);
 
           if (rta.Respuesta === "OK") {
             if (rta.Datos.TipoMensaje === "S") {

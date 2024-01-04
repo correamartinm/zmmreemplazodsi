@@ -38,7 +38,7 @@
 
                 </Toolbar>
 
-            
+
 
                 <Table id="idMaterialsAdded" items="{mockdata>/MaterialesAdded}" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="6">
                     <headerToolbar>
@@ -103,7 +103,7 @@
                                 </form:fields>
                             </form:FormElement>
 
-                            <form:FormElement visible="{= ${mockdata>/RemanejoScan/Esperada} !== '' }" >
+                            <form:FormElement visible="{= ${mockdata>/RemanejoScan/Esperada} !== '' }">
                                 <form:fields>
                                     <Text class="BigSize" text="{i18n>lblcantidadesperada}: {mockdata>/RemanejoScan/Esperada}" />
                                 </form:fields>
@@ -121,39 +121,44 @@
             </form:Form>
 
 
-            <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="Start">
+            <!-- <VBox alignItems="Start" visible="{= ${mockdata>/Remanejo} === 3 }" justifyContent="Start"> -->
+            <Panel visible="{= ${mockdata>/Remanejo} === 3 }" width="95%" height="70%" class="sapUiSmallMarginBegin">
+                <content>
+                    <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onTableMaterialesSelectionChange" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100" visible="{= ${mockdata>/Remanejo} === 3 }" showSeparators="All">
 
-                <Table id="idMaterialStock" items="{mockdata>/Materiales}" mode="MultiSelect" selectionChange="onTableMaterialesSelectionChange" growing="true" sticky="ColumnHeaders,HeaderToolbar" growingThreshold="100" showSeparators="All">
+                        <columns>
+                            <Column >
+                                <Text text="{i18n>lbllote}" />
+                            </Column>
+                            <Column >
+                                <Text text="{i18n>lbldisponible}" />
+                            </Column>
+                            <Column >
+                                <Text text="{i18n>lbltomar}" />
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem vAlign="Middle">
+                                <cells>
+                                    <Label text="{mockdata>Lote}" wrapping="true" />
+                                </cells>
+                                <cells>
+                                    <Label text="{mockdata>Disponible}" wrapping="true" />
+                                </cells>
+                                <cells>
+                                    <Input valueStateText="{i18n>msgtrascantidad}" liveChange="onCheckCantidad" enabled="false" />
 
-                    <columns>
-                        <Column >
-                            <Text text="{i18n>lbllote}" />
-                        </Column>
-                        <Column >
-                            <Text text="{i18n>lbldisponible}" />
-                        </Column>
-                        <Column >
-                            <Text text="{i18n>lbltomar}" />
-                        </Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem vAlign="Middle">
-                            <cells>
-                                <Label text="{mockdata>Lote}" wrapping="true" />
-                            </cells>
-                            <cells>
-                                <Label text="{mockdata>Disponible}" wrapping="true" />
-                            </cells>
-                            <cells>
-                                <Input valueStateText="{i18n>msgtrascantidad}" liveChange="onCheckCantidad" enabled="false" />
+                                </cells>
 
-                            </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
 
-                        </ColumnListItem>
-                    </items>
-                </Table>
+                </content>
 
-            </VBox>
+            </Panel>
+
+            <!-- </VBox> -->
 
         </content>
         <footer >
