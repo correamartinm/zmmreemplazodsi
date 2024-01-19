@@ -123,13 +123,13 @@
                                 </form:fields>
                             </form:FormElement>
                             <!-- Fin Elemento -->
-
                             <form:FormElement >
                                 <form:fields>
-                                    <ObjectStatus title="{i18n>lbldestino} " text="{mockdata>/Traslado/Destino} {mockdata>/Traslado/DescripcionDestino}" class="uptitle" />
-                                </form:fields>
-                            </form:FormElement>
-                            <!-- Fin Elemento -->
+                                    <ObjectStatus title="{i18n>lbldestino} " text="{mockdata>/Traslado/Destino}" class="uptitle" />
+                                    </form:fields>
+                                </form:FormElement>
+                                <!-- Fin Elemento -->
+                                <!-- {mockdata>/Traslado/DescripcionDestino} -->
 
                             <form:FormElement >
                                 <form:fields>

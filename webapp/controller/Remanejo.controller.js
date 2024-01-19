@@ -112,7 +112,7 @@ sap.ui.define(
           oPayload.Disponible = vObject.Disponible;
           oPayload.Ean11 = vObject.Ean11;
           oPayload.Ingreso = oItems[index].getCells()[2].getValue();
-          oPayload.Lote = this.onQuitaZeros(vObject.Lote);
+          oPayload.Lote = vObject.Lote;
           oPayload.Material = this.onQuitaZeros(vObject.Material);
           oPayload.Centro = vObject.Centro;
           oPayload.Unidad = vObject.Unidad;
@@ -275,16 +275,15 @@ sap.ui.define(
           oModel = this.getOwnerComponent().getModel(),
           oView = this.getView(),
           oEntity = "/EtiquetaSet",
-        
           oPayload = oMockModel.getProperty("/ImpresionData");
 
-          let oPayFinal = {
-            Almacen : oPayload.Almacen,
-            Posicion : oPayload.Posicion,
-            Ot : oPayload.Ot
-          };
+        let oPayFinal = {
+          Almacen: oPayload.Almacen,
+          Posicion: oPayload.Posicion,
+          Ot: oPayload.Ot,
+        };
 
-          // ALMACEN , oT, pOSICION
+        // ALMACEN , oT, pOSICION
 
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayFinal);
 
@@ -298,6 +297,9 @@ sap.ui.define(
       // Mensajes ***************************
       onShowMessagesRemanejo: function (rta, oEvent) {
         switch (rta.Tipo) {
+          case "":
+            this._onShowMsg00(rta);
+            break;
           case "01":
             this._onShowMsg1();
             break;
@@ -327,7 +329,7 @@ sap.ui.define(
             break;
         }
       },
-      _onShowMsg0: function (data) {
+      _onShowMsg00: function (data) {
         let objectMsg = {
           titulo: this._i18n().getText("lblremanejo"),
           mensaje: data.Mensaje,
@@ -342,6 +344,22 @@ sap.ui.define(
           // }
         });
       },
+
+      _onShowMsg00: function (data) {
+        let objectMsg = {
+          titulo: this._i18n().getText("lblremanejo"),
+          mensaje: data.Mensaje,
+          icono: sap.m.MessageBox.Icon.WARNING,
+          acciones: [this._i18n().getText("btnvolver")],
+          resaltar: this._i18n().getText("btnvolver"),
+        };
+
+        this._onShowMsgBox(objectMsg).then((rta) => {
+          // if (rta === this._i18n().getText("btnvolver")) {
+          // }
+        });
+      },
+
       _onShowMsg1: function () {
         let objectMsg = {
           titulo: this._i18n().getText("lblremanejo"),
@@ -352,7 +370,6 @@ sap.ui.define(
         };
 
         this._onShowMsgBox(objectMsg).then((rta) => {
-          
           // if (rta === this._i18n().getText("btnvolver")) {
           // }
         });

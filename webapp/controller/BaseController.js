@@ -195,13 +195,17 @@ sap.ui.define(
         },
 
         _onErrorHandle: function (oError) {
+
           if (oError.Mensaje === undefined) {
             var oErrorMsg = JSON.parse(oError.responseText);
             var oText = oErrorMsg.error.message.value;
           } else {
             var oText = oError.Mensaje;
           }
-
+          
+          if (oError.statusText === "Not Found"){
+            oText =  this._i18n().getText("msgnoposicionesot");
+          }
           var sMessageTitle = this._i18n().getText("msgerror");
 
           let objectMsg = {
