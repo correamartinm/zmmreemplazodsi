@@ -20,6 +20,6 @@ builder:
           name: ZMMREEMPLAZODSI
           description: Reemplazo DSI
           package: ZFIORIDSI
-          transport: MXDK900208
+          transport: MXDK901645
         exclude:
           - /test/
