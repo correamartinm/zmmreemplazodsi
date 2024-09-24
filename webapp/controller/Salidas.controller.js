@@ -175,6 +175,7 @@ sap.ui.define(
           Almacen: oData.Almacen,
           Ot: oData.Ot,
           Posicion: oData.Posicion,
+          Caso: oData.Caso
         });
 
         let rta = await this._onreadModel(oModel, oView, oPath);
@@ -246,6 +247,8 @@ sap.ui.define(
           oPayload = oMockModel.getProperty("/Salida"),
           oScan = oMockModel.getProperty("/SalidaScan");
         oPayload.Pallet = oScan.Pallet;
+
+        oMockModel.setProperty("/SalidaValida", false);
 
         let rta = await this._oncreateModel(oModel, oView, oEntity, oPayload);
 

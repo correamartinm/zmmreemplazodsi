@@ -126,10 +126,10 @@
                             <form:FormElement >
                                 <form:fields>
                                     <ObjectStatus title="{i18n>lbldestino} " text="{mockdata>/Traslado/Destino}" class="uptitle" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <!-- Fin Elemento -->
-                                <!-- {mockdata>/Traslado/DescripcionDestino} -->
+                                </form:fields>
+                            </form:FormElement>
+                            <!-- Fin Elemento -->
+                            <!-- {mockdata>/Traslado/DescripcionDestino} -->
 
                             <form:FormElement >
                                 <form:fields>

@@ -390,6 +390,9 @@ sap.ui.define(
             oPayload = oMockModel.getProperty("/Traslado"),
             oPayloadScan = oMockModel.getProperty("/TrasladoScan");
 
+            oMockModel.setProperty("/AlmValidTraslado", false);
+            
+
           // oPayload.Ean11 = oPayloadScan.Material;
 
           let oPayloadFinal = {
@@ -424,6 +427,8 @@ sap.ui.define(
             oEntity = "/TrasladoSet",
             oPayload = oMockModel.getProperty("/Traslado"),
             oPayloadScan = oMockModel.getProperty("/TrasladoScan");
+
+            oMockModel.setProperty("/AlmValidTrasladoSinEtiqueta", false);
 
           // oPayload.Ean11 = oPayloadScan.Material;
 

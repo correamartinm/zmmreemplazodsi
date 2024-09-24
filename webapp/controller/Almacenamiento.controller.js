@@ -17,8 +17,6 @@ sap.ui.define(
           oTarget.attachDisplay(this.onClearScreen, this);
         },
 
-        
-
         _onObjectMatched: async function (evt) {
           let oModel = this.getOwnerComponent().getModel(),
             oMockModel = this.getOwnerComponent().getModel("mockdata"),
@@ -144,6 +142,10 @@ sap.ui.define(
               this._onShowMsg7(oEvent);
               break;
 
+            case "08":
+              this._onShowMsg8(oEvent);
+              break;
+
             case "":
               this.onLlevarDestino(oEvent);
 
@@ -180,7 +182,6 @@ sap.ui.define(
             oValue = oEvent.getSource().getValue(),
             oData = oMockModel.getProperty("/Devolucion"),
             oDataScan = oMockModel.getProperty("/DevolucionScan"),
-
             // oData = oMockModel.getProperty("/Traslado"),
             // oDataScan = oMockModel.getProperty("/TrasladoScan"),
             oMaterial = oData.Material;
@@ -199,7 +200,7 @@ sap.ui.define(
               if (oDataScan.Cantidad > 0) {
                 oDataScan.Cantidad = parseFloat(oDataScan.Cantidad) + 1;
                 oMockModel.setProperty("/DevolucionScan", oDataScan);
-  
+
                 if (
                   parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
                 ) {
@@ -210,7 +211,6 @@ sap.ui.define(
                   this._onFocusControl(oEvent.getSource());
                   oEvent.getSource().setValue("");
                 }
-  
               } else {
                 let objectMsg = {
                   titulo: this._i18n().getText("lblalmacenamiento"),
@@ -222,7 +222,7 @@ sap.ui.define(
                   ],
                   resaltar: this._i18n().getText("btnsumar"),
                 };
-  
+
                 this._onShowMsgBox(objectMsg).then((rta) => {
                   if (rta === this._i18n().getText("btntotal")) {
                     oDataScan.Cantidad = parseFloat(oData.Cantidad);
@@ -231,7 +231,8 @@ sap.ui.define(
                   }
                   oMockModel.setProperty("/DevolucionScan", oDataScan);
                   if (
-                    parseFloat(oData.Cantidad) === parseFloat(oDataScan.Cantidad)
+                    parseFloat(oData.Cantidad) ===
+                    parseFloat(oDataScan.Cantidad)
                   ) {
                     this._onFocusControl(
                       this.getView().byId("idAlmDevDestinoScan")
@@ -243,14 +244,9 @@ sap.ui.define(
                 });
               }
             }
-
-             
-            } else {
-              this.onShowMessagesTraslado(rta.Datos);
-            }
-         
-
-
+          } else {
+            this.onShowMessagesTraslado(rta.Datos);
+          }
         },
         onMaterialScan2: function (oEvent) {
           let oMockModel = this.getOwnerComponent().getModel("mockdata"),
@@ -277,7 +273,6 @@ sap.ui.define(
                 this._onFocusControl(oEvent.getSource());
                 oEvent.getSource().setValue("");
               }
-
             } else {
               let objectMsg = {
                 titulo: this._i18n().getText("lblalmacenamiento"),
@@ -408,6 +403,9 @@ sap.ui.define(
             oView = this.getView(),
             oEntity = "/AlmacenamientoSet",
             oAlmacenamientoRta = oMockModel.getProperty("/Almacenamiento");
+
+          oMockModel.setProperty("/AlmValidAlmacenamiento", false);
+
           let oPayload = {
             Pallet: oAlmacenamientoRta.Pallet.trim(),
             Caso: oAlmacenamientoRta.Caso,
@@ -437,6 +435,8 @@ sap.ui.define(
             oView = this.getView(),
             oEntity = "/AlmacenamientoSet",
             oAlmacenamientoRta = oMockModel.getProperty("/Devolucion");
+            
+          oMockModel.setProperty("/AlmValidDevolucion", false);
 
           let oPayload = {
             Pallet: oAlmacenamientoRta.Pallet.trim(),
@@ -626,6 +626,21 @@ sap.ui.define(
           let objectMsg = {
             titulo: this._i18n().getText("lblalmacenamiento"),
             mensaje: this._i18n().getText("msgcantidadnoesperada"),
+            icono: sap.m.MessageBox.Icon.WARNING,
+            acciones: [this._i18n().getText("btnvolver")],
+            resaltar: this._i18n().getText("btnvolver"),
+          };
+
+          this._onShowMsgBox(objectMsg).then((rta) => {
+            oEvent.getSource().setValue("");
+            this._onFocusControl(oEvent.getSource());
+          });
+        },
+
+        _onShowMsg8: function (oEvent) {
+          let objectMsg = {
+            titulo: this._i18n().getText("lblalmacenamiento"),
+            mensaje: this._i18n().getText("msgnewdata"),
             icono: sap.m.MessageBox.Icon.WARNING,
             acciones: [this._i18n().getText("btnvolver")],
             resaltar: this._i18n().getText("btnvolver"),
