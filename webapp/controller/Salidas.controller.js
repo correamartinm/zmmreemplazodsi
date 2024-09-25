@@ -392,9 +392,11 @@ sap.ui.define(
             oEvent.getSource().setValue();
             this._onFocusControl(oEvent.getSource());
           } else {
-            this.getOwnerComponent()
-              .getModel("mockdata")
-              .setProperty("/SalidaValida", true);
+
+            // this.getOwnerComponent()
+            //   .getModel("mockdata")
+            //   .setProperty("/SalidaValida", true);
+              
           }
         });
       },
